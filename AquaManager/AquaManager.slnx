@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../AquaManager.Domain/AquaManager.Domain.csproj" />
+  <Project Path="AquaManager.Presentation.csproj" />
+</Solution>
