@@ -233,7 +233,6 @@ Aqua Manager — это игра, в которой игрок выступае�
 - `RemoveFish(Fish fish)` — удаляет рыбку
 - `RemoveDeadFish()` — удаляет всех мёртвых рыбок
 - `GetLiveFishCount()` — возвращает количество живых рыбок
-- `UpdateDirtyWaterEffect()` — применяет эффект грязной воды (ускорение голода)
 
 ---
 
