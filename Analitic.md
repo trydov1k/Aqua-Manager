@@ -172,11 +172,11 @@ Aqua Manager — это игра, в которой игрок выступае�
 │  │     Player      │         │     Aquarium     │         │     Fish      │ │
 │  ├─────────────────┤         ├──────────────────┤         ├───────────────┤ │
 │  │ +Money          │         │ +Name            │         │ +Name         │ │
-│  │ +Aquariums      │────────►│ +WaterCleanliness│────────►│ +Hunger       │ │
-│  │ +CurrentAquarium│         │ +Capacity        │         │ +HungerRate   │ │
-│  │   Index         │         │ +FishList        │         │ +Price        │ │
-│  └─────────────────┘         └──────────────────┘         │ +IsAlive      │ │
-│                                                           │ +Icon         │ │
+│  │ +Aquariums      │────────►│ +WaterCleanliness│────────►│ +Type         │ │
+│  │ +CurrentAquarium│         │ +Capacity        │         │ +Hunger       │ │
+│  │   Index         │         │ +FishList        │         │ +HungerRate   │ │
+│  └─────────────────┘         └──────────────────┘         │ +Price        │ │
+│                                                           │ +IsAlive      │ │
 │                                                           └───────────────┘ │
 │                                                                             │
 │  ┌─────────────────┐         ┌─────────────────┐                            │
@@ -202,12 +202,12 @@ Aqua Manager — это игра, в которой игрок выступае�
 
 | Поле | Тип | Описание | Диапазон |
 |------|-----|----------|----------|
-| `Name` | string | Название вида рыбки | - |
+| `Name` | string | Имя рыбки | - |
+| `Type` | FishType | Тип рыбки | Гуппи |
 | `Hunger` | int | Текущий уровень голода | 0–100 |
 | `HungerRate` | double | Скорость уменьшения голода (% в секунду) | 0.2–0.67 |
 | `Price` | int | Цена покупки рыбки | 40–150 |
 | `IsAlive` | bool | Жива ли рыбка | true/false |
-| `Icon` | Image | Иконка рыбки для отображения | - |
 
 **Методы:**
 - `Feed()` — восстанавливает голод до 100
