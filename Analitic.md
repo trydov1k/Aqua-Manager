@@ -228,7 +228,7 @@ Aqua Manager — это игра, в которой игрок выступае�
 | `Capacity` | int | Максимальное количество рыбок | 6 |
 
 **Методы:**
-- `ChangeWater()` — устанавливает WaterCleanliness = 100
+- `CleanWater()` — устанавливает WaterCleanliness = 100
 - `AddFish(Fish fish)` — добавляет рыбку, если есть место
 - `RemoveFish(Fish fish)` — удаляет рыбку
 - `RemoveDeadFish()` — удаляет всех мёртвых рыбок
