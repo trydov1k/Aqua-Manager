@@ -1,6 +1,6 @@
-﻿namespace AquaManager.Presentation
+﻿namespace AquaManager.Presentation.Forms
 {
-    partial class ShopForm
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "ShopForm";
+            this.Text = "MainForm";
         }
 
         #endregion
