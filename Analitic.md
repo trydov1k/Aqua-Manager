@@ -513,7 +513,104 @@ Aqua Manager — это игра, в которой игрок выступае�
 
 ---
 
-## 13. Возможные расширения (Roadmap)
+## 13. Структура проекта
+
+
+### 📁 AquaManager.Domain (Class Library)
+```
+AquaManager.Domain
+│
+├── 📁 Constants
+│   └── 📄 GameConstants.cs
+│
+├── 📁 Enums
+│   └── 📄 FishTypeEnum.cs
+│
+├── 📁 Factories
+│   └── 📄 FishFactory.cs
+│
+├── 📁 Interfaces
+│   ├── 📄 IAquarium.cs
+│   ├── 📄 IFish.cs
+│   ├── 📄 IGameState.cs
+│   └── 📄 IPlayer.cs
+│
+├── 📁 Models
+│   ├── 📄 Aquarium.cs
+│   ├── 📄 Fish.cs
+│   ├── 📄 GameState.cs
+│   └── 📄 Player.cs
+│
+└── 📁 Services
+    ├── 📄 GameEngine.cs
+    ├── 📄 IncomeService.cs
+    └── 📄 SaveLoadService.cs
+```
+
+### 📁 AquaManager.Presentation (Windows Forms App)
+
+```
+AquaManager.Presentation
+│
+├── 📁 Controls
+│   └── 📄 FishControl.cs
+│
+├── 📁 Forms
+│   ├── 📄 MainForm.cs
+│   └── 📄 ShopForm.cs
+│
+├── 📁 Resources
+│   ├── 📁 Aquariums
+│   │   └── (изображения фонов аквариумов)
+│   └── 📁 Fish
+│       └── (иконки рыбок: guppy.png, swordtail.png, angelfish.png, goldfish.png)
+│
+└── 📄 Program.cs
+```
+
+---
+
+## Назначение ключевых файлов
+
+| Файл | Назначение |
+|------|-----------|
+| **GameConstants.cs** | Все числовые константы: стартовые деньги, цены, вместимость, скорость загрязнения, интервалы таймеров, пассивный доход |
+| **FishTypeEnum.cs** | Перечисление видов рыб: Guppy, Swordtail, Angelfish, Goldfish |
+| **FishFactory.cs** | Создаёт объекты Fish с правильными характеристиками (цена, HungerRate, имя) на основе FishTypeEnum |
+| **IAquarium, IFish, IPlayer, IGameState** | Интерфейсы для моделей, позволяющие легко тестировать и подменять реализации |
+| **Aquarium.cs, Fish.cs, Player.cs, GameState.cs** | Реализации доменных моделей |
+| **GameEngine.cs** | Основная логика: обновление голода, чистоты, кормление, покупки, смена воды |
+| **IncomeService.cs** | Расчёт и начисление пассивного дохода от живых рыбок |
+| **SaveLoadService.cs** | Сохранение и загрузка состояния в JSON |
+| **FishControl.cs** | Пользовательский контрол для отображения одной рыбки (иконка, имя, полоска голода, цветовая индикация) |
+| **MainForm.cs** | Главное окно: таймеры, кнопки, список рыбок, переключение аквариумов |
+| **ShopForm.cs** | Окно магазина: покупка рыбок и новых аквариумов |
+| **Program.cs** | Точка входа, запуск MainForm |
+
+---
+
+## Связи между проектами
+
+```
+AquaManager.Presentation
+       │
+       │ (ссылается на)
+       ▼
+AquaManager.Domain
+```
+
+**Presentation** использует:
+- Все модели (Fish, Aquarium, Player)
+- Enum (FishTypeEnum)
+- Фабрику (FishFactory)
+- Сервисы (GameEngine, IncomeService, SaveLoadService)
+- Константы (GameConstants)
+
+**Domain** не знает о Presentation — независимый слой.
+
+---
+
+## 14. Возможные расширения (Roadmap)
 
 1. **Декорации** — возможность украшать аквариум, влияющее на доход
 2. **Размножение рыбок** — появление мальков при хороших условиях
@@ -521,3 +618,5 @@ Aqua Manager — это игра, в которой игрок выступае�
 4. **Анимация** — плавающие рыбки в PictureBox
 5. **Звуки** — кормление, смена воды, покупка
 6. **Достижения** — система наград за определённые действия
+
+
