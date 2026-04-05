@@ -1,4 +1,4 @@
-﻿namespace AquaManager
+﻿namespace AquaManager.Presentation
 {
     partial class ShopForm
     {

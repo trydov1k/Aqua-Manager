@@ -6,11 +6,11 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace AquaManager
+namespace AquaManager.Presentation
 {
-    public partial class ShopForm : Form
+    public partial class MainForm : Form
     {
-        public ShopForm()
+        public MainForm()
         {
             InitializeComponent();
         }

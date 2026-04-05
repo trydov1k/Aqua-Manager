@@ -1,6 +1,4 @@
-﻿using AquaManager.Domain.Models;
-
-namespace AquaManager.Domain.Interfaces
+﻿namespace AquaManager.Domain.Interfaces
 {
     public interface IAquarium
     {
@@ -17,7 +15,7 @@ namespace AquaManager.Domain.Interfaces
         /// <summary>
         /// Список рыбок в аквариуме
         /// </summary>
-        public List<Fish> FishList { get; }
+        public List<IFish> FishList { get; }
         /// <summary>
         /// Максимальное количество рыбок в аквариуме
         /// </summary>
@@ -36,14 +34,14 @@ namespace AquaManager.Domain.Interfaces
         /// </summary>
         /// <param name="fish">Рыбка, которую нужно добавить в аквариум</param>
         /// <returns>true если рыбка добавилась, false если нет места</returns>
-        public bool AddFish(Fish fish);
+        public bool AddFish(IFish fish);
 
         /// <summary>
         /// Удалить рыбку из аквариума
         /// </summary>
         /// <param name="fish">Рыбка, которую нужно убрать из аквариума</param>
         /// <returns>true если рыбка удалена, false такой рыбки в аквариуме нет</returns>
-        public bool RemoveFish(Fish fish);
+        public bool RemoveFish(IFish fish);
 
         /// <summary>
         /// Удаляет всех мёртвых рыбок

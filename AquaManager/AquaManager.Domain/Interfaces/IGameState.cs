@@ -1,5 +1,4 @@
-﻿
-namespace AquaManager.Domain.Interfaces
+﻿namespace AquaManager.Domain.Interfaces
 {
     public interface IGameState
     {

@@ -1,4 +1,4 @@
-﻿namespace AquaManager
+﻿namespace AquaManager.Presentation
 {
     partial class MainForm
     {
@@ -28,26 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            timer1 = new System.Windows.Forms.Timer(components);
-            SuspendLayout();
-            // 
-            // timer1
-            // 
-            timer1.Interval = 100;
-            // 
-            // MainForm
-            // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Name = "MainForm";
-            Text = "MainForm";
-            ResumeLayout(false);
+            this.components = new System.ComponentModel.Container();
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Text = "MainForm";
         }
 
         #endregion
-
-        private System.Windows.Forms.Timer timer1;
     }
 }

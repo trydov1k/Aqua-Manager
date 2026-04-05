@@ -1,5 +1,4 @@
 ﻿using AquaManager.Domain.Interfaces;
-using System.Xml.Linq;
 
 namespace AquaManager.Domain.Models
 {

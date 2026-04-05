@@ -1,5 +1,4 @@
-﻿
-namespace AquaManager.Domain.Enums
+﻿namespace AquaManager.Domain.Enums
 {
     /// <summary>
     /// Тип рыбки

@@ -11,7 +11,7 @@ namespace AquaManager.Domain.Models
         public int CurrentAquariumIndex { get; set; }
 
         // Конструкторы
-        public Player(int money, List<Aquarium> aquariums, int aquariumIndex) 
+        public Player(int money, List<Aquarium> aquariums, int aquariumIndex)
         {
             Money = money;
             Aquariums = aquariums;

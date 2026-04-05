@@ -1,5 +1,4 @@
-﻿
-using AquaManager.Domain.Enums;
+﻿using AquaManager.Domain.Enums;
 
 namespace AquaManager.Domain.Interfaces
 {
