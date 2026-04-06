@@ -19,10 +19,10 @@ namespace AquaManager.Domain.Interfaces
         /// <summary>
         /// Текущий голод рыбки
         /// </summary>
-        public int Hunger { get; }
+        public double Hunger { get; }
 
         /// <summary>
-        /// Коэффициент голода рыбки (насколько быстро голодает)
+        /// Коэффициент голода рыбки (сколько единиц голода уходит в секунду)
         /// </summary>
         public double HungerRate { get; }
 

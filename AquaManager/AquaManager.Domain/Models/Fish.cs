@@ -8,10 +8,10 @@ namespace AquaManager.Domain.Models
         // Свойства рыбки
         public string Name { get; }
         public FishType Type { get; }
-        public int Hunger { get; }
+        public double Hunger { get; private set; }
         public double HungerRate { get; }
-        public double Price { get; }
-        public bool IsAlive { get; }
+        public double Price { get; private set; }
+        public bool IsAlive { get; private set; }
 
         // Лямбда-свойства
         public bool IsDie => !IsAlive;
@@ -33,17 +33,18 @@ namespace AquaManager.Domain.Models
 
         public void Feed()
         {
-            throw new NotImplementedException();
+            Hunger = 100.00;
         }
 
         public void UpdateHunger()
         {
-            throw new NotImplementedException();
+            Hunger -= HungerRate;
         }
 
         public void Die()
         {
-            throw new NotImplementedException();
+            IsAlive = false;
+            Price = 0.00;
         }
     }
 }
