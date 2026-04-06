@@ -24,22 +24,25 @@ namespace AquaManager.Domain.Models
         // Методы
         public void AddMoney(int amount)
         {
-            throw new NotImplementedException();
+            Money += amount;
         }
 
         public bool CanAfford(int amount)
         {
-            throw new NotImplementedException();
+            return Money <= amount;
         }
 
         public Aquarium GetCurrentAquarium()
         {
-            throw new NotImplementedException();
+            return Aquariums[CurrentAquariumIndex];
         }
 
         public bool SpendMoney(int amount)
         {
-            throw new NotImplementedException();
+            var canAfford = CanAfford(amount);
+            if (canAfford)
+                Money -= amount;
+            return canAfford;
         }
     }
 }

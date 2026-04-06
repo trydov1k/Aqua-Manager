@@ -17,8 +17,9 @@ namespace AquaManager.Domain.Interfaces
         public List<Aquarium> Aquariums { get; set; }
 
         /// <summary>
-        /// Индекс текущего выбранного аквариума
+        /// Индекс текущего выбранного аквариума (0, 1, 2, 3 ...)
         /// </summary>
+        /// <example>0, 1, 2, 3, 4</example>
         public int CurrentAquariumIndex { get; set; }
 
 
