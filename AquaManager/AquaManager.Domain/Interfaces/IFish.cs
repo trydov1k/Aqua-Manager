@@ -29,7 +29,7 @@ namespace AquaManager.Domain.Interfaces
         /// <summary>
         /// Стоимость рыбки
         /// </summary>
-        public double Price { get; }
+        public decimal Price { get; }
 
         /// <summary>
         /// Рыбка жива
