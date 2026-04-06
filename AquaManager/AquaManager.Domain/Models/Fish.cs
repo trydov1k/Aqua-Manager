@@ -12,6 +12,7 @@ namespace AquaManager.Domain.Models
         public double HungerRate { get; }
         public decimal Price { get; private set; }
         public bool IsAlive { get; private set; }
+        public string Id { get; set; }
 
         // Лямбда-свойства
         public bool IsDie => !IsAlive;
@@ -25,6 +26,7 @@ namespace AquaManager.Domain.Models
             HungerRate = hungerRate;
             Price = price;
             IsAlive = true;
+            Id = Guid.NewGuid().ToString();
         }
 
         // Методы класса
