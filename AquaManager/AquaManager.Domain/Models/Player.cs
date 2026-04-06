@@ -5,29 +5,26 @@ namespace AquaManager.Domain.Models
     public class Player : IPlayer
     {
         // Свойства
-        public int Money { get; set; }
+        public decimal Money { get; set; }
 
         public List<Aquarium> Aquariums { get; set; }
         public int CurrentAquariumIndex { get; set; }
 
         // Конструкторы
-        public Player(int money, List<Aquarium> aquariums, int aquariumIndex)
+        public Player(decimal money, List<Aquarium> aquariums, int aquariumIndex)
         {
             Money = money;
             Aquariums = aquariums;
             CurrentAquariumIndex = aquariumIndex;
         }
 
-        public Player() : this(0, [], 0)
-        { }
-
         // Методы
-        public void AddMoney(int amount)
+        public void AddMoney(decimal amount)
         {
             Money += amount;
         }
 
-        public bool CanAfford(int amount)
+        public bool CanAfford(decimal amount)
         {
             return Money <= amount;
         }
@@ -37,7 +34,7 @@ namespace AquaManager.Domain.Models
             return Aquariums[CurrentAquariumIndex];
         }
 
-        public bool SpendMoney(int amount)
+        public bool SpendMoney(decimal amount)
         {
             var canAfford = CanAfford(amount);
             if (canAfford)

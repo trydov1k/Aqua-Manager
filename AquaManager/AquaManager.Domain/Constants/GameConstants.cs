@@ -70,7 +70,7 @@ namespace AquaManager.Domain.Constants
         /// Словарь с характеристиками рыбок в зависимости от их вида
         /// Вид рыбки: (стоимость, коэффициент голода)
         /// </summary>
-        public static readonly Dictionary<FishType, (decimal, double, string)> FishDictByType = new()
+        public static readonly Dictionary<FishType, (decimal, double, string)> FishByTypeDict = new()
         {
             { FishType.Guppy, (40, 0.2, "Гуппи") },
             { FishType.SwordsMan, (70, 0.33, "Меченосец") },

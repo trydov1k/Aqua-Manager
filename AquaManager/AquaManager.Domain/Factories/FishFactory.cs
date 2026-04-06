@@ -6,7 +6,7 @@ namespace AquaManager.Domain.Factories
 {
     public class FishFactory
     {
-        private readonly Dictionary<FishType, (decimal, double, string)> FishDict = GameConstants.FishDictByType;
+        private readonly Dictionary<FishType, (decimal, double, string)> FishDict = GameConstants.FishByTypeDict;
 
         public Fish CreateFish(FishType type)
         {

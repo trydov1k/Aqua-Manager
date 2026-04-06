@@ -9,7 +9,7 @@ namespace AquaManager.Domain.Interfaces
         /// <summary>
         /// Количество монет
         /// </summary>
-        public int Money { get; }
+        public decimal Money { get; }
 
         /// <summary>
         /// Список всех аквариумов
@@ -35,20 +35,20 @@ namespace AquaManager.Domain.Interfaces
         /// Добавить деньги
         /// </summary>
         /// <param name="amount">Сколько денег добавить</param>
-        public void AddMoney(int amount);
+        public void AddMoney(decimal amount);
 
         /// <summary>
         /// Потратить деньги
         /// </summary>
         /// <param name="amount">Сколько денег потратить</param>
         /// <returns>Если операция удалась - true, если не удалась - false</returns>
-        public bool SpendMoney(int amount);
+        public bool SpendMoney(decimal amount);
 
         /// <summary>
         /// Проверить, хватает ли денег на покупку
         /// </summary>
         /// <param name="amount">Сколько денег надо</param>
         /// <returns>Если хватает - true, если не хватает - false</returns>
-        public bool CanAfford(int amount);
+        public bool CanAfford(decimal amount);
     }
 }
