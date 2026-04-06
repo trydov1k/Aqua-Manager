@@ -7,7 +7,7 @@ namespace AquaManager.Domain.Models
         // Свойства
         public string Name { get; }
 
-        public double WaterCleanliness { get; }
+        public double WaterCleanliness { get; private set; }
 
         public List<Fish> FishList { get; }
 
@@ -25,27 +25,35 @@ namespace AquaManager.Domain.Models
         // Методы
         public bool AddFish(Fish fish)
         {
-            throw new NotImplementedException();
-        }
+            var canAdd = FishList.Count + 1 < Capacity;
+            if (!canAdd)
+                return false;
 
-        public void CleanWater()
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetLiveFishCount()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveDeadFish()
-        {
-            throw new NotImplementedException();
+            FishList.Add(fish);
+            return true;
         }
 
         public bool RemoveFish(Fish fish)
         {
-            throw new NotImplementedException();
+            return FishList.Remove(fish);
         }
+
+        public void CleanWater()
+        {
+            WaterCleanliness = 100.00;
+        }
+
+        public int GetLiveFishCount()
+        {
+            return FishList.Where(fish => fish.IsAlive).Count();
+        }
+
+        public void RemoveDeadFish()
+        {
+            foreach (var fish in FishList)
+                if (fish.IsDie)
+                    FishList.Remove(fish);
+        }
+
     }
 }
