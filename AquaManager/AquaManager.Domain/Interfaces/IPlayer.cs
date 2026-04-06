@@ -1,4 +1,6 @@
-﻿namespace AquaManager.Domain.Interfaces
+﻿using AquaManager.Domain.Models;
+
+namespace AquaManager.Domain.Interfaces
 {
     public interface IPlayer
     {
@@ -12,7 +14,7 @@
         /// <summary>
         /// Список всех аквариумов
         /// </summary>
-        public List<IAquarium> Aquariums { get; set; }
+        public List<Aquarium> Aquariums { get; set; }
 
         /// <summary>
         /// Индекс текущего выбранного аквариума
@@ -26,7 +28,7 @@
         /// Получить текущий аквариум
         /// </summary>
         /// <returns>Возвращает текущий аквариум</returns>
-        public IAquarium GetCurrentAquarium();
+        public Aquarium GetCurrentAquarium();
 
         /// <summary>
         /// Добавить деньги
