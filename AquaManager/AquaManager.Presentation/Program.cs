@@ -1,3 +1,5 @@
+using AquaManager.Presentation.Forms;
+
 namespace AquaManager.Presentation
 {
     internal static class Program

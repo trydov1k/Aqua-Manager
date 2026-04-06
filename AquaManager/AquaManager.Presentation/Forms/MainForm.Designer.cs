@@ -28,12 +28,43 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "MainForm";
+            aquarium = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)aquarium).BeginInit();
+            SuspendLayout();
+            // 
+            // aquarium
+            // 
+            aquarium.Image = Properties.Resources.Аквариум_1;
+            aquarium.ImageLocation = "";
+            aquarium.InitialImage = Properties.Resources.Аквариум_2;
+            aquarium.Location = new Point(100, 80);
+            aquarium.Name = "aquarium";
+            aquarium.Size = new Size(820, 590);
+            aquarium.SizeMode = PictureBoxSizeMode.StretchImage;
+            aquarium.TabIndex = 0;
+            aquarium.TabStop = false;
+            aquarium.Click += pictureBox1_Click;
+            // 
+            // MainForm
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.ButtonShadow;
+            ClientSize = new Size(1008, 729);
+            Controls.Add(aquarium);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "MainForm";
+            SizeGripStyle = SizeGripStyle.Show;
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "AquaManager";
+            ((System.ComponentModel.ISupportInitialize)aquarium).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private PictureBox aquarium;
     }
 }
