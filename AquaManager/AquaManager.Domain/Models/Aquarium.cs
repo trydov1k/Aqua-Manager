@@ -23,10 +23,11 @@ namespace AquaManager.Domain.Models
         }
 
         // Методы
+        public bool CanAddFish() => FishList.Count + 1 < Capacity;
+
         public bool AddFish(Fish fish)
         {
-            var canAdd = FishList.Count + 1 < Capacity;
-            if (!canAdd)
+            if (!CanAddFish())
                 return false;
 
             FishList.Add(fish);
@@ -55,5 +56,9 @@ namespace AquaManager.Domain.Models
                     FishList.Remove(fish);
         }
 
+        public void UpdateWaterCleanliness(double waterDirtRate)
+        {
+            WaterCleanliness -= waterDirtRate;
+        }
     }
 }

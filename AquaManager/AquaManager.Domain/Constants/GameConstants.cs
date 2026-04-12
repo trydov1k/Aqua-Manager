@@ -85,5 +85,11 @@ namespace AquaManager.Domain.Constants
         /// </summary>
         public const int GameTickIntervalMs = 1000;
 
+        //
+
+        /// <summary>
+        /// Тип рыбки, которая будет создана при новой игре
+        /// </summary>
+        public const FishType DefaultFishtype = FishType.Guppy;
     }
 }

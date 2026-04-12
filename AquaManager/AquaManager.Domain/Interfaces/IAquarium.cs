@@ -27,6 +27,12 @@ namespace AquaManager.Domain.Interfaces
         // Методы
 
         /// <summary>
+        /// Проверяет можно ли добавить рыбку в аквариум
+        /// </summary>
+        /// <returns>true если рыбку можно добавить, false если места не хватит</returns>
+        public bool CanAddFish();
+
+        /// <summary>
         /// Устанавливает WaterCleanliness = 100
         /// </summary>
         public void CleanWater();
@@ -54,5 +60,11 @@ namespace AquaManager.Domain.Interfaces
         /// Возвращает количество живых рыбок
         /// </summary>
         public int GetLiveFishCount();
+
+        /// <summary>
+        /// Уменьшает чистоту воды (WaterCleanliness) на waterDirtRate
+        /// </summary>
+        /// <param name="waterDirtRate">На сколько процентов уменьшить чистоту воды</param>
+        public void UpdateWaterCleanliness(double waterDirtRate);
     }
 }

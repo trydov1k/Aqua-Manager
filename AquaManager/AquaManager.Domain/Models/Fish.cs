@@ -41,9 +41,10 @@ namespace AquaManager.Domain.Models
             Hunger -= HungerRate;
         }
 
-        public void Die()
+        public void Kill()
         {
             IsAlive = false;
+            Hunger = 0;
             Price = 0;
         }
     }

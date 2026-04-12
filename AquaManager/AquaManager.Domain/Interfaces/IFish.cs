@@ -58,6 +58,6 @@ namespace AquaManager.Domain.Interfaces
         /// <summary>
         /// Сделать рыбку мертвой
         /// </summary>
-        public void Die();
+        public void Kill();
     }
 }
