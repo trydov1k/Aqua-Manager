@@ -28,12 +28,51 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "ShopForm";
+            flpItems = new FlowLayoutPanel();
+            lblMoney = new Label();
+            SuspendLayout();
+            // 
+            // flpItems
+            // 
+            flpItems.AutoScroll = true;
+            flpItems.FlowDirection = FlowDirection.TopDown;
+            flpItems.Location = new Point(15, 60);
+            flpItems.Name = "flpItems";
+            flpItems.Size = new Size(400, 350);
+            flpItems.TabIndex = 0;
+            flpItems.WrapContents = false;
+            // 
+            // lblMoney
+            // 
+            lblMoney.AutoSize = true;
+            lblMoney.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblMoney.ForeColor = Color.DarkGreen;
+            lblMoney.Location = new Point(15, 420);
+            lblMoney.Name = "lblMoney";
+            lblMoney.Size = new Size(120, 19);
+            lblMoney.TabIndex = 1;
+            lblMoney.Text = "У вас 250 монет";
+            // 
+            // ShopForm
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(434, 461);
+            Controls.Add(lblMoney);
+            Controls.Add(flpItems);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "ShopForm";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Магазин";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private FlowLayoutPanel flpItems;
+        private Label lblMoney;
     }
 }
