@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AquaManager.Domain.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,7 +11,7 @@ namespace AquaManager.Presentation.Forms
 {
     public partial class ShopForm : Form
     {
-        public ShopForm()
+        public ShopForm(GameEngine gameEngine)
         {
             InitializeComponent();
         }

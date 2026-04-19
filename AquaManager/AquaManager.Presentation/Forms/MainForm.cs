@@ -41,9 +41,46 @@ namespace AquaManager.Presentation.Forms
             // ...
         }
 
-        private void flpFishList_Paint(object sender, PaintEventArgs e)
+        private void btnFeedAll_Click(object sender, EventArgs e)
+        {
+            _engine.FeedAllFish();
+        }
+
+        private void btnFeedingMode_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnChangeWater_Click(object sender, EventArgs e)
+        {
+            _engine.ChangeWater();
+        }
+
+        private void btnRemoveDead_Click(object sender, EventArgs e)
+        {
+            _engine.RemoveDeadFish();
+        }
+
+        private void btnShop_Click(object sender, EventArgs e)
+        {
+            var shopForm = new ShopForm(_engine);
+            shopForm.ShowDialog();
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            _engine.SaveGame();
+        }
+
+        private void btnLoad_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void cmbAquariums_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbAquariums.SelectedIndex != _engine.Player.CurrentAquariumIndex)
+                _engine.SwitchAquarium(cmbAquariums.SelectedIndex);
         }
     }
 }

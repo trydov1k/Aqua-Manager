@@ -86,7 +86,6 @@
             flpFishList.Name = "flpFishList";
             flpFishList.Size = new Size(900, 110);
             flpFishList.TabIndex = 6;
-            flpFishList.Paint += flpFishList_Paint;
             // 
             // btnFeedAll
             // 
@@ -97,6 +96,7 @@
             btnFeedAll.TabIndex = 7;
             btnFeedAll.Text = "Покормить всех";
             btnFeedAll.UseVisualStyleBackColor = true;
+            btnFeedAll.Click += btnFeedAll_Click;
             // 
             // btnFeedingMode
             // 
@@ -107,6 +107,7 @@
             btnFeedingMode.TabIndex = 8;
             btnFeedingMode.Text = "Режим кормления";
             btnFeedingMode.UseVisualStyleBackColor = true;
+            btnFeedingMode.Click += btnFeedingMode_Click;
             // 
             // btnChangeWater
             // 
@@ -117,6 +118,7 @@
             btnChangeWater.TabIndex = 9;
             btnChangeWater.Text = "Сменить воду";
             btnChangeWater.UseVisualStyleBackColor = true;
+            btnChangeWater.Click += btnChangeWater_Click;
             // 
             // btnRemoveDead
             // 
@@ -127,6 +129,7 @@
             btnRemoveDead.TabIndex = 10;
             btnRemoveDead.Text = "Убрать мертвых";
             btnRemoveDead.UseVisualStyleBackColor = true;
+            btnRemoveDead.Click += btnRemoveDead_Click;
             // 
             // btnShop
             // 
@@ -137,6 +140,7 @@
             btnShop.TabIndex = 11;
             btnShop.Text = "Магазин";
             btnShop.UseVisualStyleBackColor = true;
+            btnShop.Click += btnShop_Click;
             // 
             // btnSave
             // 
@@ -146,6 +150,7 @@
             btnSave.TabIndex = 12;
             btnSave.Text = "Сохранить";
             btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_Click;
             // 
             // btnLoad
             // 
@@ -155,6 +160,7 @@
             btnLoad.TabIndex = 13;
             btnLoad.Text = "Загрузить";
             btnLoad.UseVisualStyleBackColor = true;
+            btnLoad.Click += btnLoad_Click;
             // 
             // tableLayoutPanel1
             // 
@@ -191,6 +197,7 @@
             cmbAquariums.Name = "cmbAquariums";
             cmbAquariums.Size = new Size(293, 23);
             cmbAquariums.TabIndex = 6;
+            cmbAquariums.SelectedIndexChanged += cmbAquariums_SelectedIndexChanged;
             // 
             // tableLayoutPanel2
             // 
@@ -240,9 +247,7 @@
 
         #endregion
 
-        private PictureBox aquarium;
         private Label lblMoney;
-        private ComboBox aquariumsBox;
         private ProgressBar pbWaterCleanliness;
         private PictureBox picAquarium;
         private Label lblWaterPercent;
