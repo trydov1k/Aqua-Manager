@@ -4,7 +4,6 @@ using AquaManager.Domain.Factories;
 using AquaManager.Domain.Models;
 using System.Timers;
 using Timer = System.Timers.Timer;
-using System.Linq;
 
 namespace AquaManager.Domain.Services
 {
@@ -262,7 +261,11 @@ namespace AquaManager.Domain.Services
             StateChanged?.Invoke(this, Player);
         }
 
-        //
+        // Методы для сохранения игры вручную
+        public void SaveGame() => _saveLoadService.SaveGame(Player);
+        public void LoadGame() => LoadPlayer(_saveLoadService.LoadGame());
+
+        // Удаление таймеров
 
         public void Dispose()
         {
