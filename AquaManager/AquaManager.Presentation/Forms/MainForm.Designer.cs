@@ -84,7 +84,7 @@
             flpFishList.AutoScroll = true;
             flpFishList.Location = new Point(54, 481);
             flpFishList.Name = "flpFishList";
-            flpFishList.Size = new Size(900, 110);
+            flpFishList.Size = new Size(900, 108);
             flpFishList.TabIndex = 6;
             // 
             // btnFeedAll

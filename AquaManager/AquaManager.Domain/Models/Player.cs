@@ -26,7 +26,7 @@ namespace AquaManager.Domain.Models
 
         public bool CanAfford(decimal amount)
         {
-            return Money <= amount;
+            return Money >= amount;
         }
 
         public Aquarium GetCurrentAquarium()
