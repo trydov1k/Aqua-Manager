@@ -10,11 +10,10 @@ namespace AquaManager.Presentation.Forms
     public partial class ShopForm : Form
     {
         private GameEngine _engine;
-        private FishFactory _fishFactory;
+        private FishFactory _fishFactory => _engine._fishFactory;
         public ShopForm(GameEngine gameEngine)
         {
             _engine = gameEngine;
-            _fishFactory = new FishFactory();
             InitializeComponent();
             LoadShopItems();
             UpdateMoneyDisplay();

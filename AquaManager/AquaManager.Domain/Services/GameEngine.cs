@@ -14,7 +14,7 @@ namespace AquaManager.Domain.Services
         private Timer _gameTimer;
         private IncomeService _incomeService;
         private SaveLoadService _saveLoadService;
-        private FishFactory _fishFactory;
+        public FishFactory _fishFactory;
         private bool _isRunning;
 
         public event EventHandler<Player> StateChanged;

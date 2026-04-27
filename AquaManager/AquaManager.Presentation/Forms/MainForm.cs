@@ -1,6 +1,10 @@
-﻿using AquaManager.Domain.Models;
+﻿using AquaManager.Domain.Constants;
+using AquaManager.Domain.Factories;
+using AquaManager.Domain.Models;
 using AquaManager.Domain.Services;
 using AquaManager.Presentation.Controls;
+using AquaManager.Presentation.Extensions;
+using AquaManager.Presentation.Models;
 
 namespace AquaManager.Presentation.Forms
 {
@@ -9,9 +13,22 @@ namespace AquaManager.Presentation.Forms
         private GameEngine _engine;
         private bool _isFeedingMode;
 
+        private List<SwimmingFish> _swimmingFishs = new List<SwimmingFish>();
+        private System.Windows.Forms.Timer _animationTimer;
+        private FishFactory _fishFactory => _engine._fishFactory;
+
         public MainForm()
         {
             InitializeComponent();
+
+            _animationTimer = new System.Windows.Forms.Timer();
+
+            _animationTimer.Interval = GameConstants.AnimationTimerIntervalMs;
+            _animationTimer.Tick += AnimationTimer_Tick;
+            _animationTimer.Start();
+
+            picAquarium.Paint += PicAquarium_Paint;
+            //picAquarium.MouseClick += PicAquarium_MouseClick;
 
             this.DoubleBuffered = true;
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
@@ -21,6 +38,7 @@ namespace AquaManager.Presentation.Forms
             _engine.Start();
         }
 
+        #region Обовление UI
         private void OnEngineStateChanged(object sender, Player player)
         {
             // Обновление UI (с учётом потока)
@@ -47,11 +65,8 @@ namespace AquaManager.Presentation.Forms
                 cmbAquariums.SelectedIndex = player.CurrentAquariumIndex;
             }
 
-
             var aquarium = player.GetCurrentAquarium();
-            if (aquarium == null) return;
-
-       
+            if (aquarium == null) return;       
 
             int cleanliness = (int)aquarium.WaterCleanliness;
             pbWaterCleanliness.Value = cleanliness;
@@ -63,13 +78,17 @@ namespace AquaManager.Presentation.Forms
                 pbWaterCleanliness.ForeColor = Color.Orange;
             else
                 pbWaterCleanliness.ForeColor = Color.Green;
-            
+
+
+            SyncSwimmingFishs(aquarium);  // Добавляем плавающих рыбок
+
 
             if (flpFishList.Controls.Count != aquarium.FishList.Count)
                 RebuildFishList(aquarium);
             else
                 UpdateExistingFishControls(aquarium);
         }
+        #endregion
 
         #region Работа со списком рыбок
         private void RebuildFishList(Aquarium aquarium)
@@ -106,7 +125,62 @@ namespace AquaManager.Presentation.Forms
         }
         #endregion
 
-        
+        private void SyncSwimmingFishs(Aquarium aquarium)
+        {
+            if (aquarium == null) return;
+
+            _swimmingFishs.RemoveAll(sf => !aquarium.FishList.Contains(sf.Model) || !sf.Model.IsAlive);
+
+            foreach (var fish in aquarium.FishList)
+            {
+                if (!_swimmingFishs.Any(sf => sf.Model == fish) && fish.IsAlive)
+                {
+                    Image originalImg = _fishFactory.GetFishImage(fish.Type);
+                    Random rnd = new Random();
+                    float x = 20, y = 20;
+
+                    var fishWidth = GameConstants.StandartFishImageWidth;
+                    var fishHeight = GameConstants.StandartFishImageHeight;
+
+                    if (picAquarium.Width > fishWidth)
+                        x = rnd.Next(20, picAquarium.Width - fishWidth);
+                    if (picAquarium.Height > fishHeight)
+                        y = rnd.Next(20, picAquarium.Height - fishHeight);
+                    _swimmingFishs.Add(new SwimmingFish(fish, originalImg, x, y, fishWidth, fishHeight));
+                }
+            }
+        }
+
+        private void AnimationTimer_Tick(object sender, EventArgs e)
+        {
+            if (picAquarium.Width == 0) return;
+            foreach (var sf in _swimmingFishs)
+            {
+                sf.Update(picAquarium.Width, picAquarium.Height);
+            }
+            picAquarium.Invalidate();
+        }
+
+        private void PicAquarium_Paint(object sender, PaintEventArgs e)
+        {
+            var g = e.Graphics;
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            foreach (var sf in _swimmingFishs)
+            {
+                if (sf.Model.IsAlive)
+                    g.DrawImage(sf.Image, sf.Position);
+                else
+                {
+                    using (var attr = new System.Drawing.Imaging.ImageAttributes())
+                    {
+                        var cm = new System.Drawing.Imaging.ColorMatrix { Matrix33 = 0.4f };
+                        attr.SetColorMatrix(cm);
+                        g.DrawImage(sf.Image, new Rectangle((int)sf.Position.X, (int)sf.Position.Y, sf.Image.Width, sf.Image.Height),
+                            0, 0, sf.Image.Width, sf.Image.Height, GraphicsUnit.Pixel, attr);
+                    }
+                }
+            }
+        }
 
         #region Обработка нажатий на кнопки
         private void btnFeedAll_Click(object sender, EventArgs e) => _engine.FeedAllFish();
