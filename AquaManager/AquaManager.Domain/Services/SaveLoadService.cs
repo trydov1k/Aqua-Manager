@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using AquaManager.Domain.Constants;
+using AquaManager.Domain.Interfaces.Services;
 using AquaManager.Domain.Models;
 
 namespace AquaManager.Domain.Services
@@ -11,24 +12,15 @@ namespace AquaManager.Domain.Services
     /// <summary>
     /// Сервис для сохранения и загрузки состояния игры в JSON-файл
     /// </summary>
-    public class SaveLoadService
+    public class SaveLoadService : ISaveLoadService
     {
         private readonly string _saveFilePath;
         private readonly JsonSerializerOptions _jsonOptions;
 
-        /// <summary>
-        /// Событие возникает после успешной загрузки сохранения
-        /// </summary>
         public event EventHandler<Player> GameLoaded;
 
-        /// <summary>
-        /// Событие возникает после успешного сохранения
-        /// </summary>
         public event EventHandler GameSaved;
 
-        /// <summary>
-        /// Событие возникает при ошибке сохранения/загрузки
-        /// </summary>
         public event EventHandler<string> ErrorOccurred;
 
         /// <summary>
@@ -49,9 +41,6 @@ namespace AquaManager.Domain.Services
             };
         }
 
-        /// <summary>
-        /// Сохранить текущее состояние игрока в файл (синхронно)
-        /// </summary>
         public bool SaveGame(Player player)
         {
             if (player == null)
@@ -74,9 +63,6 @@ namespace AquaManager.Domain.Services
             }
         }
 
-        /// <summary>
-        /// Асинхронное сохранение (не блокирует UI)
-        /// </summary>
         public async Task<bool> SaveGameAsync(Player player)
         {
             if (player == null)
@@ -99,9 +85,6 @@ namespace AquaManager.Domain.Services
             }
         }
 
-        /// <summary>
-        /// Загрузить состояние игрока из файла (синхронно)
-        /// </summary>
         public Player LoadGame()
         {
             if (!File.Exists(_saveFilePath))
@@ -139,9 +122,6 @@ namespace AquaManager.Domain.Services
             }
         }
 
-        /// <summary>
-        /// Асинхронная загрузка
-        /// </summary>
         public async Task<Player> LoadGameAsync()
         {
             if (!File.Exists(_saveFilePath))
@@ -209,14 +189,8 @@ namespace AquaManager.Domain.Services
             }
         }
 
-        /// <summary>
-        /// Проверить, существует ли файл сохранения
-        /// </summary>
         public bool SaveFileExists() => File.Exists(_saveFilePath);
 
-        /// <summary>
-        /// Удалить файл сохранения (начать новую игру)
-        /// </summary>
         public bool DeleteSaveFile()
         {
             try

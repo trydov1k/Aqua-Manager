@@ -1,45 +1,46 @@
-﻿using AquaManager.Domain.Interfaces;
+﻿using AquaManager.Domain.Interfaces.Models;
 
-namespace AquaManager.Domain.Models
+namespace AquaManager.Domain.Models;
+/// <summary>
+/// Класс, описывающий логику игрока
+/// </summary>
+public class Player : IPlayer
 {
-    public class Player : IPlayer
+    // Свойства
+    public decimal Money { get; set; }
+
+    public List<Aquarium> Aquariums { get; set; }
+    public int CurrentAquariumIndex { get; set; }
+
+    // Конструкторы
+    public Player(decimal money, List<Aquarium> aquariums, int aquariumIndex)
     {
-        // Свойства
-        public decimal Money { get; set; }
+        Money = money;
+        Aquariums = aquariums;
+        CurrentAquariumIndex = aquariumIndex;
+    }
 
-        public List<Aquarium> Aquariums { get; set; }
-        public int CurrentAquariumIndex { get; set; }
+    // Методы
+    public void AddMoney(decimal amount)
+    {
+        Money += amount;
+    }
 
-        // Конструкторы
-        public Player(decimal money, List<Aquarium> aquariums, int aquariumIndex)
-        {
-            Money = money;
-            Aquariums = aquariums;
-            CurrentAquariumIndex = aquariumIndex;
-        }
+    public bool CanAfford(decimal amount)
+    {
+        return Money >= amount;
+    }
 
-        // Методы
-        public void AddMoney(decimal amount)
-        {
-            Money += amount;
-        }
+    public Aquarium GetCurrentAquarium()
+    {
+        return Aquariums[CurrentAquariumIndex];
+    }
 
-        public bool CanAfford(decimal amount)
-        {
-            return Money >= amount;
-        }
-
-        public Aquarium GetCurrentAquarium()
-        {
-            return Aquariums[CurrentAquariumIndex];
-        }
-
-        public bool SpendMoney(decimal amount)
-        {
-            var canAfford = CanAfford(amount);
-            if (canAfford)
-                Money -= amount;
-            return canAfford;
-        }
+    public bool SpendMoney(decimal amount)
+    {
+        var canAfford = CanAfford(amount);
+        if (canAfford)
+            Money -= amount;
+        return canAfford;
     }
 }

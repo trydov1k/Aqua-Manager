@@ -1,64 +1,65 @@
-﻿using AquaManager.Domain.Interfaces;
+﻿using AquaManager.Domain.Interfaces.Models;
 
-namespace AquaManager.Domain.Models
+namespace AquaManager.Domain.Models;
+/// <summary>
+/// Класс, описывающий логику аквариума
+/// </summary>
+public class Aquarium : IAquarium
 {
-    public class Aquarium : IAquarium
+    // Свойства
+    public string Name { get; }
+
+    public double WaterCleanliness { get; private set; }
+
+    public List<Fish> FishList { get; }
+
+    public int Capacity { get; }
+
+    // Конструкторы
+    public Aquarium(string name, int capacity)
     {
-        // Свойства
-        public string Name { get; }
+        Name = name;
+        WaterCleanliness = 100;
+        FishList = new List<Fish>();
+        Capacity = capacity;
+    }
 
-        public double WaterCleanliness { get; private set; }
+    // Методы
+    public bool CanAddFish() => FishList.Count + 1 <= Capacity;
 
-        public List<Fish> FishList { get; }
+    public bool AddFish(Fish fish)
+    {
+        if (!CanAddFish())
+            return false;
 
-        public int Capacity { get; }
+        FishList.Add(fish);
+        return true;
+    }
 
-        // Конструкторы
-        public Aquarium(string name, int capacity)
-        {
-            Name = name;
-            WaterCleanliness = 100;
-            FishList = new List<Fish>();
-            Capacity = capacity;
-        }
+    public bool RemoveFish(Fish fish)
+    {
+        return FishList.Remove(fish);
+    }
 
-        // Методы
-        public bool CanAddFish() => FishList.Count + 1 <= Capacity;
+    public void CleanWater()
+    {
+        WaterCleanliness = 100.00;
+    }
 
-        public bool AddFish(Fish fish)
-        {
-            if (!CanAddFish())
-                return false;
+    public int GetLiveFishCount()
+    {
+        return FishList.Where(fish => fish.IsAlive).Count();
+    }
 
-            FishList.Add(fish);
-            return true;
-        }
+    public void RemoveDeadFish()
+    {
+        foreach (var fish in FishList)
+            if (fish.IsDie)
+                FishList.Remove(fish);
+    }
 
-        public bool RemoveFish(Fish fish)
-        {
-            return FishList.Remove(fish);
-        }
-
-        public void CleanWater()
-        {
-            WaterCleanliness = 100.00;
-        }
-
-        public int GetLiveFishCount()
-        {
-            return FishList.Where(fish => fish.IsAlive).Count();
-        }
-
-        public void RemoveDeadFish()
-        {
-            foreach (var fish in FishList)
-                if (fish.IsDie)
-                    FishList.Remove(fish);
-        }
-
-        public void UpdateWaterCleanliness(double waterDirtRate)
-        {
-            WaterCleanliness -= waterDirtRate;
-        }
+    public void UpdateWaterCleanliness(double waterDirtRate)
+    {
+        WaterCleanliness -= waterDirtRate;
     }
 }

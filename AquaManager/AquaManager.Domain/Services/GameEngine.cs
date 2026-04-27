@@ -1,23 +1,23 @@
 ﻿using AquaManager.Domain.Constants;
 using AquaManager.Domain.Enums;
 using AquaManager.Domain.Factories;
+using AquaManager.Domain.Interfaces.Services;
 using AquaManager.Domain.Models;
 using System.Timers;
 using Timer = System.Timers.Timer;
 
 namespace AquaManager.Domain.Services
 {
-    public class GameEngine : IDisposable
+    public class GameEngine : IDisposable, IGameEngineService
     {
         public Player Player { get; private set; }
         private Timer _gameTimer;
         private IncomeService _incomeService;
         private SaveLoadService _saveLoadService;
         private FishFactory _fishFactory;
-        bool _isRunning;
+        private bool _isRunning;
 
         public event EventHandler<Player> StateChanged;
-
 
         // Конструктор
         public GameEngine()
@@ -241,13 +241,6 @@ namespace AquaManager.Domain.Services
         }
 
         public Aquarium? GetCurrentAquarium() => Player.GetCurrentAquarium();
-
-        public int GetLiveFishCount()
-        {
-            var aquarium = Player.GetCurrentAquarium();
-            if (aquarium == null) return 0;
-            return aquarium.GetLiveFishCount();
-        }
 
         //
 
