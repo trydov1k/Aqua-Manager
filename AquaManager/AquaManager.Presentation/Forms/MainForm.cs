@@ -28,7 +28,7 @@ namespace AquaManager.Presentation.Forms
             _animationTimer.Start();
 
             picAquarium.Paint += PicAquarium_Paint;
-            //picAquarium.MouseClick += PicAquarium_MouseClick;
+            //picAquarium.MouseClick += PicAquarium_MouseClick;  в будущем сделать, чтобы кормить рыбок можно было по нажатию на рыбку в аквариуме
 
             this.DoubleBuffered = true;
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);

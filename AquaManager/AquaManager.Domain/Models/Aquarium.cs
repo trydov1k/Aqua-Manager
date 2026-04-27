@@ -61,5 +61,7 @@ public class Aquarium : IAquarium
     public void UpdateWaterCleanliness(double waterDirtRate)
     {
         WaterCleanliness -= waterDirtRate;
+        if (WaterCleanliness < 0)
+            WaterCleanliness = 0;
     }
 }
