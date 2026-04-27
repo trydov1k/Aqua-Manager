@@ -1,14 +1,6 @@
 ﻿using AquaManager.Domain.Models;
 using AquaManager.Domain.Services;
 using AquaManager.Presentation.Controls;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlTypes;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 
 namespace AquaManager.Presentation.Forms
 {
@@ -16,6 +8,7 @@ namespace AquaManager.Presentation.Forms
     {
         private GameEngine _engine;
         private bool _isFeedingMode;
+
         public MainForm()
         {
             InitializeComponent();
@@ -57,6 +50,8 @@ namespace AquaManager.Presentation.Forms
 
             var aquarium = player.GetCurrentAquarium();
             if (aquarium == null) return;
+
+       
 
             int cleanliness = (int)aquarium.WaterCleanliness;
             pbWaterCleanliness.Value = cleanliness;
@@ -110,6 +105,8 @@ namespace AquaManager.Presentation.Forms
             Cursor = Cursors.Default;
         }
         #endregion
+
+        
 
         #region Обработка нажатий на кнопки
         private void btnFeedAll_Click(object sender, EventArgs e) => _engine.FeedAllFish();

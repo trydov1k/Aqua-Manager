@@ -36,9 +36,9 @@
             // 
             flpItems.AutoScroll = true;
             flpItems.FlowDirection = FlowDirection.TopDown;
-            flpItems.Location = new Point(15, 60);
+            flpItems.Location = new Point(15, 20);
             flpItems.Name = "flpItems";
-            flpItems.Size = new Size(400, 350);
+            flpItems.Size = new Size(400, 380);
             flpItems.TabIndex = 0;
             flpItems.WrapContents = false;
             // 

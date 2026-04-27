@@ -1,22 +1,20 @@
 ﻿using AquaManager.Domain.Constants;
 using AquaManager.Domain.Enums;
+using AquaManager.Domain.Factories;
 using AquaManager.Domain.Services;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
+using AquaManager.Presentation.Controls;
+using AquaManager.Presentation.Extensions;
 
 namespace AquaManager.Presentation.Forms
 {
     public partial class ShopForm : Form
     {
         private GameEngine _engine;
+        private FishFactory _fishFactory;
         public ShopForm(GameEngine gameEngine)
         {
             _engine = gameEngine;
+            _fishFactory = new FishFactory();
             InitializeComponent();
             LoadShopItems();
             UpdateMoneyDisplay();
@@ -28,156 +26,31 @@ namespace AquaManager.Presentation.Forms
             var fishTypes = Enum.GetValues(typeof(FishType));
             foreach (FishType type in fishTypes)
             {
-                var fishPanel = CreateFishPanel(type);
-                flpItems.Controls.Add(fishPanel);
+                
+                var fishControl = new ShopItemControl(
+                    _fishFactory.GetFishImage(type),
+                    _fishFactory.GetFishName(type),
+                    _fishFactory.GetFishPrice(type),
+                    _fishFactory.GetFishDescription(type),
+                    Color.LightGreen,
+                    () => BuyFish(type));
+                flpItems.Controls.Add(fishControl);
             }
 
             // 2. Добавляем разделитель (просто панель с отступом)
-            flpItems.Controls.Add(new Panel { Height = 10 });
+            flpItems.Controls.Add(new Panel { Height = 5, BackColor = Color.LightGray, Width = 380 });
 
             // 3. Добавляем аквариум
-            var aquariumPanel = CreateAquariumPanel();
-            flpItems.Controls.Add(aquariumPanel);
-        }
+            var aquariumControl = new ShopItemControl(
+                Properties.Resources.Аквариум_1,
+                "Новый аквариум",
+                GameConstants.NewAquariumPrice,
+                $"вместимость: {GameConstants.DefaultAquariumCapacity} рыбок",
+                Color.LightBlue,
+                () => BuyAquarium()
+                );
 
-        private Panel CreateFishPanel(FishType type)
-        {
-            var panel = new Panel
-            {
-                Width = 380,
-                Height = 70,
-                BorderStyle = BorderStyle.None,
-                Margin = new Padding(3)
-            };
-
-            // Иконка (можно взять из ресурсов)
-            var pbIcon = new PictureBox
-            {
-                Image = GetFishImage(type),
-                SizeMode = PictureBoxSizeMode.Zoom,
-                Location = new Point(5, 5),
-                Size = new Size(50, 50)
-            };
-
-            // Название
-            var lblName = new Label
-            {
-                Text = GetFishName(type),
-                Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                Location = new Point(65, 10),
-                AutoSize = true
-            };
-
-            // Цена
-            int price = GetFishPrice(type);
-            var lblPrice = new Label
-            {
-                Text = $"{price} монет",
-                Location = new Point(65, 35),
-                AutoSize = true,
-                ForeColor = Color.DarkBlue
-            };
-
-            // Описание (скорость голодания)
-            double rate = GetHungerRate(type);
-            string rateDesc = rate switch
-            {
-                <= 0.25 => "медленно",
-                <= 0.4 => "средне",
-                <= 0.6 => "быстро",
-                _ => "очень быстро"
-            };
-            var lblDesc = new Label
-            {
-                Text = $"голодает {rateDesc} ({rate}%/сек)",
-                Location = new Point(65, 52),
-                AutoSize = true,
-                Font = new Font("Segoe UI", 7),
-                ForeColor = Color.Gray
-            };
-
-            // Кнопка "Купить"
-            var btnBuy = new Button
-            {
-                Text = "Купить",
-                Location = new Point(290, 20),
-                Size = new Size(80, 30),
-                FlatStyle = FlatStyle.Flat,
-                BackColor = Color.LightGreen,
-                Tag = type
-            };
-            btnBuy.Click += (s, e) => BuyFish(type);
-
-            panel.Controls.Add(pbIcon);
-            panel.Controls.Add(lblName);
-            panel.Controls.Add(lblPrice);
-            panel.Controls.Add(lblDesc);
-            panel.Controls.Add(btnBuy);
-
-            return panel;
-        }
-
-        private Panel CreateAquariumPanel()
-        {
-            var panel = new Panel
-            {
-                Width = 380,
-                Height = 70,
-                BorderStyle = BorderStyle.None,
-                Margin = new Padding(3)
-            };
-
-            var pbIcon = new PictureBox
-            {
-                Image = Properties.Resources.Аквариум_1, // добавьте иконку в ресурсы
-                SizeMode = PictureBoxSizeMode.Zoom,
-                Location = new Point(5, 5),
-                Size = new Size(50, 50)
-            };
-
-            var lblName = new Label
-            {
-                Text = "Новый аквариум",
-                Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                Location = new Point(65, 10),
-                AutoSize = true
-            };
-
-            decimal price = GameConstants.NewAquariumPrice;
-            var lblPrice = new Label
-            {
-                Text = $"{price} монет",
-                Location = new Point(65, 35),
-                AutoSize = true,
-                ForeColor = Color.DarkBlue
-            };
-
-            var lblDesc = new Label
-            {
-                Text = $"вместимость: {GameConstants.DefaultAquariumCapacity} рыбок",
-                Location = new Point(65, 52),
-                AutoSize = true,
-                Font = new Font("Segoe UI", 7),
-                ForeColor = Color.Gray
-            };
-
-            var btnBuy = new Button
-            {
-                Text = "Купить",
-                Location = new Point(290, 20),
-                Size = new Size(80, 30),
-                FlatStyle = FlatStyle.Flat,
-                BackColor = Color.LightBlue
-            };
-            btnBuy.Click += (s, e) => BuyAquarium();
-
-            panel.Controls.Add(pbIcon);
-            panel.Controls.Add(lblName);
-            panel.Controls.Add(lblPrice);
-            panel.Controls.Add(lblDesc);
-            panel.Controls.Add(btnBuy);
-
-            return panel;
+            flpItems.Controls.Add(aquariumControl);
         }
 
         private void BuyFish(FishType type)
@@ -200,7 +73,11 @@ namespace AquaManager.Presentation.Forms
 
         private void BuyAquarium()
         {
+            // Заменить aquariumName на форму, в которой можно будет ввести имя аквариума
+            var aquariumName = $"Аквариум {_engine.Player.Aquariums.Count + 1}";
+
             bool success = _engine.BuyAquarium();
+            
             if (success)
             {
                 UpdateMoneyDisplay();
@@ -216,39 +93,5 @@ namespace AquaManager.Presentation.Forms
         {
             lblMoney.Text = $"У вас: {_engine.Player.Money} монет";
         }
-
-        // Вспомогательные методы (лучше вынести в отдельный класс-хелпер, но для простоты здесь)
-        private Image GetFishImage(FishType type)
-        {
-            string name = type.ToString().ToLower();
-            return (Image)Properties.Resources.ResourceManager.GetObject(name) ?? Properties.Resources.guppy;
-        }
-
-        private string GetFishName(FishType type) => type switch
-        {
-            FishType.Guppy => "Гуппи",
-            FishType.SwordsMan => "Меченосец",
-            FishType.Angelfish => "Скалярия",
-            FishType.Goldfish => "Золотая рыбка",
-            _ => type.ToString()
-        };
-
-        private int GetFishPrice(FishType type) => type switch
-        {
-            FishType.Guppy => 40,
-            FishType.SwordsMan => 70,
-            FishType.Angelfish => 100,
-            FishType.Goldfish => 150,
-            _ => 0
-        };
-
-        private double GetHungerRate(FishType type) => type switch
-        {
-            FishType.Guppy => 0.2,
-            FishType.SwordsMan => 0.33,
-            FishType.Angelfish => 0.5,
-            FishType.Goldfish => 0.67,
-            _ => 0
-        };
     }
 }

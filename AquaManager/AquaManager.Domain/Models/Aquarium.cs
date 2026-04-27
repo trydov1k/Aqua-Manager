@@ -23,7 +23,7 @@ namespace AquaManager.Domain.Models
         }
 
         // Методы
-        public bool CanAddFish() => FishList.Count + 1 < Capacity;
+        public bool CanAddFish() => FishList.Count + 1 <= Capacity;
 
         public bool AddFish(Fish fish)
         {

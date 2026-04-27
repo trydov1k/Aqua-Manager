@@ -266,7 +266,6 @@ namespace AquaManager.Domain.Services
         public void LoadGame() => LoadPlayer(_saveLoadService.LoadGame());
 
         // Удаление таймеров
-
         public void Dispose()
         {
             Stop();

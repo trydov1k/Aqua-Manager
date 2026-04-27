@@ -61,7 +61,8 @@
             // 
             picAquarium.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             picAquarium.Image = Properties.Resources.Аквариум_1;
-            picAquarium.Location = new Point(54, 70);
+            picAquarium.Location = new Point(54, 55);
+            picAquarium.Margin = new Padding(0);
             picAquarium.Name = "picAquarium";
             picAquarium.Size = new Size(900, 400);
             picAquarium.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -82,9 +83,10 @@
             // 
             flpFishList.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             flpFishList.AutoScroll = true;
-            flpFishList.Location = new Point(54, 481);
+            flpFishList.Location = new Point(54, 460);
+            flpFishList.Margin = new Padding(0, 3, 0, 3);
             flpFishList.Name = "flpFishList";
-            flpFishList.Size = new Size(900, 108);
+            flpFishList.Size = new Size(900, 145);
             flpFishList.TabIndex = 6;
             // 
             // btnFeedAll
@@ -193,9 +195,10 @@
             cmbAquariums.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             cmbAquariums.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbAquariums.FormattingEnabled = true;
-            cmbAquariums.Location = new Point(3, 3);
+            cmbAquariums.Location = new Point(0, 3);
+            cmbAquariums.Margin = new Padding(0, 3, 3, 3);
             cmbAquariums.Name = "cmbAquariums";
-            cmbAquariums.Size = new Size(293, 23);
+            cmbAquariums.Size = new Size(296, 23);
             cmbAquariums.TabIndex = 6;
             cmbAquariums.SelectedIndexChanged += cmbAquariums_SelectedIndexChanged;
             // 
