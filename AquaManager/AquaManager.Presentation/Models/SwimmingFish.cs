@@ -3,7 +3,7 @@ using AquaManager.Domain.Models;
 
 namespace AquaManager.Presentation.Models;
 
-internal class SwimmingFish
+public class SwimmingFish
 {
     public Fish Model { get; private set; }
     public PointF Position { get; set; }
