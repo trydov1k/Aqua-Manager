@@ -1,7 +1,6 @@
 ﻿
 using AquaManager.Domain.Models;
 using AquaManager.Domain.Services;
-using System.Timers;
 
 namespace AquaManager.Domain.Interfaces.Services;
 

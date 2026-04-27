@@ -34,4 +34,11 @@ public interface IFishFactory
     /// </summary>
     /// <returns>Возвращает все типы робок</returns>
     FishType[] GetAllFishTypes();
+
+    /// <summary>
+    /// Метод для получения значения дохода от рыбки
+    /// </summary>
+    /// <param name="type">Тип рыбки</param>
+    /// <returns>Возвращает значение дохода от рыбки</returns>
+    decimal GetFishIncomeValue(FishType type);
 }

@@ -32,6 +32,11 @@ public interface IFish
     decimal Price { get; }
 
     /// <summary>
+    /// Доход от рыбки (сколько денег приносит)
+    /// </summary>
+    decimal IncomeValue { get; }
+
+    /// <summary>
     /// Рыбка жива
     /// </summary>
     bool IsAlive { get; }

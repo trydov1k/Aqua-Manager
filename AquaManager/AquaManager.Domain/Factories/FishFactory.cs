@@ -10,7 +10,7 @@ namespace AquaManager.Domain.Factories;
 /// </summary>
 public class FishFactory : IFishFactory
 {
-    private readonly Dictionary<FishType, (decimal, double, string)> FishDict = GameConstants.FishByTypeDict;
+    private readonly Dictionary<FishType, (decimal, double, string, decimal)> FishDict = GameConstants.FishByTypeDict;
 
     public Fish CreateFish(FishType type)
     {
@@ -19,8 +19,9 @@ public class FishFactory : IFishFactory
             fishConstants.Item3,
             type,
             fishConstants.Item2,
-            fishConstants.Item1
-            );
+            fishConstants.Item1,
+            fishConstants.Item4
+        );
     }
 
     public decimal GetFishPrice(FishType type)
@@ -39,6 +40,12 @@ public class FishFactory : IFishFactory
     {
         var fishConstants = FishDict[type];
         return fishConstants.Item3;
+    }
+
+    public decimal GetFishIncomeValue(FishType type)
+    {
+        var fishConstants = FishDict[type];
+        return fishConstants.Item4;
     }
 
     public FishType[] GetAllFishTypes()

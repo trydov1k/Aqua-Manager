@@ -13,6 +13,7 @@ public class Fish : IFish
     public double Hunger { get; private set; }
     public double HungerRate { get; }
     public decimal Price { get; private set; }
+    public decimal IncomeValue { get; private set; }
     public bool IsAlive { get; private set; }
     public string Id { get; set; }
 
@@ -20,13 +21,14 @@ public class Fish : IFish
     public bool IsDie => !IsAlive;
 
     // Конструкторы
-    public Fish(string name, FishType type, double hungerRate, decimal price)
+    public Fish(string name, FishType type, double hungerRate, decimal price, decimal incomeValue)
     {
         Name = name;
         Type = type;
         Hunger = 100;
         HungerRate = hungerRate;
         Price = price;
+        IncomeValue = incomeValue;
         IsAlive = true;
         Id = Guid.NewGuid().ToString();
     }

@@ -178,6 +178,8 @@ namespace AquaManager.Domain.Services
             if (player.CurrentAquariumIndex < 0 || player.CurrentAquariumIndex >= player.Aquariums.Count)
                 player.CurrentAquariumIndex = 0;
 
+
+
             // Для каждой рыбки: убедиться, что Id не пустой (для совместимости со старыми сохранениями)
             foreach (var aquarium in player.Aquariums)
             {

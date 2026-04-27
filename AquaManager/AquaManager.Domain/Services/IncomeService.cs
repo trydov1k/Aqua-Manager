@@ -45,16 +45,19 @@ public class IncomeService : IIncomeService
     }
 
     /// <summary>
-    /// Рассчитать общее количество живых рыбок во всех аквариумах
+    /// Рассчитать общий заработок от рыбок
     /// </summary>
-    private int CalculateTotalLiveFish()
+    private decimal CalculateTotalIncome()
     {
         if (_player?.Aquariums == null) return 0;
-
-        int total = 0;
+        decimal total = 0;
         foreach (var aquarium in _player.Aquariums)
         {
-            total += aquarium.GetLiveFishCount();
+            foreach (var fish in aquarium.FishList)
+            {
+                if (fish.IsAlive)
+                    total += fish.IncomeValue;
+            }
         }
         return total;
     }
@@ -66,10 +69,8 @@ public class IncomeService : IIncomeService
     {
         if (_player == null) return;
 
-        int liveFishCount = CalculateTotalLiveFish();
-        if (liveFishCount == 0) return;
+        decimal income = CalculateTotalIncome();
 
-        decimal income = liveFishCount * GameConstants.IncomePerLiveFish;
         _player.AddMoney(income);
 
         OnIncomeGenerated(income);

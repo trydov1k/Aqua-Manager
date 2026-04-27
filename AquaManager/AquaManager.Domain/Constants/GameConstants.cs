@@ -13,11 +13,6 @@ public static class GameConstants
     public const decimal StartingMoney = 200;
 
     /// <summary>
-    /// Монеты, начисляемые за каждую живую рыбку (за один тик таймера)
-    /// </summary>
-    public const decimal IncomePerLiveFish = 5;
-
-    /// <summary>
     /// Интервал пассивного дохода в секундах
     /// </summary>
     public const int IncomeIntervalSeconds = 30;
@@ -68,14 +63,14 @@ public static class GameConstants
 
     /// <summary>
     /// Словарь с характеристиками рыбок в зависимости от их вида
-    /// Вид рыбки: (стоимость, коэффициент голода)
+    /// Вид рыбки: (стоимость, коэффициент голода, имя, доход от рыбки)
     /// </summary>
-    public static readonly Dictionary<FishType, (decimal, double, string)> FishByTypeDict = new()
+    public static readonly Dictionary<FishType, (decimal, double, string, decimal)> FishByTypeDict = new()
     {
-        { FishType.Guppy, (40, 0.2, "Гуппи") },
-        { FishType.SwordsMan, (70, 0.33, "Меченосец") },
-        { FishType.Angelfish, (100, 0.5, "Скалярия") },
-        { FishType.Goldfish, (150, 0.67, "Золотая рыбка") }
+        { FishType.Guppy, (40, 0.2, "Гуппи", 5) },
+        { FishType.SwordsMan, (70, 0.33, "Меченосец", 8) },
+        { FishType.Angelfish, (100, 0.5, "Скалярия", 12) },
+        { FishType.Goldfish, (150, 0.67, "Золотая рыбка", 20) }
     };
 
     // Таймеры и обновления
