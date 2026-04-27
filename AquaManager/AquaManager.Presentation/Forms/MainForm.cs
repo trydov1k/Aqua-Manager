@@ -125,6 +125,7 @@ namespace AquaManager.Presentation.Forms
         }
         #endregion
 
+        #region Работа с плавающими рыбками
         private void SyncSwimmingFishs(Aquarium aquarium)
         {
             if (aquarium == null) return;
@@ -181,6 +182,7 @@ namespace AquaManager.Presentation.Forms
                 }
             }
         }
+        #endregion
 
         #region Обработка нажатий на кнопки
         private void btnFeedAll_Click(object sender, EventArgs e) => _engine.FeedAllFish();

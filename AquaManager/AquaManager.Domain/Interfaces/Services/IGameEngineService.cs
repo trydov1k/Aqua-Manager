@@ -61,7 +61,7 @@ public interface IGameEngineService
     /// Купить аквариум
     /// </summary>
     /// <returns>true если успешно, иначе false</returns>
-    bool BuyAquarium();
+    bool BuyAquarium(string name);
 
     /// <summary>
     /// Удалить мертвых рыбок

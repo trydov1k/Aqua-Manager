@@ -29,7 +29,6 @@ namespace AquaManager.Domain.Services
             _isRunning = false;
         }
 
-
         // Методы Start(), Stop() и NewGame()
 
         public void Start()
@@ -54,7 +53,7 @@ namespace AquaManager.Domain.Services
         {
             _isRunning = false;
             _gameTimer.Stop();
-            _incomeService.Stop();
+            _incomeService?.Stop();
         }
 
         public void NewGame()
@@ -174,6 +173,7 @@ namespace AquaManager.Domain.Services
 
             if (canChangeWater)
             {
+                Player.SpendMoney(changeCost);
                 aquarium.CleanWater();
                 RaiseStateChanged();
             }
@@ -201,11 +201,11 @@ namespace AquaManager.Domain.Services
             return canBuyFish;
         }
 
-        public bool BuyAquarium()
+        public bool BuyAquarium(string name = "")
         { 
             var aquariumCost = GameConstants.NewAquariumPrice;
             var aquariumCapacity = GameConstants.DefaultAquariumCapacity;
-            var aquariumName = $"Аквариум {Player.Aquariums.Count + 1}";
+            var aquariumName = name == "" ? $"Аквариум {Player.Aquariums.Count + 1}" : name;
 
             var canBuyAquarium = Player.CanAfford(aquariumCost);
 

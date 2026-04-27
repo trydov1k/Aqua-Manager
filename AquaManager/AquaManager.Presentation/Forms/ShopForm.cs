@@ -73,7 +73,6 @@ namespace AquaManager.Presentation.Forms
         private void BuyAquarium()
         {
             // Заменить aquariumName на форму, в которой можно будет ввести имя аквариума
-            var aquariumName = $"Аквариум {_engine.Player.Aquariums.Count + 1}";
 
             bool success = _engine.BuyAquarium();
             
