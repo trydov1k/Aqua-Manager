@@ -33,7 +33,9 @@ public class Player : IPlayer
 
     public Aquarium GetCurrentAquarium()
     {
-        return Aquariums[CurrentAquariumIndex];
+        if (0 <= CurrentAquariumIndex && CurrentAquariumIndex <= Aquariums.Count - 1)
+            return Aquariums[CurrentAquariumIndex];
+        return null;
     }
 
     public bool SpendMoney(decimal amount)

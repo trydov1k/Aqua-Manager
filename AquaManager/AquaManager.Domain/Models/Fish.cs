@@ -37,12 +37,15 @@ public class Fish : IFish
 
     public void Feed()
     {
-        Hunger = 100.00;
+        if (IsAlive)
+            Hunger = 100.00;
     }
 
     public void UpdateHunger()
     {
         Hunger -= HungerRate;
+        if (Hunger <= 0)
+            Kill();
     }
 
     public void Kill()

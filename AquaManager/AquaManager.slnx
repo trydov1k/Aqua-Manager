@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="AquaManager.Domain/AquaManager.Domain.csproj" />
   <Project Path="AquaManager.Presentation/AquaManager.Presentation.csproj" />
+  <Project Path="AquaManager.Tests/AquaManager.Tests.csproj" Id="ad7ccf9a-9e67-484c-b9f4-ac39097b944d" />
 </Solution>

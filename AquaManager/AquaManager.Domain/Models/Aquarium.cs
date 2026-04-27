@@ -53,9 +53,7 @@ public class Aquarium : IAquarium
 
     public void RemoveDeadFish()
     {
-        foreach (var fish in FishList)
-            if (fish.IsDie)
-                FishList.Remove(fish);
+        FishList.RemoveAll(fish => fish.IsDie);
     }
 
     public void UpdateWaterCleanliness(double waterDirtRate)
