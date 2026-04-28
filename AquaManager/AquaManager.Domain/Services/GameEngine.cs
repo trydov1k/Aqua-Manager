@@ -37,7 +37,7 @@ namespace AquaManager.Domain.Services
                 Player = _saveLoadService.LoadGame();
 
             if (Player == null)
-                NewGame();
+                CreateNewGame();
 
             _incomeService = new IncomeService(Player);
             _incomeService.IncomeGenerated += OnIncomeGenerated;
@@ -57,6 +57,12 @@ namespace AquaManager.Domain.Services
         }
 
         public void NewGame()
+        {
+            CreateNewGame();
+            Start();
+        }
+
+        private void CreateNewGame()
         {
             var startFish = _fishFactory.CreateFish(GameConstants.DefaultFishtype);
             var startAquarium = new Aquarium(GameConstants.DefaultAquariumName, GameConstants.DefaultAquariumCapacity);
@@ -93,27 +99,29 @@ namespace AquaManager.Domain.Services
         {
             if (Player == null) return;
 
-            var aquarium = Player.GetCurrentAquarium();
-            if (aquarium == null) return;
-            var fishList = aquarium.FishList;
+            foreach (var aquarium in Player.Aquariums)
+            { 
+                if (aquarium == null) return;
+                var fishList = aquarium.FishList;
 
-            aquarium.UpdateWaterCleanliness(GameConstants.WaterDirtRate);  // Уменьшаем чистоту воды на WaterDirtRate
+                aquarium.UpdateWaterCleanliness(GameConstants.WaterDirtRate);  // Уменьшаем чистоту воды на WaterDirtRate
 
-            if (aquarium.WaterCleanliness <= 0)
-                foreach (var fish in fishList)
-                    fish.Kill();
+                if (aquarium.WaterCleanliness <= 0)
+                    foreach (var fish in fishList)
+                        fish.Kill();
 
-            foreach (var fish in fishList.Where(fish => fish.IsAlive))
-            {
-                fish.UpdateHunger();  // Уменьшили голод
-                if (aquarium.WaterCleanliness <= GameConstants.DirtyWaterThreshold)
-                    fish.UpdateHunger();  // Уменьшили голод еще раз, если аквариум слишком грязный (голод Х2)
+                foreach (var fish in fishList.Where(fish => fish.IsAlive))
+                {
+                    fish.UpdateHunger();  // Уменьшили голод
+                    if (aquarium.WaterCleanliness <= GameConstants.DirtyWaterThreshold)
+                        fish.UpdateHunger();  // Уменьшили голод еще раз, если аквариум слишком грязный (голод Х2)
 
-                if (fish.Hunger <= 0)
-                    fish.Kill();
+                    if (fish.Hunger <= 0)
+                        fish.Kill();
+                }
+
+                RaiseStateChanged();
             }
-
-            RaiseStateChanged();
         }
 
 
