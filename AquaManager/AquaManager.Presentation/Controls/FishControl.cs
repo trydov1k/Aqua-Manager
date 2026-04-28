@@ -26,8 +26,9 @@ namespace AquaManager.Presentation.Controls
         public string FishId => _fish?.Id;
         public event EventHandler FishClicked;
 
-        public void UpdateDisplay()
+        public void UpdateDisplay(Fish? fish = null)
         {
+            _fish = fish ?? _fish;
             if (_fish == null) return;
 
             lblName.Text = _fish.Name;

@@ -66,7 +66,7 @@ namespace AquaManager.Presentation.Forms
             }
 
             var aquarium = player.GetCurrentAquarium();
-            if (aquarium == null) return;       
+            if (aquarium == null) return;
 
             int cleanliness = (int)aquarium.WaterCleanliness;
             pbWaterCleanliness.Value = cleanliness;
@@ -110,7 +110,7 @@ namespace AquaManager.Presentation.Forms
             {
                 var fish = aquarium.FishList[i];
                 var fc = (FishControl)flpFishList.Controls[i];
-                fc.UpdateDisplay();
+                fc.UpdateDisplay(fish);
             }
         }
 
@@ -214,5 +214,10 @@ namespace AquaManager.Presentation.Forms
                 _engine.SwitchAquarium(cmbAquariums.SelectedIndex);
         }
         #endregion
+
+        private void btnNewGame_Click(object sender, EventArgs e)
+        {
+            _engine.NewGame();
+        }
     }
 }

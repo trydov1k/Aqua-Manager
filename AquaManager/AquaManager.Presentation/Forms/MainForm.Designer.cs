@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             lblMoney = new Label();
             picAquarium = new PictureBox();
             lblWaterPercent = new Label();
@@ -43,6 +44,7 @@
             pbWaterCleanliness = new ProgressBar();
             cmbAquariums = new ComboBox();
             tableLayoutPanel2 = new TableLayoutPanel();
+            btnNewGame = new Button();
             ((System.ComponentModel.ISupportInitialize)picAquarium).BeginInit();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
@@ -223,12 +225,23 @@
             tableLayoutPanel2.Size = new Size(900, 69);
             tableLayoutPanel2.TabIndex = 15;
             // 
+            // btnNewGame
+            // 
+            btnNewGame.Location = new Point(405, 683);
+            btnNewGame.Name = "btnNewGame";
+            btnNewGame.Size = new Size(200, 35);
+            btnNewGame.TabIndex = 16;
+            btnNewGame.Text = "Новая игра";
+            btnNewGame.UseVisualStyleBackColor = true;
+            btnNewGame.Click += btnNewGame_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ButtonShadow;
             ClientSize = new Size(1008, 729);
+            Controls.Add(btnNewGame);
             Controls.Add(tableLayoutPanel2);
             Controls.Add(tableLayoutPanel1);
             Controls.Add(btnLoad);
@@ -236,6 +249,7 @@
             Controls.Add(flpFishList);
             Controls.Add(picAquarium);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "MainForm";
@@ -265,5 +279,6 @@
         private TableLayoutPanel tableLayoutPanel1;
         private ComboBox cmbAquariums;
         private TableLayoutPanel tableLayoutPanel2;
+        private Button btnNewGame;
     }
 }
