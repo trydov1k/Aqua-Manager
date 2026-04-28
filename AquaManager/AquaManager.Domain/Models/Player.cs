@@ -1,4 +1,5 @@
 ﻿using AquaManager.Domain.Interfaces.Models;
+using System.Text.Json.Serialization;
 
 namespace AquaManager.Domain.Models;
 /// <summary>
@@ -13,11 +14,12 @@ public class Player : IPlayer
     public int CurrentAquariumIndex { get; set; }
 
     // Конструкторы
-    public Player(decimal money, List<Aquarium> aquariums, int aquariumIndex)
+    [JsonConstructor]
+    public Player(decimal money, List<Aquarium> aquariums, int currentAquariumIndex)
     {
         Money = money;
         Aquariums = aquariums;
-        CurrentAquariumIndex = aquariumIndex;
+        CurrentAquariumIndex = currentAquariumIndex;
     }
 
     // Методы

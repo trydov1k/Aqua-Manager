@@ -197,7 +197,6 @@ namespace AquaManager.Presentation.Forms
         private void btnChangeWater_Click(object sender, EventArgs e) => _engine.ChangeWater();
 
         private void btnRemoveDead_Click(object sender, EventArgs e) => _engine.RemoveDeadFish();
-        
 
         private void btnShop_Click(object sender, EventArgs e)
         {

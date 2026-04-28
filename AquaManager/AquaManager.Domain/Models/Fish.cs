@@ -1,5 +1,6 @@
 ﻿using AquaManager.Domain.Enums;
 using AquaManager.Domain.Interfaces.Models;
+using System.Text.Json.Serialization;
 
 namespace AquaManager.Domain.Models;
 /// <summary>
@@ -21,16 +22,22 @@ public class Fish : IFish
     public bool IsDie => !IsAlive;
 
     // Конструкторы
-    public Fish(string name, FishType type, double hungerRate, decimal price, decimal incomeValue)
+    public Fish(string name, FishType type, double hungerRate, decimal price, decimal incomeValue) :
+        this(name, type, 100, hungerRate, price, incomeValue, true, Guid.NewGuid().ToString(), false)
+    { }
+
+    [JsonConstructor]
+    public Fish(string name, FishType type, double hunger, double hungerRate, decimal price, 
+        decimal incomeValue, bool isAlive, string id, bool isDie)
     {
         Name = name;
         Type = type;
-        Hunger = 100;
+        Hunger = hunger;
         HungerRate = hungerRate;
         Price = price;
         IncomeValue = incomeValue;
-        IsAlive = true;
-        Id = Guid.NewGuid().ToString();
+        IsAlive = isAlive;
+        Id = id;
     }
 
     // Методы класса

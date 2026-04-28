@@ -1,4 +1,5 @@
 ﻿using AquaManager.Domain.Interfaces.Models;
+using System.Text.Json.Serialization;
 
 namespace AquaManager.Domain.Models;
 /// <summary>
@@ -17,10 +18,15 @@ public class Aquarium : IAquarium
 
     // Конструкторы
     public Aquarium(string name, int capacity)
+        : this(name, 100, new List<Fish>(), capacity)
+    { }
+
+    [JsonConstructor]
+    public Aquarium(string name, double waterCleanliness, List<Fish> fishList, int capacity)
     {
         Name = name;
-        WaterCleanliness = 100;
-        FishList = new List<Fish>();
+        WaterCleanliness = waterCleanliness;
+        FishList = fishList;
         Capacity = capacity;
     }
 

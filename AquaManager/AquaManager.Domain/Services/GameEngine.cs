@@ -72,6 +72,7 @@ namespace AquaManager.Domain.Services
             if (_isRunning)
                 Stop();
             _incomeService?.Dispose();
+
             Player = loadedPlayer;
             Start();
         }

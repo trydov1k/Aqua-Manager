@@ -35,9 +35,10 @@ namespace AquaManager.Domain.Services
             // Настройки сериализации
             _jsonOptions = new JsonSerializerOptions
             {
-                WriteIndented = true,           // Красивое форматирование
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase, // camelCase для JSON
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                WriteIndented = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                PropertyNameCaseInsensitive = true
             };
         }
 
