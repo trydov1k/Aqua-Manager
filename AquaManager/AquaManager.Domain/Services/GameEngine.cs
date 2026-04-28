@@ -190,6 +190,25 @@ namespace AquaManager.Domain.Services
             return canChangeWater;
         }
 
+        public bool RemoveFish(string fishId)
+        {
+            var aquarium = Player.GetCurrentAquarium();
+            if (aquarium == null) return false;
+
+            var fishList = aquarium.FishList;
+
+            var fish = fishList.Where(f => f.Id == fishId).FirstOrDefault();
+
+            if (fish == null) 
+                return false;
+
+            var result = fishList.Remove(fish);
+
+            RaiseStateChanged();
+
+            return result;
+        }
+
         public bool BuyFish(FishType type)
         {
             var aquarium = Player.GetCurrentAquarium();

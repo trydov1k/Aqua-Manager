@@ -12,6 +12,7 @@ namespace AquaManager.Presentation.Forms
     {
         private GameEngine _engine;
         private bool _isFeedingMode;
+        private bool _isRemovingMode;
 
         private List<SwimmingFish> _swimmingFishs = new List<SwimmingFish>();
         private System.Windows.Forms.Timer _animationTimer;
@@ -116,11 +117,22 @@ namespace AquaManager.Presentation.Forms
 
         private void OnFishClicked(object sender, EventArgs e)
         {
-            if (!_isFeedingMode) return;
+            if (!_isFeedingMode && !_isRemovingMode) return;
+
             var fishControl = (FishControl)sender;
-            _engine.FeedSingleFish(fishControl.FishId);
-            _isFeedingMode = false;
-            btnFeedingMode.BackColor = SystemColors.Control;
+
+            if (_isFeedingMode)
+            {
+                _engine.FeedSingleFish(fishControl.FishId);
+                _isFeedingMode = false;
+                btnFeedingMode.BackColor = SystemColors.Control;
+            }
+            else if (_isRemovingMode)
+            {
+                _engine.RemoveFish(fishControl.FishId);
+                _isRemovingMode = false;
+                btnRemoveFish.BackColor = SystemColors.Control;
+            }
             Cursor = Cursors.Default;
         }
         #endregion
@@ -189,6 +201,9 @@ namespace AquaManager.Presentation.Forms
 
         private void btnFeedingMode_Click(object sender, EventArgs e)
         {
+            _isRemovingMode = false;
+            btnRemoveFish.BackColor = SystemColors.Control;
+
             _isFeedingMode = !_isFeedingMode;
             btnFeedingMode.BackColor = _isFeedingMode ? Color.LightGreen : SystemColors.Control;
             Cursor = _isFeedingMode ? Cursors.Hand : Cursors.Default;
@@ -196,7 +211,15 @@ namespace AquaManager.Presentation.Forms
 
         private void btnChangeWater_Click(object sender, EventArgs e) => _engine.ChangeWater();
 
-        private void btnRemoveDead_Click(object sender, EventArgs e) => _engine.RemoveDeadFish();
+        private void btnRemoveFish_Click(object sender, EventArgs e)
+        {
+            _isFeedingMode = false;
+            btnFeedingMode.BackColor = SystemColors.Control;
+
+            _isRemovingMode = !_isRemovingMode;
+            btnRemoveFish.BackColor = _isRemovingMode ? Color.Red : SystemColors.Control;
+            Cursor = _isRemovingMode ? Cursors.Hand : Cursors.Default;
+        }
 
         private void btnShop_Click(object sender, EventArgs e)
         {
@@ -213,11 +236,12 @@ namespace AquaManager.Presentation.Forms
             if (cmbAquariums.SelectedIndex != _engine.Player.CurrentAquariumIndex)
                 _engine.SwitchAquarium(cmbAquariums.SelectedIndex);
         }
-        #endregion
 
         private void btnNewGame_Click(object sender, EventArgs e)
         {
             _engine.NewGame();
         }
+
+        #endregion
     }
 }

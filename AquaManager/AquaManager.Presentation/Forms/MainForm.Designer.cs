@@ -36,7 +36,7 @@
             btnFeedAll = new Button();
             btnFeedingMode = new Button();
             btnChangeWater = new Button();
-            btnRemoveDead = new Button();
+            btnRemoveFish = new Button();
             btnShop = new Button();
             btnSave = new Button();
             btnLoad = new Button();
@@ -124,16 +124,16 @@
             btnChangeWater.UseVisualStyleBackColor = true;
             btnChangeWater.Click += btnChangeWater_Click;
             // 
-            // btnRemoveDead
+            // btnRemoveFish
             // 
-            btnRemoveDead.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            btnRemoveDead.Location = new Point(543, 3);
-            btnRemoveDead.Name = "btnRemoveDead";
-            btnRemoveDead.Size = new Size(174, 63);
-            btnRemoveDead.TabIndex = 10;
-            btnRemoveDead.Text = "Убрать мертвых";
-            btnRemoveDead.UseVisualStyleBackColor = true;
-            btnRemoveDead.Click += btnRemoveDead_Click;
+            btnRemoveFish.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            btnRemoveFish.Location = new Point(543, 3);
+            btnRemoveFish.Name = "btnRemoveFish";
+            btnRemoveFish.Size = new Size(174, 63);
+            btnRemoveFish.TabIndex = 10;
+            btnRemoveFish.Text = "Убрать рыбку";
+            btnRemoveFish.UseVisualStyleBackColor = true;
+            btnRemoveFish.Click += btnRemoveFish_Click;
             // 
             // btnShop
             // 
@@ -215,7 +215,7 @@
             tableLayoutPanel2.Controls.Add(btnFeedAll, 0, 0);
             tableLayoutPanel2.Controls.Add(btnFeedingMode, 1, 0);
             tableLayoutPanel2.Controls.Add(btnChangeWater, 2, 0);
-            tableLayoutPanel2.Controls.Add(btnRemoveDead, 3, 0);
+            tableLayoutPanel2.Controls.Add(btnRemoveFish, 3, 0);
             tableLayoutPanel2.Controls.Add(btnShop, 4, 0);
             tableLayoutPanel2.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
             tableLayoutPanel2.Location = new Point(54, 608);
@@ -272,7 +272,7 @@
         private Button btnFeedAll;
         private Button btnFeedingMode;
         private Button btnChangeWater;
-        private Button btnRemoveDead;
+        private Button btnRemoveFish;
         private Button btnShop;
         private Button btnSave;
         private Button btnLoad;
