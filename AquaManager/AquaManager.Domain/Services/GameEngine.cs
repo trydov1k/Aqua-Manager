@@ -248,14 +248,6 @@ namespace AquaManager.Domain.Services
             return canBuyAquarium;
         }
 
-        public void RemoveDeadFish()
-        {
-            var aquarium = Player.GetCurrentAquarium();
-            if (aquarium == null) return;
-            aquarium.RemoveDeadFish();
-            RaiseStateChanged();
-        }
-
         public bool SwitchAquarium(int index)
         {
             var isCorrectIndex = 0 <= index && index < Player.Aquariums.Count;

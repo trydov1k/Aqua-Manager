@@ -64,9 +64,9 @@ public interface IGameEngineService
     bool BuyAquarium(string name);
 
     /// <summary>
-    /// Удалить мертвых рыбок
+    /// Удалить рыбку
     /// </summary>
-    void RemoveDeadFish();
+    bool RemoveFish(string fishId);
 
     /// <summary>
     /// Переключиться на аквариум по id

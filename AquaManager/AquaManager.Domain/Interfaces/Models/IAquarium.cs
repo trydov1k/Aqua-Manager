@@ -52,11 +52,6 @@ public interface IAquarium
     bool RemoveFish(Fish fish);
 
     /// <summary>
-    /// Удаляет всех мёртвых рыбок
-    /// </summary>
-    void RemoveDeadFish();
-
-    /// <summary>
     /// Возвращает количество живых рыбок
     /// </summary>
     int GetLiveFishCount();

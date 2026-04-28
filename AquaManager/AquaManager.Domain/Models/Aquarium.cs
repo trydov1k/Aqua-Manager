@@ -57,11 +57,6 @@ public class Aquarium : IAquarium
         return FishList.Where(fish => fish.IsAlive).Count();
     }
 
-    public void RemoveDeadFish()
-    {
-        FishList.RemoveAll(fish => fish.IsDie);
-    }
-
     public void UpdateWaterCleanliness(double waterDirtRate)
     {
         WaterCleanliness -= waterDirtRate;
