@@ -88,7 +88,7 @@ public class GameEngineTests
         var oldMoney = _engine.Player.Money;
         var aquarium = _engine.Player.GetCurrentAquarium();
         int oldCount = aquarium.FishList.Count;
-        var result = _engine.BuyFish(FishType.Goldfish);
+        var result = _engine.BuyFish(FishType.Goldfish, "Золотая рыбка");
         Assert.IsTrue(result);
         Assert.AreEqual(oldCount + 1, aquarium.FishList.Count);
         Assert.AreEqual(oldMoney - 150, _engine.Player.Money);
@@ -103,7 +103,7 @@ public class GameEngineTests
         // заполним до предела (вместимость 6)
         for (int i = 0; i < 5; i++) // уже 1 есть, добавим 5
             aquarium.AddFish(factory.CreateFish(FishType.Goldfish));
-        var result = _engine.BuyFish(FishType.Goldfish);
+        var result = _engine.BuyFish(FishType.Goldfish, "Золотая рыбка");
         Assert.IsFalse(result);
     }
 
