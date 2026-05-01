@@ -49,7 +49,7 @@ namespace AquaManager.Tests.DomainTests.ModelsTests
         }
 
         [Test]
-        public void RemoveDeadFish_ShouldRemoveOnlyDead()
+        public void RemoveFish_ShouldRemoveOneFish()
         {
             var aquarium = new Aquarium("Test", 3);
 
@@ -59,10 +59,10 @@ namespace AquaManager.Tests.DomainTests.ModelsTests
             aquarium.AddFish(live);
             aquarium.AddFish(dead);
 
-            aquarium.RemoveDeadFish();
+            aquarium.RemoveFish(live);
 
             Assert.AreEqual(1, aquarium.FishList.Count);
-            Assert.AreEqual(live, aquarium.FishList[0]);
+            Assert.AreEqual(dead, aquarium.FishList[0]);
         }
 
         [Test]

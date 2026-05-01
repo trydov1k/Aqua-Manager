@@ -5,26 +5,33 @@ namespace AquaManager.Presentation.Models;
 
 public class SwimmingFish
 {
+    private Image _imageLeft;
+    private Image _imageRight;
+    private Image _currentImage;
+
     public Fish Model { get; private set; }
     public PointF Position { get; set; }
     public PointF Velocity { get; set; }
-    public Image Image { get; private set; } // Уменьшенное изображение
+    public Image Image => _currentImage; // Уменьшенное изображение
 
-    private static Image ScaleImage(Image originalImage, int targetWidth, int targetHeight)
-    {
-        var newImage = new Bitmap(targetWidth, targetHeight);
-        using (var g = Graphics.FromImage(newImage))
-        {
-            g.DrawImage(originalImage, new Rectangle(0, 0, targetWidth, targetHeight));
-        }
-        return newImage;
-    }
-
-    public SwimmingFish(Fish fish, Image originalImage, float startX, float startY, 
+    public SwimmingFish(Fish fish, Image originalImage, float startX, float startY, bool defaultOrientationRight,
         int targetWidth = GameConstants.StandartFishImageWidth, int targetHeight = GameConstants.StandartFishImageHeight)
     {
         Model = fish;
-        Image = ScaleImage(originalImage, targetWidth, targetHeight);
+        var scaled = ScaleImage(originalImage, targetWidth, targetHeight);
+
+        if (defaultOrientationRight)
+        {
+            _imageRight = scaled;
+            _imageLeft = MirrorImage(scaled);
+        }
+        else
+        {
+            _imageLeft = scaled;
+            _imageRight = MirrorImage(scaled);
+        }
+        _currentImage = _imageRight;
+
         Position = new PointF(startX, startY);
         Random rnd = new Random();
 
@@ -35,6 +42,26 @@ public class SwimmingFish
             (float)(rnd.NextDouble() * (speedMax - speedMin) + speedMin),
             (float)(rnd.NextDouble() * (speedMax - speedMin) + speedMin)
         );
+    }
+
+    private Image MirrorImage(Image original)
+    {
+        var mirrored = new Bitmap(original.Width, original.Height);
+        using (var g = Graphics.FromImage(mirrored))
+        {
+            g.DrawImage(original, mirrored.Width, 0, -mirrored.Width, mirrored.Height);
+        }
+        return mirrored;
+    }
+
+    private static Image ScaleImage(Image originalImage, int targetWidth, int targetHeight)
+    {
+        var newImage = new Bitmap(targetWidth, targetHeight);
+        using (var g = Graphics.FromImage(newImage))
+        {
+            g.DrawImage(originalImage, new Rectangle(0, 0, targetWidth, targetHeight));
+        }
+        return newImage;
     }
 
     public void Update(float maxWidth, float maxHeight)
@@ -59,5 +86,11 @@ public class SwimmingFish
 
         // 4. Устанавливаем новую позицию
         Position = new PointF(newX, newY);
+
+        // 5. Отзеркаливаем, если нужно
+        if (Velocity.X > 0)
+            _currentImage = _imageRight;
+        else if (Velocity.X < 0)
+            _currentImage = _imageLeft;
     }
 }

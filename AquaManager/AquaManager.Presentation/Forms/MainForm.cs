@@ -159,7 +159,7 @@ namespace AquaManager.Presentation.Forms
                         x = rnd.Next(20, picAquarium.Width - fishWidth);
                     if (picAquarium.Height > fishHeight)
                         y = rnd.Next(20, picAquarium.Height - fishHeight);
-                    _swimmingFishs.Add(new SwimmingFish(fish, originalImg, x, y, fishWidth, fishHeight));
+                    _swimmingFishs.Add(new SwimmingFish(fish, originalImg, x, y, _fishFactory.IsDefaultRight(fish.Type), fishWidth, fishHeight));
                 }
             }
         }

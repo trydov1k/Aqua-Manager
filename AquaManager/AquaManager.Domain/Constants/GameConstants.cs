@@ -73,6 +73,17 @@ public static class GameConstants
         { FishType.Goldfish, (150, 0.67, "Золотая рыбка", 20) }
     };
 
+    /// <summary>
+    /// Словарь для хранения направления рыбки на ее картинке
+    /// </summary>
+    public static readonly Dictionary<FishType, PictureDefaultDirection> DefaultFishPictureDirection = new()
+    {
+        { FishType.Guppy, PictureDefaultDirection.Right },
+        { FishType.SwordsMan, PictureDefaultDirection.Left },
+        { FishType.Angelfish, PictureDefaultDirection.Right },
+        { FishType.Goldfish, PictureDefaultDirection.Right }
+    };
+
     // Таймеры и обновления
 
     /// <summary>

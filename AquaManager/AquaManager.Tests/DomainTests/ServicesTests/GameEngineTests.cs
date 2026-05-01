@@ -121,16 +121,20 @@ public class GameEngineTests
     }
 
     [Test]
-    public void RemoveDeadFish_RemovesOnlyDead()
+    public void RemoveDeadFish_RemovesOnlyOneFish()
     {
         var factory = new FishFactory();
 
         var aquarium = _engine.Player.GetCurrentAquarium();
+        var liveFish = factory.CreateFish(FishType.Goldfish);
         var deadFish = factory.CreateFish(FishType.Goldfish);
         deadFish.Kill();
+        aquarium.AddFish(liveFish);
         aquarium.AddFish(deadFish);
-        _engine.RemoveDeadFish();
-        Assert.AreEqual(1, aquarium.FishList.Count); // только изначальная живая
+
+
+        _engine.RemoveFish(liveFish.Id);
+        Assert.AreEqual(2, aquarium.FishList.Count);  // Начальная рыбка и мертвая рыбка
     }
 
     [Test]

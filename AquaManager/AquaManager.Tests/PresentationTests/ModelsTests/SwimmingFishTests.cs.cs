@@ -30,7 +30,7 @@ namespace AquaManager.Tests.PresentationTests.ModelsTests
         [Test]
         public void Constructor_ShouldSetProperties()
         {
-            var sf = new SwimmingFish(_fish, _img, 10, 20, 45, 45);
+            var sf = new SwimmingFish(_fish, _img, 10, 20, _fishFactory.IsDefaultRight(FishType.Guppy), 45, 45);
             Assert.AreEqual(_fish, sf.Model);
             Assert.AreEqual(10, sf.Position.X);
             Assert.AreEqual(20, sf.Position.Y);
@@ -42,7 +42,7 @@ namespace AquaManager.Tests.PresentationTests.ModelsTests
         [Test]
         public void Update_ShouldChangePosition()
         {
-            var sf = new SwimmingFish(_fish, _img, 50, 50, 45, 45);
+            var sf = new SwimmingFish(_fish, _img, 50, 50, _fishFactory.IsDefaultRight(FishType.Guppy), 45, 45);
             var oldPos = sf.Position;
             // зафиксируем скорость для предсказуемости (через рефлексию или добавить сеттер)
             sf.Velocity = new PointF(2, 1.5f);
@@ -54,7 +54,7 @@ namespace AquaManager.Tests.PresentationTests.ModelsTests
         [Test]
         public void Update_ShouldBounceOffRightEdge()
         {
-            var sf = new SwimmingFish(_fish, _img, 160, 50, 45, 45);
+            var sf = new SwimmingFish(_fish, _img, 160, 50, _fishFactory.IsDefaultRight(FishType.Guppy), 45, 45);
             sf.Velocity = new PointF(5, 0);
             sf.Update(200, 200);
             Assert.That(sf.Position.X, Is.EqualTo(200 - 45).Within(0.001));
@@ -64,7 +64,7 @@ namespace AquaManager.Tests.PresentationTests.ModelsTests
         [Test]
         public void Update_ShouldBounceOffLeftEdge()
         {
-            var sf = new SwimmingFish(_fish, _img, 5, 50, 45, 45);
+            var sf = new SwimmingFish(_fish, _img, 5, 50, _fishFactory.IsDefaultRight(FishType.Guppy), 45, 45);
             sf.Velocity = new PointF(-5, 0);
             sf.Update(200, 200);
             Assert.That(sf.Position.X, Is.EqualTo(0).Within(0.001));

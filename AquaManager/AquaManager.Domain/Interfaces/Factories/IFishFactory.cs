@@ -41,4 +41,11 @@ public interface IFishFactory
     /// <param name="type">Тип рыбки</param>
     /// <returns>Возвращает значение дохода от рыбки</returns>
     decimal GetFishIncomeValue(FishType type);
+
+    /// <summary>
+    /// Метод, определющий в какую сторону смотрит рыбка в исходном положении (влево или вправо)
+    /// </summary>
+    /// <param name="type">Тип рыбки</param>
+    /// <returns>true если рыбка смотрит вправо, иначе false</returns>
+    bool IsDefaultRight(FishType type);
 }
