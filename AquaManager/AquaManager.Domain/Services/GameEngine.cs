@@ -209,7 +209,7 @@ namespace AquaManager.Domain.Services
             return result;
         }
 
-        public bool BuyFish(FishType type)
+        public bool BuyFish(FishType type, string fishName)
         {
             var aquarium = Player.GetCurrentAquarium();
             if (aquarium == null) return false;
@@ -221,6 +221,9 @@ namespace AquaManager.Domain.Services
             if (canBuyFish)
             {
                 var newFish = _fishFactory.CreateFish(type);
+
+                newFish.Name = fishName;
+
                 aquarium.AddFish(newFish);
                 Player.SpendMoney(fishPrice);
                 RaiseStateChanged();
@@ -229,7 +232,7 @@ namespace AquaManager.Domain.Services
             return canBuyFish;
         }
 
-        public bool BuyAquarium(string name = "")
+        public bool BuyAquarium(string name)
         { 
             var aquariumCost = GameConstants.NewAquariumPrice;
             var aquariumCapacity = GameConstants.DefaultAquariumCapacity;
@@ -246,6 +249,16 @@ namespace AquaManager.Domain.Services
             }
 
             return canBuyAquarium;
+        }
+
+        public bool CanBuyFish(FishType type)
+        {
+            return Player.CanAfford(_fishFactory.GetFishPrice(type));
+        }
+
+        public bool CanBuyAquarium()
+        {
+            return Player.CanAfford(GameConstants.NewAquariumPrice);
         }
 
         public bool SwitchAquarium(int index)

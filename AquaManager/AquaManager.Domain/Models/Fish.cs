@@ -9,7 +9,7 @@ namespace AquaManager.Domain.Models;
 public class Fish : IFish
 {
     // Свойства рыбки
-    public string Name { get; }
+    public string Name { get; set; }
     public FishType Type { get; }
     public double Hunger { get; private set; }
     public double HungerRate { get; }

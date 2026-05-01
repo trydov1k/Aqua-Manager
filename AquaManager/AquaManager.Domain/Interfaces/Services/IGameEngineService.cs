@@ -55,13 +55,26 @@ public interface IGameEngineService
     /// </summary>
     /// <param name="type">Тип рыбки, для покупки</param>
     /// <returns>true если успешно, иначе false</returns>
-    bool BuyFish(FishType type);
+    bool BuyFish(FishType type, string fishName);
 
     /// <summary>
     /// Купить аквариум
     /// </summary>
     /// <returns>true если успешно, иначе false</returns>
     bool BuyAquarium(string name);
+
+    /// <summary>
+    /// Метод для проверки можно ли купить рыбку
+    /// </summary>
+    /// <param name="type">Тип рыбки</param>
+    /// <returns>true елси можно купить, иначе false</returns>
+    bool CanBuyFish(FishType type);
+
+    /// <summary>
+    /// Метод для проверки можно ли купить аквариум
+    /// </summary>
+    /// <returns>true елси можно купить, иначе false</returns>
+    bool CanBuyAquarium();
 
     /// <summary>
     /// Удалить рыбку

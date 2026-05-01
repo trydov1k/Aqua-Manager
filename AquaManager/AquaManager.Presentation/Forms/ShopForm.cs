@@ -1,7 +1,9 @@
 ﻿using AquaManager.Domain.Constants;
 using AquaManager.Domain.Enums;
 using AquaManager.Domain.Factories;
+using AquaManager.Domain.Models;
 using AquaManager.Domain.Services;
+using AquaManager.Forms;
 using AquaManager.Presentation.Controls;
 using AquaManager.Presentation.Extensions;
 
@@ -54,7 +56,17 @@ namespace AquaManager.Presentation.Forms
 
         private void BuyFish(FishType type)
         {
-            bool success = _engine.BuyFish(type);
+            var name = _fishFactory.GetFishName(type);
+
+            if (_engine.CanBuyFish(type))
+            {
+                using var dlg = new NameInputForm(FishOrAquarium.Fish, name);
+                if (dlg.ShowDialog() == DialogResult.OK)
+                    name = dlg.EnteredName;
+            }            
+
+            bool success = _engine.BuyFish(type, name);
+
             if (success)
             {
                 UpdateMoneyDisplay();
@@ -72,9 +84,15 @@ namespace AquaManager.Presentation.Forms
 
         private void BuyAquarium()
         {
-            // Заменить aquariumName на форму, в которой можно будет ввести имя аквариума
+            var name = $"Аквариум {_engine.Player.Aquariums.Count + 1}";
+            if (_engine.CanBuyAquarium())
+            {
+                using var dlg = new NameInputForm(FishOrAquarium.Aquarium, name);
+                if (dlg.ShowDialog() == DialogResult.OK)
+                    name = dlg.EnteredName;
+            }            
 
-            bool success = _engine.BuyAquarium();
+            bool success = _engine.BuyAquarium(name);
             
             if (success)
             {

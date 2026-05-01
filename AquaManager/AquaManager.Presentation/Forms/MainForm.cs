@@ -2,6 +2,7 @@
 using AquaManager.Domain.Factories;
 using AquaManager.Domain.Models;
 using AquaManager.Domain.Services;
+using AquaManager.Forms;
 using AquaManager.Presentation.Controls;
 using AquaManager.Presentation.Extensions;
 using AquaManager.Presentation.Models;
@@ -240,6 +241,9 @@ namespace AquaManager.Presentation.Forms
         private void btnNewGame_Click(object sender, EventArgs e)
         {
             _engine.NewGame();
+
+            var tutorialForm = new TutorialForm();
+            tutorialForm.ShowDialog();
         }
 
         #endregion
