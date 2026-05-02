@@ -301,8 +301,8 @@ namespace AquaManager.Domain.Services
         public void Dispose()
         {
             Stop();
-            _gameTimer?.Dispose();
-            _incomeService?.Dispose();
+            _gameTimer.Dispose();
+            _incomeService.Dispose();
         }
     }
 }
