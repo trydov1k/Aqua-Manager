@@ -41,6 +41,7 @@ namespace AquaManager.Presentation.Forms
             this.DoubleBuffered = true;
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
 
+            this.FormClosing += MainForm_FormClosing;
             this.Disposed += DisposeGame;
         }
 
@@ -352,6 +353,22 @@ namespace AquaManager.Presentation.Forms
         {
             _engine.Dispose();
             _animationTimer.Dispose();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            var result = MessageBox.Show(
+                "Выйти из игры?\nНесохранённый прогресс будет потерян.",
+                "Выход",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            // Если пользователь выбрал No (Нет), отменяем закрытие
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true;
+            }
         }
     }
 }
