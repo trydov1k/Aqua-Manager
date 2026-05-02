@@ -12,6 +12,7 @@ namespace AquaManager.Domain.Services
     {
         public Player Player { get; private set; }
         public bool IsRunning { get; private set; }
+        public bool IsFirstGame { get; set; }
 
         private Timer _gameTimer;
         private IncomeService _incomeService;
@@ -38,7 +39,11 @@ namespace AquaManager.Domain.Services
                 Player = _saveLoadService.LoadGame();
 
             if (Player == null)
+            {
                 CreateNewGame();
+                IsFirstGame = true;
+            }
+                
 
             _incomeService = new IncomeService(Player);
             _incomeService.IncomeGenerated += OnIncomeGenerated;

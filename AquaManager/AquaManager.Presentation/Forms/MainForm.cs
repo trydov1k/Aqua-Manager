@@ -7,24 +7,25 @@ using AquaManager.Presentation.Controls;
 using AquaManager.Presentation.Enums;
 using AquaManager.Presentation.Extensions;
 using AquaManager.Presentation.Models;
+using Timer = System.Windows.Forms.Timer;
 
 namespace AquaManager.Presentation.Forms
 {
     public partial class MainForm : Form
     {
         private GameEngine _engine;
+        private FishFactory _fishFactory => _engine._fishFactory;
         private bool _isFeedingMode;
         private bool _isRemovingMode;
 
         private List<SwimmingFish> _swimmingFishs = new List<SwimmingFish>();
-        private System.Windows.Forms.Timer _animationTimer;
-        private FishFactory _fishFactory => _engine._fishFactory;
+        private Timer _animationTimer;        
 
         public MainForm()
         {
             InitializeComponent();
 
-            _animationTimer = new System.Windows.Forms.Timer();
+            _animationTimer = new Timer();
 
             _animationTimer.Interval = GameConstants.AnimationTimerIntervalMs;
             _animationTimer.Tick += AnimationTimer_Tick;
@@ -33,12 +34,14 @@ namespace AquaManager.Presentation.Forms
             picAquarium.Paint += PicAquarium_Paint;
             //picAquarium.MouseClick += PicAquarium_MouseClick;  в будущем сделать, чтобы кормить рыбок можно было по нажатию на рыбку в аквариуме
 
-            this.DoubleBuffered = true;
-            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
-
             _engine = new GameEngine();
             _engine.StateChanged += OnEngineStateChanged;
             _engine.Start();
+
+            this.DoubleBuffered = true;
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
+
+            this.Disposed += DisposeGame;
         }
 
         #region Обовление UI
@@ -82,14 +85,12 @@ namespace AquaManager.Presentation.Forms
             else
                 pbWaterCleanliness.ForeColor = Color.Green;
 
-
-            SyncSwimmingFishs(aquarium);  // Добавляем плавающих рыбок
-
-
             if (flpFishList.Controls.Count != aquarium.FishList.Count)
                 RebuildFishList(aquarium);
             else
                 UpdateExistingFishControls(aquarium);
+
+            SyncSwimmingFishs(aquarium);  // Добавляем плавающих рыбок
         }
         #endregion
 
@@ -174,6 +175,13 @@ namespace AquaManager.Presentation.Forms
                 sf.Update(picAquarium.Width, picAquarium.Height);
             }
             picAquarium.Invalidate();
+
+            if (_engine.IsFirstGame)
+            {
+                OpenTutorial();
+                _engine.IsFirstGame = false;
+                _animationTimer.Start();
+            }
         }
 
         private void PicAquarium_Paint(object sender, PaintEventArgs e)
@@ -308,6 +316,12 @@ namespace AquaManager.Presentation.Forms
                 return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        public void DisposeGame(object sender, EventArgs e)
+        {
+            _engine.Dispose();
+            _animationTimer.Dispose();
         }
     }
 }
