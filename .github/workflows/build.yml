@@ -9,8 +9,8 @@ on:
     branches: [ main, master ]
 
 env:
-  SOLUTION_PATH: AquaManager.slnx  # Укажите путь к вашему файлу решения
-  PROJECT_PATH: AquaManager.Presentation/AquaManager.Presentation.csproj
+  SOLUTION_PATH: AquaManager/AquaManager.slnx  # Укажите путь к вашему файлу решения
+  PROJECT_PATH: AquaManager/AquaManager.Presentation/AquaManager.Presentation.csproj
   CONFIGURATION: Release
   RUNTIME: win-x64
 
