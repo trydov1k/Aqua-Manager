@@ -8,41 +8,53 @@ namespace AquaManager.Tests.DomainTests.ServicesTests;
 [TestFixture]
 public class SaveLoadServiceTests
 {
-    private string _tempFile;
+    private string _directory;
+    private string _tempFileName;
+    private string _tempFilePath;
     private SaveLoadService _service;
     private Player _originalPlayer;
+    private SaveSlotInfo _saveSlot;
+    
 
     [SetUp]
     public void SetUp()
     {
-        _tempFile = Path.GetTempFileName();
-        _service = new SaveLoadService(_tempFile);
+        _directory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "GameSaves");
+        _tempFileName = "SaveForTests";
+        _tempFilePath = Path.Combine(_directory, _tempFileName + ".json");
+        _service = new SaveLoadService();
         _originalPlayer = new Player(500, new List<Aquarium>(), 0);
         var aqua = new Aquarium("TestAqua", 3);
         var fish = CreateStandartFish();
         aqua.AddFish(fish);
         _originalPlayer.Aquariums.Add(aqua);
+        
+        _saveSlot = new SaveSlotInfo(_tempFileName, _originalPlayer);
     }
 
     [TearDown]
     public void TearDown()
     {
-        if (File.Exists(_tempFile)) File.Delete(_tempFile);
+        if (File.Exists(_directory) && File.Exists(_tempFilePath))
+            File.Delete(_tempFilePath);
+        if (File.Exists(_directory))
+            File.Delete(_directory);
     }
 
     [Test]
     public void SaveGame_ShouldCreateFile()
     {
-        _service.SaveGame(_originalPlayer);
-        Assert.IsTrue(File.Exists(_tempFile));
-        Assert.IsTrue(new FileInfo(_tempFile).Length > 0);
+        _service.SaveGame(_saveSlot);
+        Assert.IsTrue(File.Exists(_tempFilePath));
+
+        Assert.IsTrue(new FileInfo(_tempFilePath).Length > 0);
     }
 
     [Test]
     public void LoadGame_ShouldRestorePlayerCorrectly()
     {
-        _service.SaveGame(_originalPlayer);
-        var loaded = _service.LoadGame();
+        _service.SaveGame(_saveSlot);
+        var loaded = _service.LoadGame(_tempFileName).Player;
         Assert.AreEqual(_originalPlayer.Money, loaded.Money);
         Assert.AreEqual(_originalPlayer.Aquariums.Count, loaded.Aquariums.Count);
         Assert.AreEqual(_originalPlayer.Aquariums[0].Name, loaded.Aquariums[0].Name);
@@ -53,10 +65,11 @@ public class SaveLoadServiceTests
     [Test]
     public void LoadGame_WhenFileNotExists_ReturnsNullAndRaisesError()
     {
-        if (File.Exists(_tempFile)) File.Delete(_tempFile);
+        if (File.Exists(_tempFilePath)) 
+            File.Delete(_tempFilePath);
         bool errorRaised = false;
         _service.ErrorOccurred += (s, msg) => errorRaised = true;
-        var loaded = _service.LoadGame();
+        var loaded = _service.LoadGame(_tempFileName);
         Assert.IsNull(loaded);
         Assert.IsTrue(errorRaised);
     }
@@ -64,19 +77,20 @@ public class SaveLoadServiceTests
     [Test]
     public void SaveFileExists_ReturnsCorrectState()
     {
-        if (File.Exists(_tempFile)) File.Delete(_tempFile);
-        Assert.IsFalse(_service.SaveFileExists());
-        _service.SaveGame(_originalPlayer);
-        Assert.IsTrue(_service.SaveFileExists());
+        if (File.Exists(_tempFilePath)) 
+            File.Delete(_tempFilePath);
+        Assert.IsFalse(_service.SaveFileExists(_tempFileName));
+        _service.SaveGame(_saveSlot);
+        Assert.IsTrue(_service.SaveFileExists(_tempFileName));
     }
 
     [Test]
     public void DeleteSaveFile_RemovesFile()
     {
-        _service.SaveGame(_originalPlayer);
-        Assert.IsTrue(File.Exists(_tempFile));
-        _service.DeleteSaveFile();
-        Assert.IsFalse(File.Exists(_tempFile));
+        _service.SaveGame(_saveSlot);
+        Assert.IsTrue(File.Exists(_tempFilePath));
+        _service.DeleteSaveFile(_tempFileName);
+        Assert.IsFalse(File.Exists(_tempFilePath));
     }
 
     #region Вспомогательные методы
