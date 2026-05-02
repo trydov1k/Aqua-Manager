@@ -223,12 +223,36 @@ namespace AquaManager.Presentation.Forms
                     _animationTimer.Start();
                     break;
                 case MenuAction.Save:  // Нажата кнопка "Сохранить игру"
-                    _engine.SaveGame();
+
+                    var nameInpotForm = new NameInputForm(NameInputType.Save, "savegame", "💾");
+                    nameInpotForm.ShowDialog();
+
+                    if (nameInpotForm.EnteredName == string.Empty)
+                        break;
+                    _engine.SaveGame(nameInpotForm.EnteredName);
+                    _engine.SaveGame("savegame");
+
+                    MessageBox.Show("Игра сохранена!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                     _engine.Start();
                     _animationTimer.Start();
                     break;
                 case MenuAction.Load:  // Нажата кнопка "Загрузить игру"
-                    _engine.LoadGame();
+                    var selectSaveForm = new SelectSaveForm(
+                        _engine.GiveAllSaveFileNames(), 
+                        "savegame",
+                        _engine.DeleteSaveFile
+                        );                    
+                    selectSaveForm.ShowDialog();
+
+                    if (selectSaveForm.SelectedSave == string.Empty)
+                        break;
+
+                    _engine.LoadGame(selectSaveForm.SelectedSave);
+
+                    selectSaveForm.Dispose();
+
+                    MessageBox.Show("Игра загружена!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     _engine.Start();
                     _animationTimer.Start();
                     break;
@@ -245,6 +269,8 @@ namespace AquaManager.Presentation.Forms
                     this.Close();
                     break;
             }
+
+            menuForm.Dispose();
         }
 
         private void OpenTutorial()
@@ -256,6 +282,7 @@ namespace AquaManager.Presentation.Forms
             }
             var tutorialForm = new TutorialForm();
             tutorialForm.ShowDialog();
+            tutorialForm.Dispose();
         }
         #endregion
 
@@ -288,6 +315,8 @@ namespace AquaManager.Presentation.Forms
         {
             var shopForm = new ShopForm(_engine);
             shopForm.ShowDialog();
+
+            shopForm.Dispose();
         }
 
         private void btnGameMenu_Click(object sender, EventArgs e)

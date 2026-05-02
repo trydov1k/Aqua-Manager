@@ -23,30 +23,36 @@ public interface ISaveLoadService
     /// <summary>
     /// Сохранить текущее состояние игрока в файл (синхронно)
     /// </summary>
-    bool SaveGame(Player player);
+    bool SaveGame(SaveSlotInfo saveInfo);
 
     /// <summary>
     /// Асинхронное сохранение (не блокирует UI)
     /// </summary>
-    Task<bool> SaveGameAsync(Player player);
+    Task<bool> SaveGameAsync(SaveSlotInfo saveInfo);
 
     /// <summary>
     /// Загрузить состояние игрока из файла (синхронно)
     /// </summary>
-    Player LoadGame();
+    SaveSlotInfo LoadGame(string slotName);
 
     /// <summary>
     /// Асинхронная загрузка
     /// </summary>
-    Task<Player> LoadGameAsync();
+    Task<SaveSlotInfo> LoadGameAsync(string slotName);
 
     /// <summary>
     /// Проверить, существует ли файл сохранения
     /// </summary>
-    bool SaveFileExists();
+    bool SaveFileExists(string fileName);
 
     /// <summary>
     /// Удалить файл сохранения (начать новую игру)
     /// </summary>
-    bool DeleteSaveFile();
+    bool DeleteSaveFile(string fileName);
+
+    /// <summary>
+    /// Получить массив всех файлов сохранений
+    /// </summary>
+    /// <returns>Массив, содержащий все сохранения</returns>
+    IEnumerable<string> GiveAllSaveFileNames();
 }

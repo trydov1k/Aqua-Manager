@@ -60,9 +60,14 @@ namespace AquaManager.Presentation.Forms
 
             if (_engine.CanBuyFish(type))
             {
-                using var dlg = new NameInputForm(FishOrAquarium.Fish, name);
-                if (dlg.ShowDialog() == DialogResult.OK)
-                    name = dlg.EnteredName;
+                var nameInputForm = new NameInputForm(NameInputType.Fish, name);
+                nameInputForm.ShowDialog();
+
+                if (nameInputForm.EnteredName == string.Empty)
+                    return;
+
+                name = nameInputForm.EnteredName;
+                nameInputForm.Dispose();
             }            
 
             bool success = _engine.BuyFish(type, name);
@@ -87,9 +92,12 @@ namespace AquaManager.Presentation.Forms
             var name = $"Аквариум {_engine.Player.Aquariums.Count + 1}";
             if (_engine.CanBuyAquarium())
             {
-                using var dlg = new NameInputForm(FishOrAquarium.Aquarium, name);
-                if (dlg.ShowDialog() == DialogResult.OK)
-                    name = dlg.EnteredName;
+                var nameInputForm = new NameInputForm(NameInputType.Aquarium, name);
+                nameInputForm.ShowDialog();
+                if (nameInputForm.EnteredName == string.Empty)
+                    return;
+                name = nameInputForm.EnteredName;
+                nameInputForm.Dispose();
             }            
 
             bool success = _engine.BuyAquarium(name);

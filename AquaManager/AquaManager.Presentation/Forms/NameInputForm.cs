@@ -18,7 +18,7 @@
         private TextBox _txtName;
         private Button _btnOk;
         private Button _btnSkip;
-        private PictureBox _pbIcon;
+        private Label _pbIcon;
 
         private readonly string _buyMessage;
         private readonly string _giveNameMessage;
@@ -26,10 +26,10 @@
         private readonly string _defaultName;  // предлагаемое имя по умолчанию
         private readonly string _emojiText;    // 🐠 или 🪣
 
-        public NameInputForm(FishOrAquarium entityType, string defaultName, string emoji = "🐠")
+        public NameInputForm(NameInputType entityType, string defaultName, string emoji = "🐠")
         {
-            _buyMessage = entityType == FishOrAquarium.Fish ? "Рыбку" : "Аквариум";
-            _giveNameMessage = entityType == FishOrAquarium.Fish ? "Рыбке" : "Аквариуму";
+            _buyMessage = entityType == NameInputType.Fish ? "рыбку" : entityType == NameInputType.Aquarium ? "аквариум" : "сохранение";
+            _giveNameMessage = entityType == NameInputType.Fish ? "рыбке" : entityType == NameInputType.Aquarium ? "аквариуму" : "сохранению";
             _defaultName = defaultName;
             _emojiText = emoji;
             InitializeComponent();
@@ -47,13 +47,13 @@
             Font = new Font("Segoe UI", 10f);
 
             // Эмодзи-иконка
-            _pbIcon = new PictureBox
+            _pbIcon = new Label
             {
                 Text = _emojiText,
                 Font = new Font("Segoe UI Emoji", 32f),
                 ForeColor = Color.White,
-                //TextAlign = ContentAlignment.MiddleCenter,
-                Location = new Point(180, 18),
+                Location = new Point(15, 15),
+                TextAlign = ContentAlignment.MiddleCenter, 
                 Size = new Size(80, 60),
             };
             Controls.Add(_pbIcon);
@@ -65,7 +65,7 @@
                 Font = new Font("Segoe UI", 12f, FontStyle.Bold),
                 ForeColor = Color.LightCyan,
                 TextAlign = ContentAlignment.MiddleCenter,
-                Location = new Point(10, 88),
+                Location = new Point(10, 30),
                 Size = new Size(400, 30),
             };
             Controls.Add(_lblPrompt);
@@ -75,7 +75,7 @@
             {
                 Text = _defaultName,
                 Font = new Font("Segoe UI", 13f),
-                Location = new Point(40, 130),
+                Location = new Point(40, 100),
                 Size = new Size(350, 36),
                 MaxLength = 30,
                 BackColor = Color.FromArgb(40, 70, 130),
@@ -92,7 +92,7 @@
                 Font = new Font("Segoe UI", 8f),
                 ForeColor = Color.LightGray,
                 TextAlign = ContentAlignment.MiddleCenter,
-                Location = new Point(10, 172),
+                Location = new Point(10, 130),
                 Size = new Size(400, 20),
             };
             Controls.Add(_lblHint);
@@ -101,7 +101,7 @@
             _btnSkip = new Button
             {
                 Text = "Пропустить",
-                Location = new Point(40, 200),
+                Location = new Point(40, 190),
                 Size = new Size(120, 34),
                 BackColor = Color.FromArgb(60, 60, 100),
                 ForeColor = Color.LightGray,
@@ -121,7 +121,7 @@
             _btnOk = new Button
             {
                 Text = "✔ Подтвердить",
-                Location = new Point(255, 200),
+                Location = new Point(255, 190),
                 Size = new Size(140, 34),
                 BackColor = Color.FromArgb(0, 140, 200),
                 ForeColor = Color.White,
@@ -160,9 +160,10 @@
         }
     }
 
-    public enum FishOrAquarium
+    public enum NameInputType
     {
         Fish,
-        Aquarium
+        Aquarium,
+        Save
     }
 }

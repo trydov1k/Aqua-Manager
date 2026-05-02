@@ -119,14 +119,12 @@ namespace AquaManager.Forms
         private void BtnSave_Click(object sender, EventArgs e)
         {
             SelectedAction = MenuAction.Save;
-            MessageBox.Show("Игра сохранена!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Close();
         }
 
         private void BtnLoad_Click(object sender, EventArgs e)
         {
             SelectedAction = MenuAction.Load;
-            MessageBox.Show("Игра загружена!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Close();
         }
 

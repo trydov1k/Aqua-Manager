@@ -97,12 +97,24 @@ public interface IGameEngineService
     /// <summary>
     /// Сохранить игру
     /// </summary>
-    void SaveGame();
+    bool SaveGame(string saveName);
 
     /// <summary>
     /// Загрузить игру
     /// </summary>
-    void LoadGame();
+    void LoadGame(string loadName);
+
+    /// <summary>
+    /// Получить массив всех сохранений игры
+    /// </summary>
+    /// <returns>массив всех сохранений игры</returns>
+    List<string> GiveAllSaveFileNames();
+
+    /// <summary>
+    /// Удалить сохранение
+    /// </summary>
+    /// <param name="fileName">Имя сохранения</param>
+    void DeleteSaveFile(string fileName);
 
     /// <summary>
     /// Удаление игрового движка

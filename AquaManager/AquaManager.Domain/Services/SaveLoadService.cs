@@ -1,8 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using AquaManager.Domain.Constants;
 using AquaManager.Domain.Interfaces.Services;
 using AquaManager.Domain.Models;
@@ -14,7 +11,6 @@ namespace AquaManager.Domain.Services
     /// </summary>
     public class SaveLoadService : ISaveLoadService
     {
-        private readonly string _saveFilePath;
         private readonly JsonSerializerOptions _jsonOptions;
 
         public event EventHandler<Player> GameLoaded;
@@ -27,11 +23,8 @@ namespace AquaManager.Domain.Services
         /// Конструктор сервиса
         /// </summary>
         /// <param name="saveFileName">Имя файла сохранения (по умолчанию "savegame.json")</param>
-        public SaveLoadService(string saveFileName = "savegame.json")
+        public SaveLoadService()
         {
-            // Путь к файлу сохранения в папке приложения
-            _saveFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, saveFileName);
-
             // Настройки сериализации
             _jsonOptions = new JsonSerializerOptions
             {
@@ -42,8 +35,11 @@ namespace AquaManager.Domain.Services
             };
         }
 
-        public bool SaveGame(Player player)
+        public bool SaveGame(SaveSlotInfo saveInfo)
         {
+            var saveFilePath = GiveFilePath(saveInfo.SlotName);
+            var player = saveInfo.Player;
+
             if (player == null)
             {
                 OnErrorOccurred("Нельзя сохранить: игрок не существует");
@@ -52,8 +48,8 @@ namespace AquaManager.Domain.Services
 
             try
             {
-                string jsonString = JsonSerializer.Serialize(player, _jsonOptions);
-                File.WriteAllText(_saveFilePath, jsonString);
+                string jsonString = JsonSerializer.Serialize(saveInfo, _jsonOptions);
+                File.WriteAllText(saveFilePath, jsonString);
                 OnGameSaved();
                 return true;
             }
@@ -64,8 +60,11 @@ namespace AquaManager.Domain.Services
             }
         }
 
-        public async Task<bool> SaveGameAsync(Player player)
+        public async Task<bool> SaveGameAsync(SaveSlotInfo saveInfo)
         {
+            var saveFilePath = GiveFilePath(saveInfo.SlotName);
+            var player = saveInfo.Player;
+
             if (player == null)
             {
                 OnErrorOccurred("Нельзя сохранить: игрок не существует");
@@ -74,8 +73,8 @@ namespace AquaManager.Domain.Services
 
             try
             {
-                string jsonString = JsonSerializer.Serialize(player, _jsonOptions);
-                await File.WriteAllTextAsync(_saveFilePath, jsonString);
+                string jsonString = JsonSerializer.Serialize(saveInfo, _jsonOptions);
+                await File.WriteAllTextAsync(saveFilePath, jsonString);
                 OnGameSaved();
                 return true;
             }
@@ -86,9 +85,11 @@ namespace AquaManager.Domain.Services
             }
         }
 
-        public Player LoadGame()
+        public SaveSlotInfo LoadGame(string slotName)
         {
-            if (!File.Exists(_saveFilePath))
+            var saveFilePath = GiveFilePath(slotName);
+
+            if (!File.Exists(saveFilePath))
             {
                 OnErrorOccurred("Файл сохранения не найден. Будет начата новая игра.");
                 return null;
@@ -96,8 +97,10 @@ namespace AquaManager.Domain.Services
 
             try
             {
-                string jsonString = File.ReadAllText(_saveFilePath);
-                Player player = JsonSerializer.Deserialize<Player>(jsonString, _jsonOptions);
+                string jsonString = File.ReadAllText(saveFilePath);
+                SaveSlotInfo saveInfo = JsonSerializer.Deserialize<SaveSlotInfo>(jsonString, _jsonOptions);
+
+                var player = saveInfo.Player;
 
                 if (player == null)
                 {
@@ -109,7 +112,7 @@ namespace AquaManager.Domain.Services
                 ValidateAndRepairPlayer(player);
 
                 OnGameLoaded(player);
-                return player;
+                return saveInfo;
             }
             catch (JsonException ex)
             {
@@ -123,9 +126,11 @@ namespace AquaManager.Domain.Services
             }
         }
 
-        public async Task<Player> LoadGameAsync()
+        public async Task<SaveSlotInfo> LoadGameAsync(string slotName)
         {
-            if (!File.Exists(_saveFilePath))
+            var saveFilePath = GiveFilePath(slotName);
+
+            if (!File.Exists(saveFilePath))
             {
                 OnErrorOccurred("Файл сохранения не найден. Будет начата новая игра.");
                 return null;
@@ -133,8 +138,10 @@ namespace AquaManager.Domain.Services
 
             try
             {
-                string jsonString = await File.ReadAllTextAsync(_saveFilePath);
-                Player player = JsonSerializer.Deserialize<Player>(jsonString, _jsonOptions);
+                string jsonString = await File.ReadAllTextAsync(saveFilePath);
+                SaveSlotInfo saveInfo = JsonSerializer.Deserialize<SaveSlotInfo>(jsonString, _jsonOptions);
+
+                Player player = saveInfo.Player;
 
                 if (player == null)
                 {
@@ -144,7 +151,7 @@ namespace AquaManager.Domain.Services
 
                 ValidateAndRepairPlayer(player);
                 OnGameLoaded(player);
-                return player;
+                return saveInfo;
             }
             catch (JsonException ex)
             {
@@ -192,14 +199,15 @@ namespace AquaManager.Domain.Services
             }
         }
 
-        public bool SaveFileExists() => File.Exists(_saveFilePath);
+        public bool SaveFileExists(string fileName) => File.Exists(GiveFilePath(fileName));
 
-        public bool DeleteSaveFile()
+        public bool DeleteSaveFile(string fileName)
         {
             try
             {
-                if (File.Exists(_saveFilePath))
-                    File.Delete(_saveFilePath);
+                var saveFilePath = GiveFilePath(fileName);
+                if (File.Exists(saveFilePath))
+                    File.Delete(saveFilePath);
                 return true;
             }
             catch (Exception ex)
@@ -207,6 +215,30 @@ namespace AquaManager.Domain.Services
                 OnErrorOccurred($"Не удалось удалить сохранение: {ex.Message}");
                 return false;
             }
+        }
+
+        private string GiveFilePath(string fileName)
+        {
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "GameSaves");
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            var fileNameWithExt = fileName + ".json";
+            return Path.Combine(path, fileNameWithExt);
+        }
+
+        public IEnumerable<string> GiveAllSaveFileNames()
+        {
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "GameSaves");
+
+            if (!Directory.Exists(path))
+                return new string[0];
+
+            var files = Directory.GetFiles(path, "*.json");
+
+            var names = files.Select(f => f.Remove(0, f.LastIndexOf("\\") + 1)).Select(f => f.Remove(f.LastIndexOf(".")));
+
+            return names;
         }
 
         // Приватные методы вызова событий

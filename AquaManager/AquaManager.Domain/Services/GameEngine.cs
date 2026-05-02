@@ -36,7 +36,7 @@ namespace AquaManager.Domain.Services
         public void Start()
         {
             if (Player == null)
-                Player = _saveLoadService.LoadGame();
+                Player = _saveLoadService.LoadGame("savegame")?.Player;
 
             if (Player == null)
             {
@@ -294,8 +294,23 @@ namespace AquaManager.Domain.Services
         }
 
         // Методы для сохранения игры вручную
-        public void SaveGame() => _saveLoadService.SaveGame(Player);
-        public void LoadGame() => LoadPlayer(_saveLoadService.LoadGame());
+        public bool SaveGame(string saveName)
+        {
+            var saveSlot = new SaveSlotInfo(saveName, Player);
+            return _saveLoadService.SaveGame(saveSlot);
+        }
+        public void LoadGame(string loadName)
+        {
+            var saveSlot = _saveLoadService.LoadGame(loadName);
+
+            var player = saveSlot.Player;
+
+            LoadPlayer(player);
+        }
+        public List<string> GiveAllSaveFileNames()
+            => _saveLoadService.GiveAllSaveFileNames().ToList();
+        public void DeleteSaveFile(string fileName)
+            => _saveLoadService.DeleteSaveFile(fileName);
 
         // Удаление таймеров
         public void Dispose()
