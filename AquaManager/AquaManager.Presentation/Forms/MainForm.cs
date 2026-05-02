@@ -230,7 +230,11 @@ namespace AquaManager.Presentation.Forms
                     nameInpotForm.ShowDialog();
 
                     if (nameInpotForm.EnteredName == string.Empty)
+                    {
+                        _engine.Start();
+                        _animationTimer.Start();
                         break;
+                    }
                     _engine.SaveGame(nameInpotForm.EnteredName);
                     _engine.SaveGame("savegame");
 
@@ -248,7 +252,11 @@ namespace AquaManager.Presentation.Forms
                     selectSaveForm.ShowDialog();
 
                     if (selectSaveForm.SelectedSave == string.Empty)
+                    {
+                        _engine.Start();
+                        _animationTimer.Start();
                         break;
+                    }
 
                     _engine.LoadGame(selectSaveForm.SelectedSave);
 

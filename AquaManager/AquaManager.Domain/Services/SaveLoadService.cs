@@ -232,7 +232,8 @@ namespace AquaManager.Domain.Services
 
         public IEnumerable<string> GiveAllSaveFileNames()
         {
-            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "GameSaves");
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var path = Path.Combine(appDataPath, "AquaManager", "GameSaves");
 
             if (!Directory.Exists(path))
                 return new string[0];
