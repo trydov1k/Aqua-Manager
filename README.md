@@ -68,6 +68,14 @@
 
 ### Сборка из исходников
 
+#### Запуск через .exe файл
+- Зайдите на вкладку [Releases](https://github.com/trydov1k/Aqua-Manager/releases)
+- Выберите последнюю версию игры (будет пометка Latest)
+- Разверните папку Assets
+- Скачайте файл AquaManager.exe
+- Запустите файл AquaManager.exe
+
+#### Запуск через компилятор (например Visual Studio)
 ```bash
 git clone https://github.com/trydov1k/Aqua-Manager.git
 cd Aqua-Manager
