@@ -38,13 +38,11 @@
             btnChangeWater = new Button();
             btnRemoveFish = new Button();
             btnShop = new Button();
-            btnSave = new Button();
-            btnLoad = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
             pbWaterCleanliness = new ProgressBar();
+            btnGameMenu = new Button();
             cmbAquariums = new ComboBox();
             tableLayoutPanel2 = new TableLayoutPanel();
-            btnNewGame = new Button();
             ((System.ComponentModel.ISupportInitialize)picAquarium).BeginInit();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
@@ -52,9 +50,12 @@
             // 
             // lblMoney
             // 
-            lblMoney.Location = new Point(601, 0);
+            lblMoney.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            lblMoney.Font = new Font("Segoe UI", 12F);
+            lblMoney.ForeColor = SystemColors.HotTrack;
+            lblMoney.Location = new Point(657, 0);
             lblMoney.Name = "lblMoney";
-            lblMoney.Size = new Size(296, 30);
+            lblMoney.Size = new Size(169, 47);
             lblMoney.TabIndex = 1;
             lblMoney.Text = "250 монет";
             lblMoney.TextAlign = ContentAlignment.MiddleCenter;
@@ -63,20 +64,22 @@
             // 
             picAquarium.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             picAquarium.Image = Properties.Resources.Аквариум_1;
-            picAquarium.Location = new Point(54, 55);
+            picAquarium.Location = new Point(54, 65);
             picAquarium.Margin = new Padding(0);
             picAquarium.Name = "picAquarium";
-            picAquarium.Size = new Size(900, 400);
+            picAquarium.Size = new Size(900, 420);
             picAquarium.SizeMode = PictureBoxSizeMode.StretchImage;
             picAquarium.TabIndex = 4;
             picAquarium.TabStop = false;
             // 
             // lblWaterPercent
             // 
-            lblWaterPercent.Location = new Point(529, 0);
+            lblWaterPercent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            lblWaterPercent.AutoSize = true;
+            lblWaterPercent.Location = new Point(617, 0);
             lblWaterPercent.Name = "lblWaterPercent";
             lblWaterPercent.Padding = new Padding(5, 0, 0, 0);
-            lblWaterPercent.Size = new Size(66, 30);
+            lblWaterPercent.Size = new Size(34, 47);
             lblWaterPercent.TabIndex = 5;
             lblWaterPercent.Text = "78%";
             lblWaterPercent.TextAlign = ContentAlignment.MiddleLeft;
@@ -85,10 +88,10 @@
             // 
             flpFishList.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             flpFishList.AutoScroll = true;
-            flpFishList.Location = new Point(54, 460);
+            flpFishList.Location = new Point(54, 485);
             flpFishList.Margin = new Padding(0, 3, 0, 3);
             flpFishList.Name = "flpFishList";
-            flpFishList.Size = new Size(900, 145);
+            flpFishList.Size = new Size(900, 150);
             flpFishList.TabIndex = 6;
             // 
             // btnFeedAll
@@ -146,61 +149,60 @@
             btnShop.UseVisualStyleBackColor = true;
             btnShop.Click += btnShop_Click;
             // 
-            // btnSave
-            // 
-            btnSave.Location = new Point(134, 683);
-            btnSave.Name = "btnSave";
-            btnSave.Size = new Size(200, 35);
-            btnSave.TabIndex = 12;
-            btnSave.Text = "Сохранить";
-            btnSave.UseVisualStyleBackColor = true;
-            btnSave.Click += btnSave_Click;
-            // 
-            // btnLoad
-            // 
-            btnLoad.Location = new Point(674, 683);
-            btnLoad.Name = "btnLoad";
-            btnLoad.Size = new Size(200, 35);
-            btnLoad.TabIndex = 13;
-            btnLoad.Text = "Загрузить";
-            btnLoad.UseVisualStyleBackColor = true;
-            btnLoad.Click += btnLoad_Click;
-            // 
             // tableLayoutPanel1
             // 
-            tableLayoutPanel1.ColumnCount = 4;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25.33F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.34F));
+            tableLayoutPanel1.ColumnCount = 5;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 39.069767F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32.32558F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20.3488369F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.083442F));
             tableLayoutPanel1.Controls.Add(lblMoney, 3, 0);
             tableLayoutPanel1.Controls.Add(pbWaterCleanliness, 1, 0);
+            tableLayoutPanel1.Controls.Add(btnGameMenu, 4, 0);
             tableLayoutPanel1.Controls.Add(lblWaterPercent, 2, 0);
             tableLayoutPanel1.Controls.Add(cmbAquariums, 0, 0);
             tableLayoutPanel1.Location = new Point(54, 15);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(900, 30);
+            tableLayoutPanel1.Size = new Size(900, 47);
             tableLayoutPanel1.TabIndex = 14;
             // 
             // pbWaterCleanliness
             // 
-            pbWaterCleanliness.Location = new Point(302, 3);
+            pbWaterCleanliness.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            pbWaterCleanliness.Location = new Point(339, 12);
             pbWaterCleanliness.Name = "pbWaterCleanliness";
-            pbWaterCleanliness.Size = new Size(221, 24);
+            pbWaterCleanliness.Size = new Size(272, 23);
             pbWaterCleanliness.Style = ProgressBarStyle.Continuous;
             pbWaterCleanliness.TabIndex = 0;
             // 
+            // btnGameMenu
+            // 
+            btnGameMenu.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            btnGameMenu.AutoSize = true;
+            btnGameMenu.Location = new Point(832, 9);
+            btnGameMenu.Name = "btnGameMenu";
+            btnGameMenu.Size = new Size(65, 28);
+            btnGameMenu.TabIndex = 7;
+            btnGameMenu.Text = "Меню";
+            btnGameMenu.UseVisualStyleBackColor = true;
+            btnGameMenu.Click += btnGameMenu_Click;
+            // 
             // cmbAquariums
             // 
-            cmbAquariums.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            cmbAquariums.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            cmbAquariums.DropDownHeight = 136;
             cmbAquariums.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbAquariums.FlatStyle = FlatStyle.Flat;
             cmbAquariums.FormattingEnabled = true;
-            cmbAquariums.Location = new Point(0, 3);
+            cmbAquariums.IntegralHeight = false;
+            cmbAquariums.ItemHeight = 15;
+            cmbAquariums.Location = new Point(0, 12);
             cmbAquariums.Margin = new Padding(0, 3, 3, 3);
             cmbAquariums.Name = "cmbAquariums";
-            cmbAquariums.Size = new Size(296, 23);
+            cmbAquariums.Size = new Size(333, 23);
             cmbAquariums.TabIndex = 6;
             cmbAquariums.SelectedIndexChanged += cmbAquariums_SelectedIndexChanged;
             // 
@@ -218,22 +220,12 @@
             tableLayoutPanel2.Controls.Add(btnRemoveFish, 3, 0);
             tableLayoutPanel2.Controls.Add(btnShop, 4, 0);
             tableLayoutPanel2.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
-            tableLayoutPanel2.Location = new Point(54, 608);
+            tableLayoutPanel2.Location = new Point(54, 638);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle());
             tableLayoutPanel2.Size = new Size(900, 69);
             tableLayoutPanel2.TabIndex = 15;
-            // 
-            // btnNewGame
-            // 
-            btnNewGame.Location = new Point(405, 683);
-            btnNewGame.Name = "btnNewGame";
-            btnNewGame.Size = new Size(200, 35);
-            btnNewGame.TabIndex = 16;
-            btnNewGame.Text = "Новая игра";
-            btnNewGame.UseVisualStyleBackColor = true;
-            btnNewGame.Click += btnNewGame_Click;
             // 
             // MainForm
             // 
@@ -241,11 +233,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ButtonShadow;
             ClientSize = new Size(1008, 729);
-            Controls.Add(btnNewGame);
             Controls.Add(tableLayoutPanel2);
             Controls.Add(tableLayoutPanel1);
-            Controls.Add(btnLoad);
-            Controls.Add(btnSave);
             Controls.Add(flpFishList);
             Controls.Add(picAquarium);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -258,6 +247,7 @@
             Text = "AquaManager";
             ((System.ComponentModel.ISupportInitialize)picAquarium).EndInit();
             tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
             tableLayoutPanel2.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -274,11 +264,9 @@
         private Button btnChangeWater;
         private Button btnRemoveFish;
         private Button btnShop;
-        private Button btnSave;
-        private Button btnLoad;
         private TableLayoutPanel tableLayoutPanel1;
         private ComboBox cmbAquariums;
         private TableLayoutPanel tableLayoutPanel2;
-        private Button btnNewGame;
+        private Button btnGameMenu;
     }
 }

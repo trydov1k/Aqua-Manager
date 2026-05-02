@@ -4,6 +4,7 @@ using AquaManager.Domain.Models;
 using AquaManager.Domain.Services;
 using AquaManager.Forms;
 using AquaManager.Presentation.Controls;
+using AquaManager.Presentation.Enums;
 using AquaManager.Presentation.Extensions;
 using AquaManager.Presentation.Models;
 
@@ -228,24 +229,45 @@ namespace AquaManager.Presentation.Forms
             shopForm.ShowDialog();
         }
 
-        private void btnSave_Click(object sender, EventArgs e) => _engine.SaveGame();
-
-        private void btnLoad_Click(object sender, EventArgs e) => _engine.LoadGame();
-
         private void cmbAquariums_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbAquariums.SelectedIndex != _engine.Player.CurrentAquariumIndex)
                 _engine.SwitchAquarium(cmbAquariums.SelectedIndex);
         }
 
-        private void btnNewGame_Click(object sender, EventArgs e)
-        {
-            _engine.NewGame();
-
-            var tutorialForm = new TutorialForm();
-            tutorialForm.ShowDialog();
-        }
-
         #endregion
+
+        private void btnGameMenu_Click(object sender, EventArgs e)
+        {
+            _engine.Stop();
+            var menuForm = new GameMenuForm();
+            menuForm.ShowDialog();
+
+            switch (menuForm.SelectedAction)
+            {
+                case MenuAction.None:  // Форма закрыта
+                case MenuAction.Continue:  // Нажата кнопка "Продолжить игру"
+                    _engine.Start();
+                    break;
+                case MenuAction.Save:  // Нажата кнопка "Сохранить игру"
+                    _engine.SaveGame();
+                    _engine.Start();
+                    break;
+                case MenuAction.Load:  // Нажата кнопка "Загрузить игру"
+                    _engine.LoadGame();
+                    _engine.Start();
+                    break;
+                case MenuAction.Tutorial:
+                    var tutorialForm = new TutorialForm();
+                    tutorialForm.ShowDialog();
+                    break;
+                case MenuAction.NewGame:  // Нажата кнопка "Новая игра"
+                    _engine.NewGame();
+                    break;
+                case MenuAction.Exit:  // Нажата кнопка "Выйти из игры"
+                    this.Close();
+                    break;
+            }            
+        }
     }
 }

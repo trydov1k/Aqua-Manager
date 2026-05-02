@@ -70,7 +70,7 @@ namespace AquaManager.Presentation.Forms
             if (success)
             {
                 UpdateMoneyDisplay();
-                MessageBox.Show("Рыбка куплена!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show("Рыбка куплена!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
@@ -97,7 +97,7 @@ namespace AquaManager.Presentation.Forms
             if (success)
             {
                 UpdateMoneyDisplay();
-                MessageBox.Show("Новый аквариум куплен!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show("Новый аквариум куплен!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
