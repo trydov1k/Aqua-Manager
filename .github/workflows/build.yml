@@ -1,0 +1,61 @@
+name: Build Windows Forms Game
+
+on:
+  push:
+    branches: [ main, master ]
+    tags:
+      - 'v*'  # Автоматический релиз при пуше тегов типа v1.0.0
+  pull_request:
+    branches: [ main, master ]
+
+env:
+  SOLUTION_PATH: AquaManager.slnx  # Укажите путь к вашему файлу решения
+  PROJECT_PATH: AquaManager.Presentation/AquaManager.Presentation.csproj
+  CONFIGURATION: Release
+  RUNTIME: win-x64
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest  # Обязательно Windows для Windows Forms[citation:6][citation:10]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x  # Или ваша версия .NET
+      
+      - name: Restore dependencies
+        run: dotnet restore ${{ env.SOLUTION_PATH }}
+      
+      - name: Build project
+        run: dotnet build ${{ env.PROJECT_PATH }} --configuration ${{ env.CONFIGURATION }} --no-restore
+      
+      - name: Publish as single EXE
+        run: dotnet publish ${{ env.PROJECT_PATH }} --configuration ${{ env.CONFIGURATION }} --runtime ${{ env.RUNTIME }} --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true --output ./publish
+      
+      - name: Upload artifact (для тестирования)
+        uses: actions/upload-artifact@v4
+        with:
+          name: AquaManager-${{ github.run_number }}
+          path: ./publish/*.exe
+          if-no-files-found: error
+      
+      - name: Create Release (при пуше тега)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ./publish/*.exe
+          name: AquaManager ${{ github.ref_name }}
+          body: |
+            Автоматическая сборка игры.
+            
+            Просто скачайте файл `AquaManager.Presentation.exe` и запустите его.
+            Никаких дополнительных установок не требуется!
