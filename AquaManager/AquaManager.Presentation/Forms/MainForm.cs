@@ -202,6 +202,8 @@ namespace AquaManager.Presentation.Forms
         private void OpenMenu()
         {
             _engine.Stop();
+            _animationTimer.Stop();
+
             var menuForm = new GameMenuForm();
             menuForm.ShowDialog();
 
@@ -210,20 +212,26 @@ namespace AquaManager.Presentation.Forms
                 case MenuAction.None:  // Форма закрыта
                 case MenuAction.Continue:  // Нажата кнопка "Продолжить игру"
                     _engine.Start();
+                    _animationTimer.Start();
                     break;
                 case MenuAction.Save:  // Нажата кнопка "Сохранить игру"
                     _engine.SaveGame();
                     _engine.Start();
+                    _animationTimer.Start();
                     break;
                 case MenuAction.Load:  // Нажата кнопка "Загрузить игру"
                     _engine.LoadGame();
                     _engine.Start();
+                    _animationTimer.Start();
                     break;
                 case MenuAction.Tutorial:
                     OpenTutorial();
+                    _engine.Start();
+                    _animationTimer.Start();
                     break;
                 case MenuAction.NewGame:  // Нажата кнопка "Новая игра"
                     _engine.NewGame();
+                    _animationTimer.Start();
                     break;
                 case MenuAction.Exit:  // Нажата кнопка "Выйти из игры"
                     this.Close();
@@ -233,6 +241,11 @@ namespace AquaManager.Presentation.Forms
 
         private void OpenTutorial()
         {
+            if (_engine.IsRunning)
+            {
+                _engine.Stop();
+                _animationTimer.Stop();
+            }
             var tutorialForm = new TutorialForm();
             tutorialForm.ShowDialog();
         }

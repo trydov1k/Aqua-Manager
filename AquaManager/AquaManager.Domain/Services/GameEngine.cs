@@ -11,11 +11,12 @@ namespace AquaManager.Domain.Services
     public class GameEngine : IDisposable, IGameEngineService
     {
         public Player Player { get; private set; }
+        public bool IsRunning { get; private set; }
+
         private Timer _gameTimer;
         private IncomeService _incomeService;
         private SaveLoadService _saveLoadService;
-        public FishFactory _fishFactory;
-        private bool _isRunning;
+        public FishFactory _fishFactory;        
 
         public event EventHandler<Player> StateChanged;
 
@@ -26,7 +27,7 @@ namespace AquaManager.Domain.Services
             _gameTimer.Elapsed += OnGameTick;
             _saveLoadService = new SaveLoadService();
             _fishFactory = new FishFactory();
-            _isRunning = false;
+            IsRunning = false;
         }
 
         // Методы Start(), Stop() и NewGame()
@@ -42,7 +43,7 @@ namespace AquaManager.Domain.Services
             _incomeService = new IncomeService(Player);
             _incomeService.IncomeGenerated += OnIncomeGenerated;
 
-            _isRunning = true;
+            IsRunning = true;
             _gameTimer.Start();
             _incomeService.Start();
 
@@ -51,7 +52,7 @@ namespace AquaManager.Domain.Services
 
         public void Stop()
         {
-            _isRunning = false;
+            IsRunning = false;
             _gameTimer.Stop();
             _incomeService?.Stop();
         }
@@ -75,7 +76,7 @@ namespace AquaManager.Domain.Services
 
         public void LoadPlayer(Player loadedPlayer)
         {
-            if (_isRunning)
+            if (IsRunning)
                 Stop();
             _incomeService?.Dispose();
 
@@ -89,7 +90,7 @@ namespace AquaManager.Domain.Services
         private void OnGameTick(object sender, ElapsedEventArgs e)
         {
             // Тут должен быть обработчик таймера...
-            if (!_isRunning)
+            if (!IsRunning)
                 return;
 
             UpdateGameState();
