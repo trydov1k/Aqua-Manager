@@ -181,6 +181,7 @@ namespace AquaManager.Presentation.Forms
                 OpenTutorial();
                 _engine.IsFirstGame = false;
                 _animationTimer.Start();
+                _engine.Start();
             }
         }
 
