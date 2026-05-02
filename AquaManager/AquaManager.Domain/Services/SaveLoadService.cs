@@ -219,7 +219,10 @@ namespace AquaManager.Domain.Services
 
         private string GiveFilePath(string fileName)
         {
-            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "GameSaves");
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+            var path = Path.Combine(appDataPath, "AquaManager", "GameSaves");
+
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
