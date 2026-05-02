@@ -198,6 +198,46 @@ namespace AquaManager.Presentation.Forms
         }
         #endregion
 
+        #region Работа с меню и обучением
+        private void OpenMenu()
+        {
+            _engine.Stop();
+            var menuForm = new GameMenuForm();
+            menuForm.ShowDialog();
+
+            switch (menuForm.SelectedAction)
+            {
+                case MenuAction.None:  // Форма закрыта
+                case MenuAction.Continue:  // Нажата кнопка "Продолжить игру"
+                    _engine.Start();
+                    break;
+                case MenuAction.Save:  // Нажата кнопка "Сохранить игру"
+                    _engine.SaveGame();
+                    _engine.Start();
+                    break;
+                case MenuAction.Load:  // Нажата кнопка "Загрузить игру"
+                    _engine.LoadGame();
+                    _engine.Start();
+                    break;
+                case MenuAction.Tutorial:
+                    OpenTutorial();
+                    break;
+                case MenuAction.NewGame:  // Нажата кнопка "Новая игра"
+                    _engine.NewGame();
+                    break;
+                case MenuAction.Exit:  // Нажата кнопка "Выйти из игры"
+                    this.Close();
+                    break;
+            }
+        }
+
+        private void OpenTutorial()
+        {
+            var tutorialForm = new TutorialForm();
+            tutorialForm.ShowDialog();
+        }
+        #endregion
+
         #region Обработка нажатий на кнопки
         private void btnFeedAll_Click(object sender, EventArgs e) => _engine.FeedAllFish();
 
@@ -229,6 +269,11 @@ namespace AquaManager.Presentation.Forms
             shopForm.ShowDialog();
         }
 
+        private void btnGameMenu_Click(object sender, EventArgs e)
+        {
+            OpenMenu();
+        }
+
         private void cmbAquariums_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbAquariums.SelectedIndex != _engine.Player.CurrentAquariumIndex)
@@ -236,38 +281,20 @@ namespace AquaManager.Presentation.Forms
         }
 
         #endregion
-
-        private void btnGameMenu_Click(object sender, EventArgs e)
+            
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            _engine.Stop();
-            var menuForm = new GameMenuForm();
-            menuForm.ShowDialog();
-
-            switch (menuForm.SelectedAction)
+            if (keyData == Keys.Escape)
             {
-                case MenuAction.None:  // Форма закрыта
-                case MenuAction.Continue:  // Нажата кнопка "Продолжить игру"
-                    _engine.Start();
-                    break;
-                case MenuAction.Save:  // Нажата кнопка "Сохранить игру"
-                    _engine.SaveGame();
-                    _engine.Start();
-                    break;
-                case MenuAction.Load:  // Нажата кнопка "Загрузить игру"
-                    _engine.LoadGame();
-                    _engine.Start();
-                    break;
-                case MenuAction.Tutorial:
-                    var tutorialForm = new TutorialForm();
-                    tutorialForm.ShowDialog();
-                    break;
-                case MenuAction.NewGame:  // Нажата кнопка "Новая игра"
-                    _engine.NewGame();
-                    break;
-                case MenuAction.Exit:  // Нажата кнопка "Выйти из игры"
-                    this.Close();
-                    break;
-            }            
+                OpenMenu();
+                return true;
+            }
+            if (keyData == Keys.F1)
+            {
+                OpenTutorial();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }
