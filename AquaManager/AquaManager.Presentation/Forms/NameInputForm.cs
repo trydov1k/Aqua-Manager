@@ -2,10 +2,6 @@
 {
     /// <summary>
     /// Диалог для ввода имени при покупке рыбки или аквариума.
-    /// Использование:
-    ///   using var dlg = new NameInputForm("рыбку", "Клоун");
-    ///   if (dlg.ShowDialog() == DialogResult.OK)
-    ///       string name = dlg.EnteredName;
     /// </summary>
     public class NameInputForm : Form
     {
@@ -25,6 +21,9 @@
 
         private readonly string _defaultName;  // предлагаемое имя по умолчанию
         private readonly string _emojiText;    // 🐠 или 🪣
+
+        // Настройки / константы
+        private readonly int MaxNameLenght = 15;
 
         public NameInputForm(NameInputType entityType, string defaultName, string emoji = "🐠")
         {
@@ -77,7 +76,7 @@
                 Font = new Font("Segoe UI", 13f),
                 Location = new Point(40, 100),
                 Size = new Size(350, 36),
-                MaxLength = 30,
+                MaxLength = MaxNameLenght,
                 BackColor = Color.FromArgb(40, 70, 130),
                 ForeColor = Color.White,
                 BorderStyle = BorderStyle.FixedSingle,
@@ -88,7 +87,7 @@
             // Подсказка
             _lblHint = new Label
             {
-                Text = "Макс. 30 символов. Оставьте пустым для имени по умолчанию.",
+                Text = $"Макс. {MaxNameLenght} символов. Оставьте пустым для имени по умолчанию.",
                 Font = new Font("Segoe UI", 8f),
                 ForeColor = Color.LightGray,
                 TextAlign = ContentAlignment.MiddleCenter,
@@ -151,7 +150,6 @@
         {
             if (keyData == Keys.Escape)
             {
-                EnteredName = _defaultName;
                 DialogResult = DialogResult.Cancel;
                 Close();
                 return true;
