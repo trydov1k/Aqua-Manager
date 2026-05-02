@@ -4,12 +4,12 @@ on:
   push:
     branches: [ main, master ]
     tags:
-      - 'v*'  # Автоматический релиз при пуше тегов типа v1.0.0
+      - 'v*'
   pull_request:
     branches: [ main, master ]
 
 env:
-  SOLUTION_PATH: AquaManager/AquaManager.slnx  # Укажите путь к вашему файлу решения
+  SOLUTION_PATH: AquaManager/AquaManager.slnx
   PROJECT_PATH: AquaManager/AquaManager.Presentation/AquaManager.Presentation.csproj
   CONFIGURATION: Release
   RUNTIME: win-x64
@@ -19,7 +19,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: windows-latest  # Обязательно Windows для Windows Forms[citation:6][citation:10]
+    runs-on: windows-latest
     
     steps:
       - name: Checkout code
@@ -30,7 +30,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: 10.0.x  # Или ваша версия .NET
+          dotnet-version: 10.0.x
       
       - name: Restore dependencies
         run: dotnet restore ${{ env.SOLUTION_PATH }}
@@ -57,5 +57,5 @@ jobs:
           body: |
             Автоматическая сборка игры.
             
-            Просто скачайте файл `AquaManager.Presentation.exe` и запустите его.
+            Просто скачайте файл `AquaManager.exe` и запустите его.
             Никаких дополнительных установок не требуется!
