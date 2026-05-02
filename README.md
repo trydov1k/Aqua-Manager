@@ -120,7 +120,7 @@ AquaManager.sln
 - **C# / .NET** — основной язык
 - **Windows Forms** — графический интерфейс
 - **System.Text.Json** — сериализация сохранений
-- **System.Timers.Timer** — игровые таймеры и автосохранение
+- **System.Timers.Timer** — игровые таймеры
 
 ---
 
