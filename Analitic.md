@@ -36,14 +36,19 @@ AquaManager.sln
 │   ├── Services/           – бизнес-логика (GameEngine, IncomeService, SaveLoadService)
 │   └── Properties/         – служебные ресурсы
 │
-└── AquaManager.Presentation (Windows Forms App)
-    ├── Controls/           – пользовательские контролы (FishControl, ShopItemControl)
-    ├── Extensions/         – методы-расширения для удобства
-    ├── Forms/              – UI формы (MainForm, ShopForm, AquariumNameForm)
-    ├── Models/             – вспомогательные модели для UI (SwimmingFish)
-    ├── Resources/          – изображения рыбок и фонов
-    ├── Properties/         – служебные ресурсы
-    └── Program.cs          – точка входа в приложение
+├── AquaManager.Presentation (Windows Forms App)
+│   ├── Controls/           – пользовательские контролы (FishControl, ShopItemControl)
+│   ├── Enums/              - enum для использования в формах
+│   ├── Extensions/         – методы-расширения для удобства
+│   ├── Forms/              – UI формы (MainForm, ShopForm, AquariumNameForm)
+│   ├── Models/             – вспомогательные модели для UI (SwimmingFish)
+│   ├── Resources/          – изображения рыбок и фонов
+│   ├── Properties/         – служебные ресурсы
+│   └── Program.cs          – точка входа в приложение
+│
+└── AquaManager.Tests
+    ├── DomainTests/        - тесты доменных моделей
+    └── PresentationTests/  - тесты моделей из Presentation
 ```
 
 ### 2.2. Архитектурные принципы
