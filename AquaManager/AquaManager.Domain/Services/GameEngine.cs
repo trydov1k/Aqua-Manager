@@ -36,7 +36,7 @@ namespace AquaManager.Domain.Services
         public void Start()
         {
             if (Player == null)
-                Player = _saveLoadService.LoadGame("savegame")?.Player;
+                Player = _saveLoadService.LoadGame("SystemGameSave")?.Player;
 
             if (Player == null)
             {

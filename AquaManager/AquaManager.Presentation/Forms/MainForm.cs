@@ -236,7 +236,7 @@ namespace AquaManager.Presentation.Forms
                         break;
                     }
                     _engine.SaveGame(nameInpotForm.EnteredName);
-                    _engine.SaveGame("savegame");
+                    _engine.SaveGame("SystemGameSave");
 
                     MessageBox.Show("Игра сохранена!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
 

@@ -242,7 +242,7 @@ namespace AquaManager.Domain.Services
 
             var names = files.Select(f => f.Remove(0, f.LastIndexOf("\\") + 1)).Select(f => f.Remove(f.LastIndexOf(".")));
 
-            return names;
+            return names.Where(f => f != "SystemGameSave");
         }
 
         // Приватные методы вызова событий
