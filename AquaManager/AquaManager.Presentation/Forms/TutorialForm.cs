@@ -205,9 +205,22 @@
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (keyData == Keys.Escape) { Close(); return true; }
-            if (keyData == Keys.Right || keyData == Keys.Enter) { BtnNext_Click(null, null); return true; }
-            if (keyData == Keys.Left) { BtnPrev_Click(null, null); return true; }
+            if (keyData == Keys.Escape) 
+            { 
+                Close(); 
+                return true; 
+            }
+            if (keyData == Keys.Right || keyData == Keys.Enter) 
+            { 
+                BtnNext_Click(null, null); 
+                return true; 
+            }
+            if (keyData == Keys.Left) 
+            { 
+                BtnPrev_Click(null, null); 
+                return true; 
+            }
+
             return base.ProcessCmdKey(ref msg, keyData);
         }
     }

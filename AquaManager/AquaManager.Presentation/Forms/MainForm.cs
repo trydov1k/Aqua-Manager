@@ -225,19 +225,18 @@ namespace AquaManager.Presentation.Forms
                     _animationTimer.Start();
                     break;
                 case MenuAction.Save:  // Нажата кнопка "Сохранить игру"
-
-                    var nameInpotForm = new NameInputForm(NameInputType.Save, 
+                    var nameInputForm = new NameInputForm(NameInputType.Save, 
                         SaveLoadConstants.DefaultGameSaveName,
                         "💾");
-                    nameInpotForm.ShowDialog();
+                    nameInputForm.ShowDialog();
 
-                    if (nameInpotForm.EnteredName == string.Empty)
+                    if (nameInputForm.EnteredName == string.Empty)
                     {
                         _engine.Start();
                         _animationTimer.Start();
                         break;
                     }
-                    _engine.SaveGame(nameInpotForm.EnteredName);
+                    _engine.SaveGame(nameInputForm.EnteredName);
                     _engine.SaveGame(SaveLoadConstants.DefaultSystemGameSaveFileName);
 
                     MessageBox.Show("Игра сохранена!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -270,8 +269,6 @@ namespace AquaManager.Presentation.Forms
                     break;
                 case MenuAction.Tutorial:
                     OpenTutorial();
-                    _engine.Start();
-                    _animationTimer.Start();
                     break;
                 case MenuAction.NewGame:  // Нажата кнопка "Новая игра"
                     _engine.NewGame();
@@ -295,6 +292,12 @@ namespace AquaManager.Presentation.Forms
             var tutorialForm = new TutorialForm();
             tutorialForm.ShowDialog();
             tutorialForm.Dispose();
+            
+            if (!_engine.IsRunning)
+            {
+                _engine.Start();
+                _animationTimer.Start();
+            }            
         }
         #endregion
 
