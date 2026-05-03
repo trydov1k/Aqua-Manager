@@ -118,35 +118,27 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Аквариум 5" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Aquariums\Аквариум 5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Аквариум 2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Aquariums\Аквариум 2.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Аквариум 4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Aquariums\Аквариум 4.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Аквариум 1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Aquariums\Аквариум 1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Аквариум 3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Aquariums\Аквариум 3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Аквариум 6" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Aquariums\Аквариум 6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="guppy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Fish\Guppy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Гуппи</comment>
   </data>
   <data name="swordsman" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Fish\SwordsMan.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Меченосец</comment>
   </data>
   <data name="angelfish" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Fish\Angelfish.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Скалярия</comment>
   </data>
   <data name="goldfish" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Fish\Goldfish.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Золотая рыбка</comment>
   </data>
   <data name="AquaManagerIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AquaManagerIcon.ico;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

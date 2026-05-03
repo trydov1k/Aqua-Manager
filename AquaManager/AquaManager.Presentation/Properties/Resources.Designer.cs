@@ -113,16 +113,6 @@ namespace AquaManager.Presentation.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Аквариум_1 {
-            get {
-                object obj = ResourceManager.GetObject("Аквариум 1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Аквариум_2 {
             get {
                 object obj = ResourceManager.GetObject("Аквариум 2", resourceCulture);
@@ -136,36 +126,6 @@ namespace AquaManager.Presentation.Properties {
         internal static System.Drawing.Bitmap Аквариум_3 {
             get {
                 object obj = ResourceManager.GetObject("Аквариум 3", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Аквариум_4 {
-            get {
-                object obj = ResourceManager.GetObject("Аквариум 4", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Аквариум_5 {
-            get {
-                object obj = ResourceManager.GetObject("Аквариум 5", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Аквариум_6 {
-            get {
-                object obj = ResourceManager.GetObject("Аквариум 6", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

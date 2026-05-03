@@ -43,7 +43,7 @@ namespace AquaManager.Presentation.Forms
 
             // 3. Добавляем аквариум
             var aquariumControl = new ShopItemControl(
-                Properties.Resources.Аквариум_1,
+                Properties.Resources.Аквариум_2,
                 "Новый аквариум",
                 GameConstants.NewAquariumPrice,
                 $"вместимость: {GameConstants.DefaultAquariumCapacity} рыбок",
