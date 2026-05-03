@@ -359,6 +359,19 @@ namespace AquaManager.Presentation.Forms
                 OpenTutorial();
                 return true;
             }
+            if (keyData == Keys.Right)
+            {
+                if (_engine.Player.CurrentAquariumIndex + 1 < _engine.Player.Aquariums.Count)
+                    _engine.Player.CurrentAquariumIndex++;
+                return true;
+            }
+            if (keyData == Keys.Left)
+            {
+                if (_engine.Player.CurrentAquariumIndex - 1 >= 0)
+                    _engine.Player.CurrentAquariumIndex--;
+                return true;
+            }
+
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
