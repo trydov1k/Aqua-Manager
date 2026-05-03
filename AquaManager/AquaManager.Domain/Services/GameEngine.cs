@@ -21,6 +21,8 @@ namespace AquaManager.Domain.Services
 
         public event EventHandler<Player> StateChanged;
 
+        private readonly string _systemGameSaveName;
+
         // Конструктор
         public GameEngine()
         {
@@ -29,6 +31,8 @@ namespace AquaManager.Domain.Services
             _saveLoadService = new SaveLoadService();
             _fishFactory = new FishFactory();
             IsRunning = false;
+
+            _systemGameSaveName = SaveLoadConstants.DefaultSystemGameSaveFileName;
         }
 
         // Методы Start(), Stop() и NewGame()
@@ -36,14 +40,14 @@ namespace AquaManager.Domain.Services
         public void Start()
         {
             if (Player == null)
-                Player = _saveLoadService.LoadGame("SystemGameSave")?.Player;
-
-            if (Player == null)
             {
-                CreateNewGame();
-                IsFirstGame = true;
-            }
-                
+                Player = _saveLoadService.LoadGame(_systemGameSaveName)?.Player;
+                if (Player == null)
+                {
+                    CreateNewGame();
+                    IsFirstGame = true;
+                }
+            }   
 
             _incomeService = new IncomeService(Player);
             _incomeService.IncomeGenerated += OnIncomeGenerated;

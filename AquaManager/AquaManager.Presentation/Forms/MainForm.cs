@@ -226,7 +226,9 @@ namespace AquaManager.Presentation.Forms
                     break;
                 case MenuAction.Save:  // Нажата кнопка "Сохранить игру"
 
-                    var nameInpotForm = new NameInputForm(NameInputType.Save, "savegame", "💾");
+                    var nameInpotForm = new NameInputForm(NameInputType.Save, 
+                        SaveLoadConstants.DefaultGameSaveName,
+                        "💾");
                     nameInpotForm.ShowDialog();
 
                     if (nameInpotForm.EnteredName == string.Empty)
@@ -236,7 +238,7 @@ namespace AquaManager.Presentation.Forms
                         break;
                     }
                     _engine.SaveGame(nameInpotForm.EnteredName);
-                    _engine.SaveGame("SystemGameSave");
+                    _engine.SaveGame(SaveLoadConstants.DefaultSystemGameSaveFileName);
 
                     MessageBox.Show("Игра сохранена!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -246,7 +248,7 @@ namespace AquaManager.Presentation.Forms
                 case MenuAction.Load:  // Нажата кнопка "Загрузить игру"
                     var selectSaveForm = new SelectSaveForm(
                         _engine.GiveAllSaveFileNames(), 
-                        "savegame",
+                        SaveLoadConstants.DefaultGameSaveName,
                         _engine.DeleteSaveFile
                         );                    
                     selectSaveForm.ShowDialog();

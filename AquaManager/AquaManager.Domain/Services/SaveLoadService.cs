@@ -19,6 +19,9 @@ namespace AquaManager.Domain.Services
 
         public event EventHandler<string> ErrorOccurred;
 
+        private readonly string _folderToSaveName;
+        private readonly string _systemGameSaveName;
+
         /// <summary>
         /// Конструктор сервиса
         /// </summary>
@@ -33,6 +36,9 @@ namespace AquaManager.Domain.Services
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
                 PropertyNameCaseInsensitive = true
             };
+
+            _folderToSaveName = SaveLoadConstants.DefaultFolderToSavesName;
+            _systemGameSaveName = SaveLoadConstants.DefaultSystemGameSaveFileName;
         }
 
         public bool SaveGame(SaveSlotInfo saveInfo)
@@ -221,7 +227,7 @@ namespace AquaManager.Domain.Services
         {
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
-            var path = Path.Combine(appDataPath, "AquaManager", "GameSaves");
+            var path = Path.Combine(appDataPath, "AquaManager", _folderToSaveName);
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
@@ -233,7 +239,7 @@ namespace AquaManager.Domain.Services
         public IEnumerable<string> GiveAllSaveFileNames()
         {
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var path = Path.Combine(appDataPath, "AquaManager", "GameSaves");
+            var path = Path.Combine(appDataPath, "AquaManager", _folderToSaveName);
 
             if (!Directory.Exists(path))
                 return new string[0];
@@ -242,7 +248,7 @@ namespace AquaManager.Domain.Services
 
             var names = files.Select(f => f.Remove(0, f.LastIndexOf("\\") + 1)).Select(f => f.Remove(f.LastIndexOf(".")));
 
-            return names.Where(f => f != "SystemGameSave");
+            return names.Where(f => f != _systemGameSaveName);
         }
 
         // Приватные методы вызова событий
