@@ -38,11 +38,6 @@ public class IncomeService : IIncomeService
     {
         _incomeTimer.Stop();
     }
-    
-    public void UpdatePlayer(Player player)
-    {
-        _player = player ?? throw new ArgumentNullException(nameof(player));
-    }
 
     /// <summary>
     /// Рассчитать общий заработок от рыбок

@@ -16,4 +16,9 @@ public static class SaveLoadConstants
     /// Название файла, в который будет сохраняться игра по умолчнию (если не выбрать другое имя сохранения)
     /// </summary>
     public const string DefaultGameSaveName = "gamesave";
+
+    /// <summary>
+    /// Расширение файлов для сохранения игры (.json). Обязательно с точкой
+    /// </summary>
+    public const string DefaultSaveFileExtension = ".json";
 }

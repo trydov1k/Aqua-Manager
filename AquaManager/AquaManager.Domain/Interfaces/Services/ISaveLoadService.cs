@@ -33,12 +33,12 @@ public interface ISaveLoadService
     /// <summary>
     /// Загрузить состояние игрока из файла (синхронно)
     /// </summary>
-    SaveSlotInfo LoadGame(string slotName);
+    SaveSlotInfo? LoadGame(string slotName);
 
     /// <summary>
     /// Асинхронная загрузка
     /// </summary>
-    Task<SaveSlotInfo> LoadGameAsync(string slotName);
+    Task<SaveSlotInfo?> LoadGameAsync(string slotName);
 
     /// <summary>
     /// Проверить, существует ли файл сохранения
@@ -51,7 +51,7 @@ public interface ISaveLoadService
     bool DeleteSaveFile(string fileName);
 
     /// <summary>
-    /// Получить массив всех файлов сохранений
+    /// Получить перечисление всех файлов сохранений
     /// </summary>
     /// <returns>Массив, содержащий все сохранения</returns>
     IEnumerable<string> GiveAllSaveFileNames();

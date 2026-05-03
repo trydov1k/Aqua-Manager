@@ -14,13 +14,13 @@ public interface IPlayer
     /// <summary>
     /// Список всех аквариумов
     /// </summary>
-    List<Aquarium> Aquariums { get; set; }
+    List<Aquarium> Aquariums { get; }
 
     /// <summary>
     /// Индекс текущего выбранного аквариума (0, 1, 2, 3 ...)
     /// </summary>
     /// <example>0, 1, 2, 3, 4</example>
-    int CurrentAquariumIndex { get; set; }
+    int CurrentAquariumIndex { get; }
 
 
     // Методы
@@ -29,7 +29,7 @@ public interface IPlayer
     /// Получить текущий аквариум
     /// </summary>
     /// <returns>Возвращает текущий аквариум</returns>
-    Aquarium GetCurrentAquarium();
+    Aquarium? GetCurrentAquarium();
 
     /// <summary>
     /// Добавить деньги

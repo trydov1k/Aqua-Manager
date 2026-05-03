@@ -21,8 +21,6 @@ namespace AquaManager.Domain.Services
 
         public event EventHandler<Player> StateChanged;
 
-        private readonly string _systemGameSaveName;
-
         // Конструктор
         public GameEngine()
         {
@@ -31,8 +29,6 @@ namespace AquaManager.Domain.Services
             _saveLoadService = new SaveLoadService();
             _fishFactory = new FishFactory();
             IsRunning = false;
-
-            _systemGameSaveName = SaveLoadConstants.DefaultSystemGameSaveFileName;
         }
 
         // Методы Start(), Stop() и NewGame()
@@ -41,12 +37,14 @@ namespace AquaManager.Domain.Services
         {
             if (Player == null)
             {
-                Player = _saveLoadService.LoadGame(_systemGameSaveName)?.Player;
-                if (Player == null)
+                var player = _saveLoadService.LoadGame(SaveLoadConstants.DefaultSystemGameSaveFileName)?.Player;
+                if (player == null)
                 {
                     CreateNewGame();
                     IsFirstGame = true;
                 }
+                else
+                    Player = player;
             }   
 
             _incomeService = new IncomeService(Player);
@@ -87,7 +85,7 @@ namespace AquaManager.Domain.Services
         {
             if (IsRunning)
                 Stop();
-            _incomeService?.Dispose();
+            _incomeService.Dispose();
 
             Player = loadedPlayer;
             Start();
@@ -95,10 +93,8 @@ namespace AquaManager.Domain.Services
 
 
         // Логика обновления (работа с таймерами)
-
         private void OnGameTick(object sender, ElapsedEventArgs e)
         {
-            // Тут должен быть обработчик таймера...
             if (!IsRunning)
                 return;
 
@@ -114,7 +110,7 @@ namespace AquaManager.Domain.Services
                 if (aquarium == null) return;
                 var fishList = aquarium.FishList;
 
-                aquarium.UpdateWaterCleanliness(GameConstants.WaterDirtRate);  // Уменьшаем чистоту воды на WaterDirtRate
+                aquarium.UpdateWaterCleanliness(GameConstants.WaterDirtRate);
 
                 if (aquarium.WaterCleanliness <= 0)
                     foreach (var fish in fishList)
@@ -122,12 +118,9 @@ namespace AquaManager.Domain.Services
 
                 foreach (var fish in fishList.Where(fish => fish.IsAlive))
                 {
-                    fish.UpdateHunger();  // Уменьшили голод
+                    fish.UpdateHunger();
                     if (aquarium.WaterCleanliness <= GameConstants.DirtyWaterThreshold)
                         fish.UpdateHunger();  // Уменьшили голод еще раз, если аквариум слишком грязный (голод Х2)
-
-                    if (fish.Hunger <= 0)
-                        fish.Kill();
                 }
 
                 RaiseStateChanged();
@@ -232,7 +225,7 @@ namespace AquaManager.Domain.Services
             {
                 var newFish = _fishFactory.CreateFish(type);
 
-                newFish.Name = fishName;
+                newFish.Rename(fishName);
 
                 aquarium.AddFish(newFish);
                 Player.SpendMoney(fishPrice);

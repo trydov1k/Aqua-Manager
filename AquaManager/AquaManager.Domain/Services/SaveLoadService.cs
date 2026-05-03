@@ -19,13 +19,9 @@ namespace AquaManager.Domain.Services
 
         public event EventHandler<string> ErrorOccurred;
 
-        private readonly string _folderToSaveName;
-        private readonly string _systemGameSaveName;
-
         /// <summary>
         /// Конструктор сервиса
         /// </summary>
-        /// <param name="saveFileName">Имя файла сохранения (по умолчанию "savegame.json")</param>
         public SaveLoadService()
         {
             // Настройки сериализации
@@ -36,9 +32,6 @@ namespace AquaManager.Domain.Services
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
                 PropertyNameCaseInsensitive = true
             };
-
-            _folderToSaveName = SaveLoadConstants.DefaultFolderToSavesName;
-            _systemGameSaveName = SaveLoadConstants.DefaultSystemGameSaveFileName;
         }
 
         public bool SaveGame(SaveSlotInfo saveInfo)
@@ -91,7 +84,7 @@ namespace AquaManager.Domain.Services
             }
         }
 
-        public SaveSlotInfo LoadGame(string slotName)
+        public SaveSlotInfo? LoadGame(string slotName)
         {
             var saveFilePath = GiveFilePath(slotName);
 
@@ -106,7 +99,7 @@ namespace AquaManager.Domain.Services
                 string jsonString = File.ReadAllText(saveFilePath);
                 SaveSlotInfo saveInfo = JsonSerializer.Deserialize<SaveSlotInfo>(jsonString, _jsonOptions);
 
-                var player = saveInfo.Player;
+                var player = saveInfo?.Player;
 
                 if (player == null)
                 {
@@ -132,7 +125,7 @@ namespace AquaManager.Domain.Services
             }
         }
 
-        public async Task<SaveSlotInfo> LoadGameAsync(string slotName)
+        public async Task<SaveSlotInfo?> LoadGameAsync(string slotName)
         {
             var saveFilePath = GiveFilePath(slotName);
 
@@ -147,7 +140,7 @@ namespace AquaManager.Domain.Services
                 string jsonString = await File.ReadAllTextAsync(saveFilePath);
                 SaveSlotInfo saveInfo = JsonSerializer.Deserialize<SaveSlotInfo>(jsonString, _jsonOptions);
 
-                Player player = saveInfo.Player;
+                var player = saveInfo?.Player;
 
                 if (player == null)
                 {
@@ -183,13 +176,15 @@ namespace AquaManager.Domain.Services
             {
                 player.Aquariums = new List<Aquarium>
                 {
-                    new Aquarium(GameConstants.DefaultAquariumName, GameConstants.DefaultAquariumCapacity)
+                    new Aquarium(GameConstants.DefaultAquariumName, 
+                        GameConstants.DefaultAquariumCapacity)
                 };
                 player.CurrentAquariumIndex = 0;
             }
 
             // Проверить, что CurrentAquariumIndex корректен
-            if (player.CurrentAquariumIndex < 0 || player.CurrentAquariumIndex >= player.Aquariums.Count)
+            if (player.CurrentAquariumIndex < 0 
+                || player.CurrentAquariumIndex >= player.Aquariums.Count)
                 player.CurrentAquariumIndex = 0;
 
 
@@ -200,7 +195,7 @@ namespace AquaManager.Domain.Services
                 foreach (var fish in aquarium.FishList)
                 {
                     if (string.IsNullOrEmpty(fish.Id))
-                        fish.Id = Guid.NewGuid().ToString();
+                        fish.TryChangeId(Guid.NewGuid().ToString());
                 }
             }
         }
@@ -227,28 +222,28 @@ namespace AquaManager.Domain.Services
         {
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
-            var path = Path.Combine(appDataPath, "AquaManager", _folderToSaveName);
+            var folderToSavePath = Path.Combine(appDataPath, "AquaManager", SaveLoadConstants.DefaultFolderToSavesName);
 
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
+            if (!Directory.Exists(folderToSavePath))
+                Directory.CreateDirectory(folderToSavePath);
 
-            var fileNameWithExt = fileName + ".json";
-            return Path.Combine(path, fileNameWithExt);
+            var fileNameWithExt = fileName + SaveLoadConstants.DefaultSaveFileExtension;
+            return Path.Combine(folderToSavePath, fileNameWithExt);
         }
 
         public IEnumerable<string> GiveAllSaveFileNames()
         {
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var path = Path.Combine(appDataPath, "AquaManager", _folderToSaveName);
+            var folderToSavePath = Path.Combine(appDataPath, "AquaManager", SaveLoadConstants.DefaultFolderToSavesName);
 
-            if (!Directory.Exists(path))
-                return new string[0];
+            if (!Directory.Exists(folderToSavePath))
+                return Enumerable.Empty<string>();
 
-            var files = Directory.GetFiles(path, "*.json");
+            var files = Directory.GetFiles(folderToSavePath, $"*{SaveLoadConstants.DefaultSaveFileExtension}");
 
             var names = files.Select(f => f.Remove(0, f.LastIndexOf("\\") + 1)).Select(f => f.Remove(f.LastIndexOf(".")));
 
-            return names.Where(f => f != _systemGameSaveName);
+            return names.Where(f => f != SaveLoadConstants.DefaultSystemGameSaveFileName);
         }
 
         // Приватные методы вызова событий

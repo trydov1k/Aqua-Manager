@@ -22,11 +22,6 @@ public interface IIncomeService
     void Stop();
 
     /// <summary>
-    /// Обновить ссылку на игрока (например, после загрузки сохранения)
-    /// </summary>
-    void UpdatePlayer(Player player);
-
-    /// <summary>
     /// Освобождение ресурсов
     /// </summary>
     void Dispose();

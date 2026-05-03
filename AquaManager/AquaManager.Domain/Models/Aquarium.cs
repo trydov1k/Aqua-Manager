@@ -31,7 +31,8 @@ public class Aquarium : IAquarium
     }
 
     // Методы
-    public bool CanAddFish() => FishList.Count + 1 <= Capacity;
+    public bool CanAddFish() 
+        => FishList.Count + 1 <= Capacity;
 
     public bool AddFish(Fish fish)
     {

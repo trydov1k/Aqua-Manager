@@ -8,7 +8,7 @@ namespace AquaManager.Domain.Models;
 public class Player : IPlayer
 {
     // Свойства
-    public decimal Money { get; set; }
+    public decimal Money { get; private set; }
 
     public List<Aquarium> Aquariums { get; set; }
     public int CurrentAquariumIndex { get; set; }
@@ -33,7 +33,7 @@ public class Player : IPlayer
         return Money >= amount;
     }
 
-    public Aquarium GetCurrentAquarium()
+    public Aquarium? GetCurrentAquarium()
     {
         if (0 <= CurrentAquariumIndex && CurrentAquariumIndex <= Aquariums.Count - 1)
             return Aquariums[CurrentAquariumIndex];

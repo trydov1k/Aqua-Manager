@@ -9,14 +9,14 @@ namespace AquaManager.Domain.Models;
 public class Fish : IFish
 {
     // Свойства рыбки
-    public string Name { get; set; }
+    public string Name { get; private set; }
     public FishType Type { get; }
     public double Hunger { get; private set; }
     public double HungerRate { get; }
-    public decimal Price { get; private set; }
-    public decimal IncomeValue { get; private set; }
+    public decimal Price { get; }
+    public decimal IncomeValue { get; }
     public bool IsAlive { get; private set; }
-    public string Id { get; set; }
+    public string Id { get; private set; }
 
     // Лямбда-свойства
     public bool IsDie => !IsAlive;
@@ -59,6 +59,18 @@ public class Fish : IFish
     {
         IsAlive = false;
         Hunger = 0;
-        Price = 0;
+    }
+
+    public void Rename(string newName)
+    {
+        Name = newName;
+    }
+
+    public bool TryChangeId(string newId)
+    {
+        var needToChange = string.IsNullOrEmpty(Id);
+        if (needToChange)
+            Id = newId;
+        return needToChange;
     }
 }

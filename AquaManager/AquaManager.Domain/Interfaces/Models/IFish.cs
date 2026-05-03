@@ -64,4 +64,10 @@ public interface IFish
     /// Сделать рыбку мертвой
     /// </summary>
     void Kill();
+
+    /// <summary>
+    /// Переименовать рыбку, нужен чтобы давать имя рыбкам при покупке
+    /// </summary>
+    /// <param name="newName">Имя, которое мы хотим дать рыбку</param>
+    void Rename(string newName);
 }
