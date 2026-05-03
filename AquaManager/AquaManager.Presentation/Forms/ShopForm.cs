@@ -1,6 +1,7 @@
 ﻿using AquaManager.Domain.Constants;
 using AquaManager.Domain.Enums;
 using AquaManager.Domain.Factories;
+using AquaManager.Domain.Interfaces.Models;
 using AquaManager.Domain.Models;
 using AquaManager.Domain.Services;
 using AquaManager.Forms;
@@ -58,7 +59,9 @@ namespace AquaManager.Presentation.Forms
         {
             var name = _fishFactory.GetFishName(type);
 
-            if (_engine.CanBuyFish(type))
+            var aquarium = _engine.GetCurrentAquarium();
+
+            if (_engine.CanBuyFish(type) && aquarium?.FishList.Count +1 <= aquarium?.Capacity)
             {
                 var nameInputForm = new NameInputForm(NameInputType.Fish, name);
                 nameInputForm.ShowDialog();
@@ -75,11 +78,9 @@ namespace AquaManager.Presentation.Forms
             if (success)
             {
                 UpdateMoneyDisplay();
-                //MessageBox.Show("Рыбка куплена!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                var aquarium = _engine.GetCurrentAquarium();
                 if (aquarium != null && aquarium.FishList.Count >= aquarium.Capacity)
                     MessageBox.Show("Нет места в аквариуме!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 else
@@ -105,7 +106,6 @@ namespace AquaManager.Presentation.Forms
             if (success)
             {
                 UpdateMoneyDisplay();
-                //MessageBox.Show("Новый аквариум куплен!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
