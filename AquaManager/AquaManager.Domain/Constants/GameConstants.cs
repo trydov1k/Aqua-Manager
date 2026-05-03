@@ -51,7 +51,7 @@ public static class GameConstants
     /// <summary>
     /// Уменьшение чистоты воды в процентах за секунду
     /// </summary>
-    public const double WaterDirtRate = 0.3;
+    public const double WaterDirtRatePerFish = 0.07;
 
     /// <summary>
     /// Уровень чистоты (%), ниже которого рыбки голодают в 2 раза быстрее

@@ -110,7 +110,7 @@ namespace AquaManager.Domain.Services
                 if (aquarium == null) return;
                 var fishList = aquarium.FishList;
 
-                aquarium.UpdateWaterCleanliness(GameConstants.WaterDirtRate);
+                aquarium.UpdateWaterCleanliness(GameConstants.WaterDirtRatePerFish);
 
                 if (aquarium.WaterCleanliness <= 0)
                     foreach (var fish in fishList)

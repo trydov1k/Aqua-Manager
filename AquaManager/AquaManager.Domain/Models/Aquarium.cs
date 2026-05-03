@@ -58,9 +58,9 @@ public class Aquarium : IAquarium
         return FishList.Where(fish => fish.IsAlive).Count();
     }
 
-    public void UpdateWaterCleanliness(double waterDirtRate)
+    public void UpdateWaterCleanliness(double waterDirtRatePerFish)
     {
-        WaterCleanliness -= waterDirtRate;
+        WaterCleanliness -= waterDirtRatePerFish * GetLiveFishCount();
         if (WaterCleanliness < 0)
             WaterCleanliness = 0;
     }
