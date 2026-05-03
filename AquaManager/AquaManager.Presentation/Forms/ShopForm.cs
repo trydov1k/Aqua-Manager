@@ -28,7 +28,7 @@ namespace AquaManager.Presentation.Forms
             var fishTypes = Enum.GetValues(typeof(FishType));
             foreach (FishType type in fishTypes)
             {
-                
+
                 var fishControl = new ShopItemControl(
                     _fishFactory.GetFishImage(type),
                     _fishFactory.GetFishName(type),
@@ -61,7 +61,7 @@ namespace AquaManager.Presentation.Forms
 
             var aquarium = _engine.GetCurrentAquarium();
 
-            if (_engine.CanBuyFish(type) && aquarium?.FishList.Count +1 <= aquarium?.Capacity)
+            if (_engine.CanBuyFish(type) && aquarium?.FishList.Count + 1 <= aquarium?.Capacity)
             {
                 var nameInputForm = new NameInputForm(NameInputType.Fish, name);
                 nameInputForm.ShowDialog();
@@ -71,7 +71,7 @@ namespace AquaManager.Presentation.Forms
 
                 name = nameInputForm.EnteredName;
                 nameInputForm.Dispose();
-            }            
+            }
 
             bool success = _engine.BuyFish(type, name);
 
@@ -99,10 +99,10 @@ namespace AquaManager.Presentation.Forms
                     return;
                 name = nameInputForm.EnteredName;
                 nameInputForm.Dispose();
-            }            
+            }
 
             bool success = _engine.BuyAquarium(name);
-            
+
             if (success)
             {
                 UpdateMoneyDisplay();
@@ -116,6 +116,16 @@ namespace AquaManager.Presentation.Forms
         private void UpdateMoneyDisplay()
         {
             lblMoney.Text = $"У вас: {_engine.Player.Money} монет";
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                Close();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }
