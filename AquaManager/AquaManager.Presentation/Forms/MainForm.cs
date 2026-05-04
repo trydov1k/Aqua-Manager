@@ -315,12 +315,7 @@ namespace AquaManager.Presentation.Forms
             => DoRemoveMode();
 
         private void btnShop_Click(object sender, EventArgs e)
-        {
-            var shopForm = new ShopForm(_engine);
-            shopForm.ShowDialog();
-
-            shopForm.Dispose();
-        }
+            => OpenShop();
 
         private void btnGameMenu_Click(object sender, EventArgs e)
         {
@@ -355,6 +350,14 @@ namespace AquaManager.Presentation.Forms
             _isRemovingMode = !_isRemovingMode;
             btnRemoveFish.BackColor = _isRemovingMode ? Color.Red : SystemColors.Control;
             Cursor = _isRemovingMode ? Cursors.Hand : Cursors.Default;
+        }
+
+        private void OpenShop()
+        {
+            var shopForm = new ShopForm(_engine);
+            shopForm.ShowDialog();
+
+            shopForm.Dispose();
         }
 
         #endregion
@@ -392,6 +395,9 @@ namespace AquaManager.Presentation.Forms
                 case Keys.Q:
                     _engine.FeedAllFish();
                     return true;  // Покормить всех
+                case Keys.Space:
+                    OpenShop();
+                    return true;
 
                 case Keys.D1:
                     break;  // Покормить/удалить рыбку 1

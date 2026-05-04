@@ -48,10 +48,7 @@ public partial class NameInputForm : Form
     #region Обработка нажатий на кнопки
     private void btnOk_Click(object sender, EventArgs e)
     {
-        string trimmed = txtName.Text.Trim();
-        EnteredName = string.IsNullOrEmpty(trimmed) ? _defaultName : trimmed;
-        DialogResult = DialogResult.OK;
-        Close();
+        SaveResult();
     }
 
     private void btnSkip_Click(object sender, EventArgs e)
@@ -63,6 +60,14 @@ public partial class NameInputForm : Form
 
     #endregion
 
+    private void SaveResult()
+    {
+        string trimmed = txtName.Text.Trim();
+        EnteredName = string.IsNullOrEmpty(trimmed) ? _defaultName : trimmed;
+        DialogResult = DialogResult.OK;
+        Close();
+    }
+
     #region Обработка нажатий на клавиши клавиатуры
     protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
     {
@@ -71,6 +76,10 @@ public partial class NameInputForm : Form
             DialogResult = DialogResult.Cancel;
             Close();
             return true;
+        }
+        if (keyData == Keys.Enter)
+        {
+            SaveResult();
         }
 
         return base.ProcessCmdKey(ref msg, keyData);
