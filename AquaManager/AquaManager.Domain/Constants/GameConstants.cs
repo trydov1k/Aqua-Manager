@@ -10,12 +10,12 @@ public static class GameConstants
     /// <summary>
     /// Начальное количество монет у игрока
     /// </summary>
-    public const decimal StartingMoney = 200;
+    public const decimal StartingMoney = 150;
 
     /// <summary>
     /// Интервал пассивного дохода в секундах
     /// </summary>
-    public const int IncomeIntervalSeconds = 30;
+    public const int IncomeIntervalSeconds = 20;
 
 
     // Стоимость действий
