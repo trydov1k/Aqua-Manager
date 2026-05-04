@@ -66,9 +66,10 @@ namespace AquaManager.Tests.DomainTests.ModelsTests
         }
 
         [Test]
-        public void CleanWater_ShouldSetWaterCleanlinessTo100()
+        public void CleanWater_ShouldSetWaterCleanlinessTo100WhenHaveFish()
         {
             var aquarium = new Aquarium("Test", 3);
+            aquarium.AddFish(CreateStandartFish());
             aquarium.UpdateWaterCleanliness(50);
             Assert.AreEqual(50, aquarium.WaterCleanliness);
             aquarium.CleanWater();
@@ -76,9 +77,18 @@ namespace AquaManager.Tests.DomainTests.ModelsTests
         }
 
         [Test]
+        public void CleanWater_ShouldDontSetWaterCleanlinessTo100WhenDontHaveFish()
+        {
+            var aquarium = new Aquarium("Test", 3);
+            aquarium.UpdateWaterCleanliness(50);
+            Assert.AreEqual(100, aquarium.WaterCleanliness);
+        }
+
+        [Test]
         public void UpdateWaterCleanliness_ShouldDecreaseByRate()
         {
             var aquarium = new Aquarium("Test", 3);
+            aquarium.AddFish(CreateStandartFish());
             aquarium.UpdateWaterCleanliness(10);
             Assert.AreEqual(90, aquarium.WaterCleanliness);
             aquarium.UpdateWaterCleanliness(200);

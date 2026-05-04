@@ -8,7 +8,6 @@ using AquaManager.Presentation.Controls;
 using AquaManager.Presentation.Enums;
 using AquaManager.Presentation.Extensions;
 using AquaManager.Presentation.Models;
-using NameInputFormType = AquaManager.Presentation.Enums.NameInputFormType;
 using Timer = System.Windows.Forms.Timer;
 
 namespace AquaManager.Presentation.Forms
@@ -425,7 +424,6 @@ namespace AquaManager.Presentation.Forms
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-
             var result = MessageBox.Show(
                 "Выйти из игры?\nНесохранённый прогресс будет потерян.",
                 "Выход",

@@ -19,9 +19,9 @@ public class SaveLoadServiceTests
     [SetUp]
     public void SetUp()
     {
-        _directory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "GameSaves");
+        _directory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AquaManager", SaveLoadConstants.DefaultFolderToSavesName);
         _tempFileName = "SaveForTests";
-        _tempFilePath = Path.Combine(_directory, _tempFileName + ".json");
+        _tempFilePath = Path.Combine(_directory, _tempFileName + SaveLoadConstants.DefaultSaveFileExtension);
         _service = new SaveLoadService();
         _originalPlayer = new Player(500, new List<Aquarium>(), 0);
         var aqua = new Aquarium("TestAqua", 3);
