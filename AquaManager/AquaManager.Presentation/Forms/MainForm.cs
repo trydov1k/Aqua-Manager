@@ -224,7 +224,7 @@ namespace AquaManager.Presentation.Forms
                     _animationTimer.Start();
                     break;
                 case MenuAction.Save:  // Нажата кнопка "Сохранить игру"
-                    var nameInputForm = new AquaManager.Forms.NameInputForm(NameInputFormType.Save,
+                    var nameInputForm = new NameInputForm(NameInputFormType.Save,
                         SaveLoadConstants.DefaultGameSaveName,
                         "💾");
                     nameInputForm.ShowDialog();

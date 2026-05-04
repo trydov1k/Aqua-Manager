@@ -64,7 +64,7 @@ namespace AquaManager.Presentation.Forms
 
             if (_engine.CanBuyFish(type) && aquarium?.FishList.Count + 1 <= aquarium?.Capacity)
             {
-                var nameInputForm = new AquaManager.Forms.NameInputForm(NameInputFormType.Fish, name);
+                var nameInputForm = new NameInputForm(NameInputFormType.Fish, name);
                 nameInputForm.ShowDialog();
 
                 if (nameInputForm.EnteredName == string.Empty)
@@ -94,7 +94,7 @@ namespace AquaManager.Presentation.Forms
             var name = $"Аквариум {_engine.Player.Aquariums.Count + 1}";
             if (_engine.CanBuyAquarium())
             {
-                var nameInputForm = new AquaManager.Forms.NameInputForm(NameInputFormType.Aquarium, name);
+                var nameInputForm = new NameInputForm(NameInputFormType.Aquarium, name);
                 nameInputForm.ShowDialog();
                 if (nameInputForm.EnteredName == string.Empty)
                     return;

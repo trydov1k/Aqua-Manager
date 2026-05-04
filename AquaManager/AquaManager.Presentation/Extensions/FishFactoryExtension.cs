@@ -8,7 +8,7 @@ public static class FishFactoryExtension
     public static Image GetFishImage(this FishFactory fishFactory, FishType type)
     {
         string name = type.ToString().ToLower();
-        return (Image)Properties.Resources.ResourceManager.GetObject(name) ?? Properties.Resources.guppy;
+        return (Image)(Properties.Resources.ResourceManager.GetObject(name) ?? Properties.Resources.guppy);
     }
 
     public static string GetFishDescription(this FishFactory fishFactory, FishType type)

@@ -23,7 +23,7 @@ namespace AquaManager.Presentation.Controls
             lblHungerPercent.Click += OnClick;
         }
 
-        public string FishId => _fish?.Id;
+        public string FishId => _fish.Id;
         public event EventHandler FishClicked;
 
         public void UpdateDisplay(Fish? fish = null)
@@ -34,8 +34,8 @@ namespace AquaManager.Presentation.Controls
             lblName.Text = _fish.Name;
 
             string imageName = _fish.Type.ToString().ToLower();
-            var img = (Image)Properties.Resources.ResourceManager.GetObject(imageName);
-            pbIcon.Image = img ?? Properties.Resources.guppy;
+            var img = (Image)(Properties.Resources.ResourceManager.GetObject(imageName) ?? Properties.Resources.guppy);
+            pbIcon.Image = img;
 
             if (_fish.IsAlive)
             {
