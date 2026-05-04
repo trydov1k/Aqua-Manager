@@ -1,5 +1,6 @@
 ﻿using AquaManager.Domain.Constants;
 using AquaManager.Domain.Models;
+using AquaManager.Presentation.Constants;
 
 namespace AquaManager.Presentation.Models;
 
@@ -15,7 +16,7 @@ public class SwimmingFish
     public Image Image => _currentImage; // Уменьшенное изображение
 
     public SwimmingFish(Fish fish, Image originalImage, float startX, float startY, bool defaultOrientationRight,
-        int targetWidth = GameConstants.StandartFishImageWidth, int targetHeight = GameConstants.StandartFishImageHeight)
+        int targetWidth = PresentationConstants.StandartFishImageWidth, int targetHeight = PresentationConstants.StandartFishImageHeight)
     {
         Model = fish;
         var scaled = ScaleImage(originalImage, targetWidth, targetHeight);
@@ -35,8 +36,8 @@ public class SwimmingFish
         Position = new PointF(startX, startY);
         Random rnd = new Random();
 
-        var speedMin = GameConstants.SwimmingFishVelocityMin;
-        var speedMax = GameConstants.SwimmingFishVelocityMax;
+        var speedMin = PresentationConstants.SwimmingFishVelocityMin;
+        var speedMax = PresentationConstants.SwimmingFishVelocityMax;
 
         Velocity = new PointF(
             (float)(rnd.NextDouble() * (speedMax - speedMin) + speedMin),

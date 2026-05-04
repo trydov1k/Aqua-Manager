@@ -3,6 +3,7 @@ using AquaManager.Domain.Factories;
 using AquaManager.Domain.Models;
 using AquaManager.Domain.Services;
 using AquaManager.Forms;
+using AquaManager.Presentation.Constants;
 using AquaManager.Presentation.Controls;
 using AquaManager.Presentation.Enums;
 using AquaManager.Presentation.Extensions;
@@ -28,7 +29,7 @@ namespace AquaManager.Presentation.Forms
 
             _animationTimer = new Timer();
 
-            _animationTimer.Interval = GameConstants.AnimationTimerIntervalMs;
+            _animationTimer.Interval = PresentationConstants.AnimationTimerIntervalMs;
             _animationTimer.Tick += AnimationTimer_Tick;
             _animationTimer.Start();
 
@@ -155,8 +156,8 @@ namespace AquaManager.Presentation.Forms
                     Random rnd = new Random();
                     float x = 20, y = 20;
 
-                    var fishWidth = GameConstants.StandartFishImageWidth;
-                    var fishHeight = GameConstants.StandartFishImageHeight;
+                    var fishWidth = PresentationConstants.StandartFishImageWidth;
+                    var fishHeight = PresentationConstants.StandartFishImageHeight;
 
                     if (picAquarium.Width > fishWidth)
                         x = rnd.Next(20, picAquarium.Width - fishWidth);

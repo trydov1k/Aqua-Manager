@@ -1,4 +1,4 @@
-﻿namespace AquaManager.Domain.Enums;
+﻿namespace AquaManager.Presentation.Enums;
 
 /// <summary>
 /// enum для определния в какую сторону смотрит рыбка на картинке

@@ -1,4 +1,4 @@
-﻿using AquaManager.Forms;
+﻿using AquaManager.Presentation.Constants;
 using AquaManager.Presentation.Enums;
 
 namespace AquaManager.Presentation.Forms;
@@ -12,9 +12,6 @@ public partial class NameInputForm : Form
 
     private readonly string _buyMessage;
     private readonly string _giveNameMessage;
-
-    private readonly int MaxNameLenght = 15;
-
     public NameInputForm(NameInputFormType entityType, string defaultName, string emoji = "🐠")
     {
         _buyMessage = entityType == NameInputFormType.Fish ? "рыбку"
@@ -31,8 +28,8 @@ public partial class NameInputForm : Form
         Text = $"Назовите {_buyMessage}";
         lblIcon.Text = _emojiText;
         lblPrompt.Text = $"Дайте имя {_giveNameMessage}:";
-        txtName.MaxLength = MaxNameLenght;
-        lblHint.Text = $"Макс. {MaxNameLenght} символов. Оставьте пустым для имени по умолчанию.";
+        txtName.MaxLength = PresentationConstants.MaxInputNameLenght;
+        lblHint.Text = $"Макс. {PresentationConstants.MaxInputNameLenght} символов. Оставьте пустым для имени по умолчанию.";
     }
 
     #region События (выделение текстового поля при заходе в него)

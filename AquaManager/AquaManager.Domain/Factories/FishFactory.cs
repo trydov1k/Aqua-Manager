@@ -11,7 +11,6 @@ namespace AquaManager.Domain.Factories;
 public class FishFactory : IFishFactory
 {
     private readonly Dictionary<FishType, (decimal, double, string, decimal)> FishDict = GameConstants.FishByTypeDict;
-    private readonly Dictionary<FishType, PictureDefaultDirection> TypeToDirection = GameConstants.DefaultFishPictureDirection;
 
     public Fish CreateFish(FishType type)
     {
@@ -52,10 +51,5 @@ public class FishFactory : IFishFactory
     public FishType[] GetAllFishTypes()
     {
         return FishDict.Keys.ToArray();
-    }
-
-    public bool IsDefaultRight(FishType type)
-    {
-        return TypeToDirection[type] == PictureDefaultDirection.Right;
     }
 }

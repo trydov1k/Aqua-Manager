@@ -3,6 +3,7 @@ using AquaManager.Domain.Enums;
 using AquaManager.Presentation.Models;
 using System.Drawing;
 using AquaManager.Domain.Factories;
+using AquaManager.Presentation.Extensions;
 
 namespace AquaManager.Tests.PresentationTests.ModelsTests
 {
