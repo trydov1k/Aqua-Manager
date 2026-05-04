@@ -35,10 +35,8 @@ public class SaveLoadServiceTests
     [TearDown]
     public void TearDown()
     {
-        if (File.Exists(_directory) && File.Exists(_tempFilePath))
+        if (File.Exists(_tempFilePath))
             File.Delete(_tempFilePath);
-        if (File.Exists(_directory))
-            File.Delete(_directory);
     }
 
     [Test]
