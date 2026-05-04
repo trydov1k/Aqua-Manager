@@ -128,8 +128,6 @@ namespace AquaManager.Presentation.Forms
             if (_isFeedingMode)
             {
                 _engine.FeedSingleFish(fishControl.FishId);
-                _isFeedingMode = false;
-                btnFeedingMode.BackColor = SystemColors.Control;
             }
             else if (_isRemovingMode)
             {
