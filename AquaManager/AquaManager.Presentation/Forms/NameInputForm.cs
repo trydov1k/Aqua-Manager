@@ -29,6 +29,7 @@ public partial class NameInputForm : Form
         lblIcon.Text = _emojiText;
         lblPrompt.Text = $"Дайте имя {_giveNameMessage}:";
         txtName.MaxLength = PresentationConstants.MaxInputNameLenght;
+        txtName.Text = _defaultName;
         lblHint.Text = $"Макс. {PresentationConstants.MaxInputNameLenght} символов. Оставьте пустым для имени по умолчанию.";
     }
 
