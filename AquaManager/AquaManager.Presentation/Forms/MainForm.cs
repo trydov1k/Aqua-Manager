@@ -7,6 +7,7 @@ using AquaManager.Presentation.Controls;
 using AquaManager.Presentation.Enums;
 using AquaManager.Presentation.Extensions;
 using AquaManager.Presentation.Models;
+using NameInputFormType = AquaManager.Presentation.Enums.NameInputFormType;
 using Timer = System.Windows.Forms.Timer;
 
 namespace AquaManager.Presentation.Forms
@@ -223,7 +224,7 @@ namespace AquaManager.Presentation.Forms
                     _animationTimer.Start();
                     break;
                 case MenuAction.Save:  // Нажата кнопка "Сохранить игру"
-                    var nameInputForm = new NameInputForm(NameInputType.Save, 
+                    var nameInputForm = new AquaManager.Forms.NameInputForm(NameInputFormType.Save,
                         SaveLoadConstants.DefaultGameSaveName,
                         "💾");
                     nameInputForm.ShowDialog();

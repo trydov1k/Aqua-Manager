@@ -1,167 +1,82 @@
-﻿namespace AquaManager.Forms
+﻿using AquaManager.Forms;
+using AquaManager.Presentation.Enums;
+
+namespace AquaManager.Presentation.Forms;
+
+public partial class NameInputForm : Form
 {
-    /// <summary>
-    /// Диалог для ввода имени при покупке рыбки или аквариума.
-    /// </summary>
-    public class NameInputForm : Form
+    public string EnteredName { get; private set; } = string.Empty;
+
+    private readonly string _defaultName;
+    private readonly string _emojiText;
+
+    private readonly string _buyMessage;
+    private readonly string _giveNameMessage;
+
+    private readonly int MaxNameLenght = 15;
+
+    public NameInputForm(NameInputFormType entityType, string defaultName, string emoji = "🐠")
     {
-        // ── публичный результат ───────────────────────────────────────────
-        public string EnteredName { get; private set; } = string.Empty;
+        _buyMessage = entityType == NameInputFormType.Fish ? "рыбку"
+            : entityType == NameInputFormType.Aquarium ? "аквариум"
+            : "сохранение";
+        _giveNameMessage = entityType == NameInputFormType.Fish ? "рыбке"
+            : entityType == NameInputFormType.Aquarium ? "аквариуму"
+            : "сохранению";
+        _defaultName = defaultName;
+        _emojiText = emoji;
 
-        // ── контролы ─────────────────────────────────────────────────────
-        private Label _lblPrompt;
-        private Label _lblHint;
-        private TextBox _txtName;
-        private Button _btnOk;
-        private Button _btnSkip;
-        private Label _pbIcon;
+        InitializeComponent();
 
-        private readonly string _buyMessage;
-        private readonly string _giveNameMessage;
+        Text = $"Назовите {_buyMessage}";
+        lblIcon.Text = _emojiText;
+        lblPrompt.Text = $"Дайте имя {_giveNameMessage}:";
+        txtName.MaxLength = MaxNameLenght;
+        lblHint.Text = $"Макс. {MaxNameLenght} символов. Оставьте пустым для имени по умолчанию.";
+    }
 
-        private readonly string _defaultName;  // предлагаемое имя по умолчанию
-        private readonly string _emojiText;    // 🐠 или 🪣
+    #region События (выделение текстового поля при заходе в него)
+    private void txtName_Enter(object sender, EventArgs e)
+    {
+        txtName.BackColor = Color.FromArgb(50, 90, 170);
+    }
 
-        // Настройки / константы
-        private readonly int MaxNameLenght = 15;
+    private void txtName_Leave(object sender, EventArgs e)
+    {
+        txtName.BackColor = Color.FromArgb(40, 70, 130);
+    }
 
-        public NameInputForm(NameInputType entityType, string defaultName, string emoji = "🐠")
+    #endregion
+
+    #region Обработка нажатий на кнопки
+    private void btnOk_Click(object sender, EventArgs e)
+    {
+        string trimmed = txtName.Text.Trim();
+        EnteredName = string.IsNullOrEmpty(trimmed) ? _defaultName : trimmed;
+        DialogResult = DialogResult.OK;
+        Close();
+    }
+
+    private void btnSkip_Click(object sender, EventArgs e)
+    {
+        EnteredName = _defaultName;
+        DialogResult = DialogResult.Cancel;
+        Close();
+    }
+
+    #endregion
+
+    #region Обработка нажатий на клавиши клавиатуры
+    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+    {
+        if (keyData == Keys.Escape)
         {
-            _buyMessage = entityType == NameInputType.Fish ? "рыбку" : entityType == NameInputType.Aquarium ? "аквариум" : "сохранение";
-            _giveNameMessage = entityType == NameInputType.Fish ? "рыбке" : entityType == NameInputType.Aquarium ? "аквариуму" : "сохранению";
-            _defaultName = defaultName;
-            _emojiText = emoji;
-            InitializeComponent();
-        }
-
-        private void InitializeComponent()
-        {
-            Text = $"Назовите {_buyMessage}";
-            Size = new Size(440, 280);
-            StartPosition = FormStartPosition.CenterParent;
-            FormBorderStyle = FormBorderStyle.FixedDialog;
-            MaximizeBox = false;
-            MinimizeBox = false;
-            BackColor = Color.FromArgb(20, 40, 80);
-            Font = new Font("Segoe UI", 10f);
-
-            // Эмодзи-иконка
-            _pbIcon = new Label
-            {
-                Text = _emojiText,
-                Font = new Font("Segoe UI Emoji", 32f),
-                ForeColor = Color.White,
-                Location = new Point(15, 15),
-                TextAlign = ContentAlignment.MiddleCenter, 
-                Size = new Size(80, 60),
-            };
-            Controls.Add(_pbIcon);
-
-            // Заголовок
-            _lblPrompt = new Label
-            {
-                Text = $"Дайте имя {_giveNameMessage}:",
-                Font = new Font("Segoe UI", 12f, FontStyle.Bold),
-                ForeColor = Color.LightCyan,
-                TextAlign = ContentAlignment.MiddleCenter,
-                Location = new Point(10, 30),
-                Size = new Size(400, 30),
-            };
-            Controls.Add(_lblPrompt);
-
-            // Поле ввода
-            _txtName = new TextBox
-            {
-                Text = _defaultName,
-                Font = new Font("Segoe UI", 13f),
-                Location = new Point(40, 100),
-                Size = new Size(350, 36),
-                MaxLength = MaxNameLenght,
-                BackColor = Color.FromArgb(40, 70, 130),
-                ForeColor = Color.White,
-                BorderStyle = BorderStyle.FixedSingle,
-            };
-            _txtName.SelectAll();
-            Controls.Add(_txtName);
-
-            // Подсказка
-            _lblHint = new Label
-            {
-                Text = $"Макс. {MaxNameLenght} символов. Оставьте пустым для имени по умолчанию.",
-                Font = new Font("Segoe UI", 8f),
-                ForeColor = Color.LightGray,
-                TextAlign = ContentAlignment.MiddleCenter,
-                Location = new Point(10, 130),
-                Size = new Size(400, 20),
-            };
-            Controls.Add(_lblHint);
-
-            // Кнопка «Пропустить»
-            _btnSkip = new Button
-            {
-                Text = "Пропустить",
-                Location = new Point(40, 190),
-                Size = new Size(120, 34),
-                BackColor = Color.FromArgb(60, 60, 100),
-                ForeColor = Color.LightGray,
-                FlatStyle = FlatStyle.Flat,
-                DialogResult = DialogResult.Cancel,
-            };
-            _btnSkip.FlatAppearance.BorderColor = Color.Gray;
-            _btnSkip.Click += (s, e) =>
-            {
-                EnteredName = _defaultName; // при пропуске — дефолтное имя
-                DialogResult = DialogResult.Cancel;
-                Close();
-            };
-            Controls.Add(_btnSkip);
-
-            // Кнопка «Подтвердить»
-            _btnOk = new Button
-            {
-                Text = "✔ Подтвердить",
-                Location = new Point(255, 190),
-                Size = new Size(140, 34),
-                BackColor = Color.FromArgb(0, 140, 200),
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat,
-                DialogResult = DialogResult.OK,
-            };
-            _btnOk.FlatAppearance.BorderColor = Color.DeepSkyBlue;
-            _btnOk.Click += BtnOk_Click;
-            Controls.Add(_btnOk);
-
-            AcceptButton = _btnOk;
-
-            // Подсветка при фокусе на поле
-            _txtName.Enter += (s, e) => _txtName.BackColor = Color.FromArgb(50, 90, 170);
-            _txtName.Leave += (s, e) => _txtName.BackColor = Color.FromArgb(40, 70, 130);
-        }
-
-        private void BtnOk_Click(object sender, EventArgs e)
-        {
-            string trimmed = _txtName.Text.Trim();
-            EnteredName = string.IsNullOrEmpty(trimmed) ? _defaultName : trimmed;
-            DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.Cancel;
             Close();
+            return true;
         }
 
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            if (keyData == Keys.Escape)
-            {
-                DialogResult = DialogResult.Cancel;
-                Close();
-                return true;
-            }
-            return base.ProcessCmdKey(ref msg, keyData);
-        }
+        return base.ProcessCmdKey(ref msg, keyData);
     }
-
-    public enum NameInputType
-    {
-        Fish,
-        Aquarium,
-        Save
-    }
+    #endregion
 }

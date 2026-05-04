@@ -6,6 +6,7 @@ using AquaManager.Domain.Models;
 using AquaManager.Domain.Services;
 using AquaManager.Forms;
 using AquaManager.Presentation.Controls;
+using AquaManager.Presentation.Enums;
 using AquaManager.Presentation.Extensions;
 
 namespace AquaManager.Presentation.Forms
@@ -63,7 +64,7 @@ namespace AquaManager.Presentation.Forms
 
             if (_engine.CanBuyFish(type) && aquarium?.FishList.Count + 1 <= aquarium?.Capacity)
             {
-                var nameInputForm = new NameInputForm(NameInputType.Fish, name);
+                var nameInputForm = new AquaManager.Forms.NameInputForm(NameInputFormType.Fish, name);
                 nameInputForm.ShowDialog();
 
                 if (nameInputForm.EnteredName == string.Empty)
@@ -93,7 +94,7 @@ namespace AquaManager.Presentation.Forms
             var name = $"Аквариум {_engine.Player.Aquariums.Count + 1}";
             if (_engine.CanBuyAquarium())
             {
-                var nameInputForm = new NameInputForm(NameInputType.Aquarium, name);
+                var nameInputForm = new AquaManager.Forms.NameInputForm(NameInputFormType.Aquarium, name);
                 nameInputForm.ShowDialog();
                 if (nameInputForm.EnteredName == string.Empty)
                     return;
