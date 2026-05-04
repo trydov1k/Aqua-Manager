@@ -377,6 +377,7 @@ namespace AquaManager.Presentation.Forms
                     if (_engine.Player.CurrentAquariumIndex - 1 >= 0)
                         _engine.Player.CurrentAquariumIndex--;
                     return true;
+
                 case Keys.E:
                     DoFeedingMode();
                     return true;  // Режим кормления
