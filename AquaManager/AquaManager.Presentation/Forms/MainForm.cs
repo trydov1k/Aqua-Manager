@@ -300,29 +300,17 @@ namespace AquaManager.Presentation.Forms
         #endregion
 
         #region Обработка нажатий на кнопки
-        private void btnFeedAll_Click(object sender, EventArgs e) => _engine.FeedAllFish();
+        private void btnFeedAll_Click(object sender, EventArgs e) 
+            => _engine.FeedAllFish();
 
         private void btnFeedingMode_Click(object sender, EventArgs e)
-        {
-            _isRemovingMode = false;
-            btnRemoveFish.BackColor = SystemColors.Control;
+            => DoFeedingMode();
 
-            _isFeedingMode = !_isFeedingMode;
-            btnFeedingMode.BackColor = _isFeedingMode ? Color.LightGreen : SystemColors.Control;
-            Cursor = _isFeedingMode ? Cursors.Hand : Cursors.Default;
-        }
-
-        private void btnChangeWater_Click(object sender, EventArgs e) => _engine.ChangeWater();
+        private void btnChangeWater_Click(object sender, EventArgs e)
+            => _engine.ChangeWater();
 
         private void btnRemoveFish_Click(object sender, EventArgs e)
-        {
-            _isFeedingMode = false;
-            btnFeedingMode.BackColor = SystemColors.Control;
-
-            _isRemovingMode = !_isRemovingMode;
-            btnRemoveFish.BackColor = _isRemovingMode ? Color.Red : SystemColors.Control;
-            Cursor = _isRemovingMode ? Cursors.Hand : Cursors.Default;
-        }
+            => DoRemoveMode();
 
         private void btnShop_Click(object sender, EventArgs e)
         {
@@ -344,30 +332,77 @@ namespace AquaManager.Presentation.Forms
         }
 
         #endregion
-            
+
+        #region Вспомогательные методы для обработки нажатий на кнопки
+
+        private void DoFeedingMode()
+        {
+            _isRemovingMode = false;
+            btnRemoveFish.BackColor = SystemColors.Control;
+
+            _isFeedingMode = !_isFeedingMode;
+            btnFeedingMode.BackColor = _isFeedingMode ? Color.LightGreen : SystemColors.Control;
+            Cursor = _isFeedingMode ? Cursors.Hand : Cursors.Default;
+        }
+
+        private void DoRemoveMode()
+        {
+            _isFeedingMode = false;
+            btnFeedingMode.BackColor = SystemColors.Control;
+
+            _isRemovingMode = !_isRemovingMode;
+            btnRemoveFish.BackColor = _isRemovingMode ? Color.Red : SystemColors.Control;
+            Cursor = _isRemovingMode ? Cursors.Hand : Cursors.Default;
+        }
+
+        #endregion
+
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (keyData == Keys.Escape)
+            switch(keyData)
             {
-                OpenMenu();
-                return true;
-            }
-            if (keyData == Keys.F1)
-            {
-                OpenTutorial();
-                return true;
-            }
-            if (keyData == Keys.Right)
-            {
-                if (_engine.Player.CurrentAquariumIndex + 1 < _engine.Player.Aquariums.Count)
-                    _engine.Player.CurrentAquariumIndex++;
-                return true;
-            }
-            if (keyData == Keys.Left)
-            {
-                if (_engine.Player.CurrentAquariumIndex - 1 >= 0)
-                    _engine.Player.CurrentAquariumIndex--;
-                return true;
+                case Keys.Escape:
+                    OpenMenu();
+                    return true;  // Меню
+                case Keys.F1:
+                    OpenTutorial();
+                    return true;  // Обучение
+                case Keys.Right:  // Переключение аквариума вправо
+                case Keys.D:
+                    if (_engine.Player.CurrentAquariumIndex + 1 < _engine.Player.Aquariums.Count)
+                        _engine.Player.CurrentAquariumIndex++;
+                    return true;
+                case Keys.Left:  // Переключение аквариума влево
+                case Keys.A:
+                    if (_engine.Player.CurrentAquariumIndex - 1 >= 0)
+                        _engine.Player.CurrentAquariumIndex--;
+                    return true;
+                case Keys.E:
+                    DoFeedingMode();
+                    return true;  // Режим кормления
+                case Keys.R:
+                    DoRemoveMode();
+                    return true;  // Удалить рыбку
+                case Keys.F:
+                    _engine.ChangeWater();
+                    return true;  // Поменять воду в аквариуме
+                case Keys.Q:
+                    _engine.FeedAllFish();
+                    return true;  // Покормить всех
+
+                case Keys.D1:
+                    break;  // Покормить/удалить рыбку 1
+                case Keys.D2:
+                    break;  // Покормить/удалить рыбку 2
+                case Keys.D3:
+                    break;  // Покормить/удалить рыбку 3
+                case Keys.D4:
+                    break;  // Покормить/удалить рыбку 4
+                case Keys.D5:
+                    break;  // Покормить/удалить рыбку 5
+                case Keys.D6:
+                    break;  // Покормить/удалить рыбку 6
+
             }
 
             return base.ProcessCmdKey(ref msg, keyData);

@@ -151,17 +151,8 @@ namespace AquaManager.Forms
 
         private void BtnExit_Click(object sender, EventArgs e)
         {
-            var result = MessageBox.Show(
-                "Выйти из игры?\nНесохранённый прогресс будет потерян.",
-                "Выход",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                SelectedAction = MenuAction.Exit;
+            SelectedAction = MenuAction.Exit;
                 Close();
-            }
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
