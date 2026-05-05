@@ -1,6 +1,7 @@
 ﻿using AquaManager.Domain.Constants;
 using AquaManager.Domain.Enums;
 using AquaManager.Domain.Factories;
+using AquaManager.Domain.Interfaces.Factories;
 using AquaManager.Domain.Models;
 using AquaManager.Domain.Services;
 using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
@@ -110,14 +111,14 @@ public class GameEngineTests
     [Test]
     public void BuyAquarium_AddsNewAquariumToPlayer()
     {
-        _engine.Player.AddMoney(GameConstants.NewAquariumPrice - GameConstants.StartingMoney);
+        _engine.Player.AddMoney(_engine._aquariumFactory.GetAquariumPrice(AquariumType.Default) - GameConstants.StartingMoney);
         int oldCount = _engine.Player.Aquariums.Count;
         var oldMoney = _engine.Player.Money;
-        var result = _engine.BuyAquarium("Новый дом");
+        var result = _engine.BuyAquarium(AquariumType.Default, "Новый дом");
         Assert.IsTrue(result);
         Assert.AreEqual(oldCount + 1, _engine.Player.Aquariums.Count);
         Assert.AreEqual("Новый дом", _engine.Player.Aquariums.Last().Name);
-        Assert.AreEqual(oldMoney - GameConstants.NewAquariumPrice, _engine.Player.Money);
+        Assert.AreEqual(oldMoney - _engine._aquariumFactory.GetAquariumPrice(AquariumType.Default), _engine.Player.Money);
     }
 
     [Test]
@@ -140,8 +141,8 @@ public class GameEngineTests
     [Test]
     public void SwitchAquarium_ChangesCurrentIndex()
     {
-        _engine.Player.AddMoney(GameConstants.NewAquariumPrice - GameConstants.StartingMoney);
-        _engine.BuyAquarium("Second");
+        _engine.Player.AddMoney(_engine._aquariumFactory.GetAquariumPrice(AquariumType.Default) - GameConstants.StartingMoney);
+        _engine.BuyAquarium(AquariumType.Default, "Second");
         Assert.AreEqual(0, _engine.Player.CurrentAquariumIndex);
         _engine.SwitchAquarium(1);
         Assert.AreEqual(1, _engine.Player.CurrentAquariumIndex);
