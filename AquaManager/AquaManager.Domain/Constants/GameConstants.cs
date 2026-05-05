@@ -34,32 +34,16 @@ public static class GameConstants
     // Параметры аквариума
 
     /// <summary>
-    /// Название первого аквариума
+    /// Словарь с характеристиками аквариумов в зависимости от их вида
+    /// Вид аквариума: (имя, стоимость, вместительность, коэффициент загрязнения в секунду, порог после которго рыбы быстрее голодают)
     /// </summary>
-    public const string DefaultAquariumName = "Мой первый аквариум";
+    public static readonly Dictionary<AquariumType, (string, decimal, int, double, double)> AquariumByTypeDict = new()
+    {
+        { AquariumType.Default, ("Стандартный аквариум", 500, 6, 0.07, 20) },
+        { AquariumType.Ocean, ("Океан", 600, 6, 0.05, 20) }
+    };
 
-    /// <summary>
-    /// Максимальное количество рыбок в одном аквариуме
-    /// </summary>
-    public const int DefaultAquariumCapacity = 6;
-
-    /// <summary>
-    /// Цена покупки дополнительного аквариума
-    /// </summary>
-    public const decimal NewAquariumPrice = 500;
-
-    /// <summary>
-    /// Уменьшение чистоты воды в процентах за секунду
-    /// </summary>
-    public const double WaterDirtRatePerFish = 0.07;
-
-    /// <summary>
-    /// Уровень чистоты (%), ниже которого рыбки голодают в 2 раза быстрее
-    /// </summary>
-    public const double DirtyWaterThreshold = 20;
-
-
-    // Характеристики видов рыб
+    // Параметры рыб
 
     /// <summary>
     /// Словарь с характеристиками рыбок в зависимости от их вида

@@ -1,4 +1,5 @@
-﻿using AquaManager.Domain.Models;
+﻿using AquaManager.Domain.Enums;
+using AquaManager.Domain.Models;
 
 namespace AquaManager.Tests.DomainTests.ModelsTests;
 
@@ -8,7 +9,7 @@ public class PlayerTests
     [Test]
     public void Constructor_ShouldInitializeProperties()
     {
-        var aquariums = new List<Aquarium> { new Aquarium("A1", 5) };
+        var aquariums = new List<Aquarium> { new Aquarium("A1", AquariumType.Default, 5) };
         var player = new Player(200, aquariums, 0);
         Assert.AreEqual(200, player.Money);
         Assert.AreEqual(1, player.Aquariums.Count);
@@ -55,8 +56,8 @@ public class PlayerTests
     {
         var aquariums = new List<Aquarium>
         {
-            new Aquarium("A1", 5),
-            new Aquarium("A2", 6)
+            new Aquarium("A1",AquariumType.Default, 5),
+            new Aquarium("A2",AquariumType.Default, 6)
         };
         var player = new Player(100, aquariums, 1);
         var current = player.GetCurrentAquarium();

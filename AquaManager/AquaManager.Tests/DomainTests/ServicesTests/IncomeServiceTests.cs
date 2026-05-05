@@ -12,7 +12,7 @@ namespace AquaManager.Tests.DomainTests.ServicesTests
         public void CalculateTotalIncome_ShouldSumIncomeValueOfAllLiveFish()
         {
             var player = new Player(100, new List<Aquarium>(), 0);
-            var aquarium = new Aquarium("Test", 5);
+            var aquarium = new Aquarium("Test", AquariumType.Default, 5);
             var fish1 = CreateStandartFish();
             var fish2 = CreateStandartFish();
             var deadFish = CreateDeadFish();

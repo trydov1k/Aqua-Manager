@@ -61,7 +61,7 @@ public interface IGameEngineService
     /// Купить аквариум
     /// </summary>
     /// <returns>true если успешно, иначе false</returns>
-    bool BuyAquarium(string name);
+    bool BuyAquarium(AquariumType type, string name);
 
     /// <summary>
     /// Метод для проверки можно ли купить рыбку
@@ -74,7 +74,7 @@ public interface IGameEngineService
     /// Метод для проверки можно ли купить аквариум
     /// </summary>
     /// <returns>true елси можно купить, иначе false</returns>
-    bool CanBuyAquarium();
+    bool CanBuyAquarium(AquariumType type);
 
     /// <summary>
     /// Удалить рыбку

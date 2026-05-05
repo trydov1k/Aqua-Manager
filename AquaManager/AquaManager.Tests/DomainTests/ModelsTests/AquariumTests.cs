@@ -10,7 +10,7 @@ namespace AquaManager.Tests.DomainTests.ModelsTests
         [Test]
         public void Constructor_ShouldSetNameAndCapacity()
         {
-            var aquarium = new Aquarium("TestAqua", 5);
+            var aquarium = new Aquarium("TestAqua", AquariumType.Default, 5);
             Assert.AreEqual("TestAqua", aquarium.Name);
             Assert.AreEqual(5, aquarium.Capacity);
             Assert.AreEqual(100, aquarium.WaterCleanliness);
@@ -20,7 +20,7 @@ namespace AquaManager.Tests.DomainTests.ModelsTests
         [Test]
         public void CanAddFish_WhenSpaceAvailable_ReturnsTrue()
         {
-            var aquarium = new Aquarium("Test", 2);
+            var aquarium = new Aquarium("Test", AquariumType.Default, 2);
             Assert.IsTrue(aquarium.CanAddFish());
             aquarium.AddFish(CreateStandartFish());
             Assert.IsTrue(aquarium.CanAddFish());
@@ -31,7 +31,7 @@ namespace AquaManager.Tests.DomainTests.ModelsTests
         [Test]
         public void AddFish_WhenSpaceAvailable_AddsFish()
         {
-            var aquarium = new Aquarium("Test", 1);
+            var aquarium = new Aquarium("Test", AquariumType.Default, 1);
             var fish = CreateStandartFish();
             var result = aquarium.AddFish(fish);
             Assert.IsTrue(result);
@@ -42,7 +42,7 @@ namespace AquaManager.Tests.DomainTests.ModelsTests
         [Test]
         public void AddFish_WhenFull_ReturnsFalse()
         {
-            var aquarium = new Aquarium("Test", 1);
+            var aquarium = new Aquarium("Test", AquariumType.Default, 1);
             aquarium.AddFish(CreateStandartFish());
             var secondFish = CreateStandartFish();
             Assert.IsFalse(aquarium.AddFish(secondFish));
@@ -51,7 +51,7 @@ namespace AquaManager.Tests.DomainTests.ModelsTests
         [Test]
         public void RemoveFish_ShouldRemoveOneFish()
         {
-            var aquarium = new Aquarium("Test", 3);
+            var aquarium = new Aquarium("Test", AquariumType.Default, 3);
 
             var live = CreateStandartFish();
             var dead = CreateDeadFish();
@@ -68,7 +68,7 @@ namespace AquaManager.Tests.DomainTests.ModelsTests
         [Test]
         public void CleanWater_ShouldSetWaterCleanlinessTo100WhenHaveFish()
         {
-            var aquarium = new Aquarium("Test", 3);
+            var aquarium = new Aquarium("Test", AquariumType.Default, 3);
             aquarium.AddFish(CreateStandartFish());
             aquarium.UpdateWaterCleanliness(50);
             Assert.AreEqual(50, aquarium.WaterCleanliness);
@@ -79,7 +79,7 @@ namespace AquaManager.Tests.DomainTests.ModelsTests
         [Test]
         public void CleanWater_ShouldDontSetWaterCleanlinessTo100WhenDontHaveFish()
         {
-            var aquarium = new Aquarium("Test", 3);
+            var aquarium = new Aquarium("Test", AquariumType.Default, 3);
             aquarium.UpdateWaterCleanliness(50);
             Assert.AreEqual(100, aquarium.WaterCleanliness);
         }
@@ -87,7 +87,7 @@ namespace AquaManager.Tests.DomainTests.ModelsTests
         [Test]
         public void UpdateWaterCleanliness_ShouldDecreaseByRate()
         {
-            var aquarium = new Aquarium("Test", 3);
+            var aquarium = new Aquarium("Test", AquariumType.Default, 3);
             aquarium.AddFish(CreateStandartFish());
             aquarium.UpdateWaterCleanliness(10);
             Assert.AreEqual(90, aquarium.WaterCleanliness);
@@ -98,7 +98,7 @@ namespace AquaManager.Tests.DomainTests.ModelsTests
         [Test]
         public void GetLiveFishCount_ShouldReturnCorrectCount()
         {
-            var aquarium = new Aquarium("Test", 3);
+            var aquarium = new Aquarium("Test", AquariumType.Default, 3);
             var live1 = CreateStandartFish();
             var live2 = CreateStandartFish();
             var dead = CreateDeadFish();

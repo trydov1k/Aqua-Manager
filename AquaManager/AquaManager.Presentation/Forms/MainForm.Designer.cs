@@ -63,7 +63,7 @@
             // picAquarium
             // 
             picAquarium.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            picAquarium.Image = Properties.Resources.Аквариум_2;
+            //picAquarium.Image = Properties.Resources.defaultAquarium;
             picAquarium.Location = new Point(54, 65);
             picAquarium.Margin = new Padding(0);
             picAquarium.Name = "picAquarium";

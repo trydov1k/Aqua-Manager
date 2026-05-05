@@ -17,7 +17,8 @@ namespace AquaManager.Domain.Services
         private Timer _gameTimer;
         private IncomeService _incomeService;
         private SaveLoadService _saveLoadService;
-        public FishFactory _fishFactory;        
+        public FishFactory _fishFactory;
+        public AquariumFactory _aquariumFactory;
 
         public event EventHandler<Player> StateChanged;
 
@@ -28,6 +29,7 @@ namespace AquaManager.Domain.Services
             _gameTimer.Elapsed += OnGameTick;
             _saveLoadService = new SaveLoadService();
             _fishFactory = new FishFactory();
+            _aquariumFactory = new AquariumFactory();
             IsRunning = false;
         }
 
@@ -73,7 +75,7 @@ namespace AquaManager.Domain.Services
         private void CreateNewGame()
         {
             var startFish = _fishFactory.CreateFish(GameConstants.DefaultFishtype);
-            var startAquarium = new Aquarium(GameConstants.DefaultAquariumName, GameConstants.DefaultAquariumCapacity);
+            var startAquarium = _aquariumFactory.CreateAquarium(AquariumType.Default);
             startAquarium.AddFish(startFish);
             var aquariums = new List<Aquarium>() { startAquarium };
             Player = new Player(GameConstants.StartingMoney, aquariums, 0);
@@ -110,7 +112,9 @@ namespace AquaManager.Domain.Services
                 if (aquarium == null) return;
                 var fishList = aquarium.FishList;
 
-                aquarium.UpdateWaterCleanliness(GameConstants.WaterDirtRatePerFish);
+                var waterDirtRatePerFish = _aquariumFactory.GetAquariumWaterDirtRatePerFish(aquarium.Type);
+                var dirtyWaterThreshold = _aquariumFactory.GetAquariumDirtyWaterThreshold(aquarium.Type);
+                aquarium.UpdateWaterCleanliness(waterDirtRatePerFish);
 
                 if (aquarium.WaterCleanliness <= 0)
                     foreach (var fish in fishList)
@@ -119,7 +123,7 @@ namespace AquaManager.Domain.Services
                 foreach (var fish in fishList.Where(fish => fish.IsAlive))
                 {
                     fish.UpdateHunger();
-                    if (aquarium.WaterCleanliness <= GameConstants.DirtyWaterThreshold)
+                    if (aquarium.WaterCleanliness <= dirtyWaterThreshold)
                         fish.UpdateHunger();  // Уменьшили голод еще раз, если аквариум слишком грязный (голод Х2)
                 }
 
@@ -235,17 +239,18 @@ namespace AquaManager.Domain.Services
             return canBuyFish;
         }
 
-        public bool BuyAquarium(string name)
+        public bool BuyAquarium(AquariumType type, string name)
         { 
-            var aquariumCost = GameConstants.NewAquariumPrice;
-            var aquariumCapacity = GameConstants.DefaultAquariumCapacity;
-            var aquariumName = name == "" ? $"Аквариум {Player.Aquariums.Count + 1}" : name;
+            var aquariumCost = _aquariumFactory.GetAquariumPrice(type);
+            var aquariumCapacity = _aquariumFactory.GetAquariumCapacity(type);
+            var standartName = _aquariumFactory.GetAquariumStandartName(type);
+            var aquariumName = name == "" ? $"{standartName} {Player.Aquariums.Where(a => a.Type == type).Count() + 1}" : name;
 
             var canBuyAquarium = Player.CanAfford(aquariumCost);
 
             if (canBuyAquarium)
             {
-                var newAquarium = new Aquarium(aquariumName, aquariumCapacity);
+                var newAquarium = _aquariumFactory.CreateAquarium(type, name);
                 Player.Aquariums.Add(newAquarium);
                 Player.SpendMoney(aquariumCost);
                 RaiseStateChanged();
@@ -259,9 +264,9 @@ namespace AquaManager.Domain.Services
             return Player.CanAfford(_fishFactory.GetFishPrice(type));
         }
 
-        public bool CanBuyAquarium()
+        public bool CanBuyAquarium(AquariumType type)
         {
-            return Player.CanAfford(GameConstants.NewAquariumPrice);
+            return Player.CanAfford(_aquariumFactory.GetAquariumPrice(type));
         }
 
         public bool SwitchAquarium(int index)

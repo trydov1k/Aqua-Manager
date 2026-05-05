@@ -1,4 +1,5 @@
-﻿using AquaManager.Domain.Interfaces.Models;
+﻿using AquaManager.Domain.Enums;
+using AquaManager.Domain.Interfaces.Models;
 using System.Text.Json.Serialization;
 
 namespace AquaManager.Domain.Models;
@@ -10,6 +11,8 @@ public class Aquarium : IAquarium
     // Свойства
     public string Name { get; }
 
+    public AquariumType Type { get; }
+
     public double WaterCleanliness { get; private set; }
 
     public List<Fish> FishList { get; }
@@ -17,14 +20,15 @@ public class Aquarium : IAquarium
     public int Capacity { get; }
 
     // Конструкторы
-    public Aquarium(string name, int capacity)
-        : this(name, 100, new List<Fish>(), capacity)
+    public Aquarium(string name, AquariumType type, int capacity)
+        : this(name, type, 100, new List<Fish>(), capacity)
     { }
 
     [JsonConstructor]
-    public Aquarium(string name, double waterCleanliness, List<Fish> fishList, int capacity)
+    public Aquarium(string name, AquariumType type, double waterCleanliness, List<Fish> fishList, int capacity)
     {
         Name = name;
+        Type = type;
         WaterCleanliness = waterCleanliness;
         FishList = fishList;
         Capacity = capacity;

@@ -24,7 +24,7 @@ public class SaveLoadServiceTests
         _tempFilePath = Path.Combine(_directory, _tempFileName + SaveLoadConstants.DefaultSaveFileExtension);
         _service = new SaveLoadService();
         _originalPlayer = new Player(500, new List<Aquarium>(), 0);
-        var aqua = new Aquarium("TestAqua", 3);
+        var aqua = new Aquarium("TestAqua", AquariumType.Default, 3);
         var fish = CreateStandartFish();
         aqua.AddFish(fish);
         _originalPlayer.Aquariums.Add(aqua);

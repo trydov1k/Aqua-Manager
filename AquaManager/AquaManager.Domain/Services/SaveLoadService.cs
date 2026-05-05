@@ -1,6 +1,8 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using AquaManager.Domain.Constants;
+using AquaManager.Domain.Enums;
+using AquaManager.Domain.Factories;
 using AquaManager.Domain.Interfaces.Services;
 using AquaManager.Domain.Models;
 
@@ -174,11 +176,11 @@ namespace AquaManager.Domain.Services
             // Если нет аквариумов — создать один по умолчанию
             if (player.Aquariums == null || player.Aquariums.Count == 0)
             {
+                var aquariumFactory = new AquariumFactory();
                 player.Aquariums = new List<Aquarium>
                 {
-                    new Aquarium(GameConstants.DefaultAquariumName, 
-                        GameConstants.DefaultAquariumCapacity)
-                };
+                   aquariumFactory.CreateAquarium(AquariumType.Default)
+                };                
                 player.CurrentAquariumIndex = 0;
             }
 

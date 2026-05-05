@@ -1,4 +1,5 @@
-﻿using AquaManager.Domain.Models;
+﻿using AquaManager.Domain.Enums;
+using AquaManager.Domain.Models;
 
 namespace AquaManager.Domain.Interfaces.Models;
 
@@ -10,6 +11,10 @@ public interface IAquarium
     /// Название аквариума
     /// </summary>
     string Name { get; }
+    /// <summary>
+    /// Тип аквариума
+    /// </summary>
+    AquariumType Type { get; }
     /// <summary>
     /// Уровень чистоты воды
     /// </summary>

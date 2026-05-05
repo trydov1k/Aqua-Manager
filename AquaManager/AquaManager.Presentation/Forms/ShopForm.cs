@@ -1,10 +1,6 @@
-﻿using AquaManager.Domain.Constants;
-using AquaManager.Domain.Enums;
+﻿using AquaManager.Domain.Enums;
 using AquaManager.Domain.Factories;
-using AquaManager.Domain.Interfaces.Models;
-using AquaManager.Domain.Models;
 using AquaManager.Domain.Services;
-using AquaManager.Forms;
 using AquaManager.Presentation.Controls;
 using AquaManager.Presentation.Enums;
 using AquaManager.Presentation.Extensions;
@@ -15,6 +11,7 @@ namespace AquaManager.Presentation.Forms
     {
         private GameEngine _engine;
         private FishFactory _fishFactory => _engine._fishFactory;
+        private AquariumFactory _aquariumFactory => _engine._aquariumFactory;
         public ShopForm(GameEngine gameEngine)
         {
             _engine = gameEngine;
@@ -26,10 +23,9 @@ namespace AquaManager.Presentation.Forms
         private void LoadShopItems()
         {
             // 1. Добавляем рыбок
-            var fishTypes = Enum.GetValues(typeof(FishType));
+            var fishTypes = _fishFactory.GetAllFishTypes();
             foreach (FishType type in fishTypes)
             {
-
                 var fishControl = new ShopItemControl(
                     _fishFactory.GetFishImage(type),
                     _fishFactory.GetFishName(type),
@@ -43,17 +39,20 @@ namespace AquaManager.Presentation.Forms
             // 2. Добавляем разделитель (просто панель с отступом)
             flpItems.Controls.Add(new Panel { Height = 5, BackColor = Color.LightGray, Width = 380 });
 
-            // 3. Добавляем аквариум
-            var aquariumControl = new ShopItemControl(
-                Properties.Resources.Аквариум_2,
-                "Новый аквариум",
-                GameConstants.NewAquariumPrice,
-                $"вместимость: {GameConstants.DefaultAquariumCapacity} рыбок",
-                Color.LightBlue,
-                () => BuyAquarium()
-                );
-
-            flpItems.Controls.Add(aquariumControl);
+            // 3. Добавляем аквариумы
+            var aquariumTypes = _aquariumFactory.GetAllAquariumTypes();
+            foreach (AquariumType type in aquariumTypes)
+            {
+                var aquariumControl = new ShopItemControl(
+                    _aquariumFactory.GetAquariumImage(type),
+                    _aquariumFactory.GetAquariumStandartName(type),
+                    _aquariumFactory.GetAquariumPrice(type),
+                    _aquariumFactory.GetAquariumDescription(type),
+                    Color.LightBlue,
+                    () => BuyAquarium(type)
+                    );
+                flpItems.Controls.Add(aquariumControl);
+            }
         }
 
         private void BuyFish(FishType type)
@@ -62,7 +61,7 @@ namespace AquaManager.Presentation.Forms
 
             var aquarium = _engine.GetCurrentAquarium();
 
-            if (_engine.CanBuyFish(type) && aquarium?.FishList.Count + 1 <= aquarium?.Capacity)
+            if (_engine.CanBuyFish(type) && (aquarium?.CanAddFish() ?? true))
             {
                 var nameInputForm = new NameInputForm(NameInputFormType.Fish, name);
                 nameInputForm.ShowDialog();
@@ -76,23 +75,21 @@ namespace AquaManager.Presentation.Forms
 
             bool success = _engine.BuyFish(type, name);
 
-            if (success)
-            {
-                UpdateMoneyDisplay();
-            }
-            else
+            if (!success)
             {
                 if (aquarium != null && aquarium.FishList.Count >= aquarium.Capacity)
                     MessageBox.Show("Нет места в аквариуме!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 else
                     MessageBox.Show("Недостаточно денег!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            UpdateMoneyDisplay();
         }
 
-        private void BuyAquarium()
+        private void BuyAquarium(AquariumType type)
         {
-            var name = $"Аквариум {_engine.Player.Aquariums.Count + 1}";
-            if (_engine.CanBuyAquarium())
+            var standartName = _aquariumFactory.GetAquariumStandartName(type);
+            var name = $"{standartName} {_engine.Player.Aquariums.Where(a => a.Type == type).Count() + 1}";
+            if (_engine.CanBuyAquarium(type))
             {
                 var nameInputForm = new NameInputForm(NameInputFormType.Aquarium, name);
                 nameInputForm.ShowDialog();
@@ -102,16 +99,13 @@ namespace AquaManager.Presentation.Forms
                 nameInputForm.Dispose();
             }
 
-            bool success = _engine.BuyAquarium(name);
+            bool success = _engine.BuyAquarium(type, name);
 
-            if (success)
-            {
-                UpdateMoneyDisplay();
-            }
-            else
+            if (!success)
             {
                 MessageBox.Show("Недостаточно денег для покупки аквариума!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            UpdateMoneyDisplay();
         }
 
         private void UpdateMoneyDisplay()

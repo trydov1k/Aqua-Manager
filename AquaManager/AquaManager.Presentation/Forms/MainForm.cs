@@ -16,6 +16,7 @@ namespace AquaManager.Presentation.Forms
     {
         private GameEngine _engine;
         private FishFactory _fishFactory => _engine._fishFactory;
+        private AquariumFactory _aquariumFactory => _engine._aquariumFactory;
         private bool _isFeedingMode;
         private bool _isRemovingMode;
 
@@ -60,6 +61,7 @@ namespace AquaManager.Presentation.Forms
         {
             lblMoney.Text = $"{player.Money} монет";
 
+            picAquarium.Image = _aquariumFactory.GetAquariumImage(player.GetCurrentAquarium().Type);
 
             if (cmbAquariums.Items.Count != player.Aquariums.Count)
             {
