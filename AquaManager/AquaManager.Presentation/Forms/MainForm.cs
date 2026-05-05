@@ -422,6 +422,10 @@ namespace AquaManager.Presentation.Forms
                     }
                     return true;
 
+                case Keys.T:  // Кнопка для тестирования новых функций
+
+                    return true;
+
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
