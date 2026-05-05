@@ -13,6 +13,6 @@ public static class AquariumFactoryExtension
 
     public static string GetAquariumDescription(this AquariumFactory aquariumFactory, AquariumType type)
     {
-        return $"вместимость: {aquariumFactory.GetAquariumCapacity} рыбок";
+        return $"вместимость: {aquariumFactory.GetAquariumCapacity(type)} рыбок";
     }
 }
