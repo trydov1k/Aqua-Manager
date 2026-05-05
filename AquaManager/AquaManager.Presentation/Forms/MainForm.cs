@@ -398,18 +398,29 @@ namespace AquaManager.Presentation.Forms
                     OpenShop();
                     return true;
 
-                case Keys.D1:
-                    break;  // Покормить/удалить рыбку 1
-                case Keys.D2:
-                    break;  // Покормить/удалить рыбку 2
-                case Keys.D3:
-                    break;  // Покормить/удалить рыбку 3
-                case Keys.D4:
-                    break;  // Покормить/удалить рыбку 4
-                case Keys.D5:
-                    break;  // Покормить/удалить рыбку 5
-                case Keys.D6:
-                    break;  // Покормить/удалить рыбку 6
+                case Keys.D1:  // Покормить/удалить рыбку 1
+                case Keys.D2:  // Покормить/удалить рыбку 2
+                case Keys.D3:  // Покормить/удалить рыбку 3
+                case Keys.D4:  // Покормить/удалить рыбку 4
+                case Keys.D5:  // Покормить/удалить рыбку 5
+                case Keys.D6:  // Покормить/удалить рыбку 6
+                    var index = keyData - Keys.D1;
+                    var aquarium = _engine.Player.GetCurrentAquarium();
+                    if (aquarium != null && index < aquarium.FishList.Count && index >= 0)
+                    {
+                        var fish = aquarium.FishList[index];
+                        if (_isFeedingMode)
+                        {
+                            _engine.FeedSingleFish(fish.Id);
+                        }
+                        else if (_isRemovingMode)
+                        {
+                            _engine.RemoveFish(fish.Id);
+                            _isRemovingMode = false;
+                            btnRemoveFish.BackColor = SystemColors.Control;
+                        }
+                    }
+                    return true;
 
             }
 
